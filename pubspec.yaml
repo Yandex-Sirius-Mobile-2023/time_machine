@@ -20,6 +20,7 @@ dependencies:
   flutter_riverpod: ^2.3.4
   analytics:
     path: packages/analytics
+  circular_widgets: ^3.0.0
 
 dev_dependencies:
   flutter_test:
