@@ -1,20 +1,27 @@
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:time_machine/data/auth/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:time_machine/data/auth/status/auth_create_exception.dart';
+import 'package:time_machine/data/auth/status/credential_sign_exception.dart';
 import 'package:time_machine/data/auth/status/email_sign_exception.dart';
 
 import 'my_user.dart';
 
 /// Firebase authentication.
 class FirebaseAuthService implements AuthService {
-  final FirebaseAuth _auth;
+  final FirebaseAuth _firebaseAuth;
+  final GoogleSignIn _googleAuth;
 
-  FirebaseAuthService(this._auth);
+  FirebaseAuthService(
+      {required FirebaseAuth firebaseAuth, required GoogleSignIn googleAuth})
+      : _firebaseAuth = firebaseAuth,
+        _googleAuth = googleAuth;
 
   /// User in current log session.
   @override
-  MyUser? get user =>
-      _auth.currentUser != null ? _myUserFromFirebase(_auth.currentUser!) : null;
+  MyUser? get user => _firebaseAuth.currentUser != null
+      ? _myUserFromFirebase(_firebaseAuth.currentUser!)
+      : null;
 
   /// Attempts to create  user via email and password.
   /// Throws [AuthCreateException] on sign failures.
@@ -23,7 +30,7 @@ class FirebaseAuthService implements AuthService {
       {required String email, required String password}) async {
     try {
       // Sign user
-      var credentials = await _auth.createUserWithEmailAndPassword(
+      var credentials = await _firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);
       return _myUserFromFirebase(credentials.user!);
     } on FirebaseAuthException catch (e) {
@@ -46,8 +53,8 @@ class FirebaseAuthService implements AuthService {
       {required String email, required String password}) async {
     try {
       // Sign user
-      var credentials =
-          await _auth.signInWithEmailAndPassword(email: email, password: password);
+      var credentials = await _firebaseAuth.signInWithEmailAndPassword(
+          email: email, password: password);
       return _myUserFromFirebase(credentials.user!);
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
@@ -66,13 +73,37 @@ class FirebaseAuthService implements AuthService {
     throw UnimplementedError();
   }
 
+  /// Sign in with Google account.
+  /// Throws [CredentialSignException] on sign failures.
   @override
   Future<MyUser> signInWithGoogle() async {
-    throw UnimplementedError();
+    final GoogleSignInAccount? googleUser = await _googleAuth.signIn();
+    final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+
+    // Create a new credential
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
+
+    try {
+      var firebaseCredential = await _firebaseAuth.signInWithCredential(credential);
+      return _myUserFromFirebase(firebaseCredential.user!);
+    } on FirebaseAuthException catch (e) {
+      switch (e.code) {
+        case "account-exists-with-different-credential":
+          throw const CredentialSignException.exsistAnother();
+        case "invalid-credential":
+          throw const CredentialSignException.invalidCredential();
+        case "user-not-found":
+        default:
+          throw const CredentialSignException.userNotFound();
+      }
+    }
   }
 
   @override
-  Future<void> signOut() async => await _auth.signOut();
+  Future<void> signOut() async => await _firebaseAuth.signOut();
 
   MyUser _myUserFromFirebase(User user) =>
       MyUser(name: user.displayName ?? "Not defined", uid: user.uid);
