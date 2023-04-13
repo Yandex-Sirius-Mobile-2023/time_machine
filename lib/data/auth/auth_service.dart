@@ -17,9 +17,6 @@ abstract class AuthService {
   /// Attempts to sign in a user with the Google provider.
   Future<MyUser> signInWithGoogle();
 
-  /// Attempts to sign in a user with the Apple provider.
-  Future<MyUser> signInWithApple();
-
   /// Sign out current user.
   Future<void> signOut();
 }

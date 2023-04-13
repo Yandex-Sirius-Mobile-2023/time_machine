@@ -73,11 +73,6 @@ class FirebaseAuthService implements AuthService {
     }
   }
 
-  @override
-  Future<MyUser> signInWithApple() async {
-    throw UnimplementedError();
-  }
-
   /// Sign in with Google account.
   ///
   /// Throws [CredentialSignException] on sign failures.
