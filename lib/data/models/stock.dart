@@ -25,6 +25,8 @@ class Stock with _$Stock {
   const factory Stock(
       {required StockTicker ticker,
       required Map<DateTime, double> quotesHistory}) = _Stock;
+
+
 }
 
 extension StockExtension on StockTicker {
