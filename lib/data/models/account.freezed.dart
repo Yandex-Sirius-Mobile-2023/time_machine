@@ -18,8 +18,6 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$Account {
   int get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  String get email => throw _privateConstructorUsedError;
-  String get password => throw _privateConstructorUsedError;
   List<Session>? get sessions => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -31,12 +29,7 @@ abstract class $AccountCopyWith<$Res> {
   factory $AccountCopyWith(Account value, $Res Function(Account) then) =
       _$AccountCopyWithImpl<$Res, Account>;
   @useResult
-  $Res call(
-      {int id,
-      String name,
-      String email,
-      String password,
-      List<Session>? sessions});
+  $Res call({int id, String name, List<Session>? sessions});
 }
 
 /// @nodoc
@@ -54,8 +47,6 @@ class _$AccountCopyWithImpl<$Res, $Val extends Account>
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? email = null,
-    Object? password = null,
     Object? sessions = freezed,
   }) {
     return _then(_value.copyWith(
@@ -66,14 +57,6 @@ class _$AccountCopyWithImpl<$Res, $Val extends Account>
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      email: null == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      password: null == password
-          ? _value.password
-          : password // ignore: cast_nullable_to_non_nullable
               as String,
       sessions: freezed == sessions
           ? _value.sessions
@@ -90,12 +73,7 @@ abstract class _$$_AccountCopyWith<$Res> implements $AccountCopyWith<$Res> {
       __$$_AccountCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {int id,
-      String name,
-      String email,
-      String password,
-      List<Session>? sessions});
+  $Res call({int id, String name, List<Session>? sessions});
 }
 
 /// @nodoc
@@ -110,8 +88,6 @@ class __$$_AccountCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? email = null,
-    Object? password = null,
     Object? sessions = freezed,
   }) {
     return _then(_$_Account(
@@ -122,14 +98,6 @@ class __$$_AccountCopyWithImpl<$Res>
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      email: null == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      password: null == password
-          ? _value.password
-          : password // ignore: cast_nullable_to_non_nullable
               as String,
       sessions: freezed == sessions
           ? _value._sessions
@@ -143,21 +111,13 @@ class __$$_AccountCopyWithImpl<$Res>
 
 class _$_Account implements _Account {
   const _$_Account(
-      {required this.id,
-      required this.name,
-      required this.email,
-      required this.password,
-      final List<Session>? sessions})
+      {required this.id, required this.name, final List<Session>? sessions})
       : _sessions = sessions;
 
   @override
   final int id;
   @override
   final String name;
-  @override
-  final String email;
-  @override
-  final String password;
   final List<Session>? _sessions;
   @override
   List<Session>? get sessions {
@@ -170,7 +130,7 @@ class _$_Account implements _Account {
 
   @override
   String toString() {
-    return 'Account(id: $id, name: $name, email: $email, password: $password, sessions: $sessions)';
+    return 'Account(id: $id, name: $name, sessions: $sessions)';
   }
 
   @override
@@ -180,15 +140,12 @@ class _$_Account implements _Account {
             other is _$_Account &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.email, email) || other.email == email) &&
-            (identical(other.password, password) ||
-                other.password == password) &&
             const DeepCollectionEquality().equals(other._sessions, _sessions));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, email, password,
-      const DeepCollectionEquality().hash(_sessions));
+  int get hashCode => Object.hash(
+      runtimeType, id, name, const DeepCollectionEquality().hash(_sessions));
 
   @JsonKey(ignore: true)
   @override
@@ -201,18 +158,12 @@ abstract class _Account implements Account {
   const factory _Account(
       {required final int id,
       required final String name,
-      required final String email,
-      required final String password,
       final List<Session>? sessions}) = _$_Account;
 
   @override
   int get id;
   @override
   String get name;
-  @override
-  String get email;
-  @override
-  String get password;
   @override
   List<Session>? get sessions;
   @override

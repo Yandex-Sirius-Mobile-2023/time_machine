@@ -1,5 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:time_machine/data/models/stock.dart';
+import 'package:intl/intl.dart';
+
 
 part 'portfolio.freezed.dart';
 
@@ -9,27 +12,27 @@ class Portfolio with _$Portfolio {
   const factory Portfolio({
     required int id,
     required DateTime createdAt,
-    required List<Stock> stocks,
-    required List<int> quantity,
-    Map<String, int>? content,
+    required List<Map<Stock,int>> stocks,
+    required DateTime nowDate,
     double? balance,
   }) = _Portfolio;
 }
 
 extension PortfolioExtension on Portfolio {
-  Map<String, int> getContent(List<Stock> stocks, List<int> quantity)  {
+  Map<String, int> getContent() {
     Map<String, int> content = {};
-    stocks.forEach((stock) {
-      content[stock.ticker.toString()] = quantity[stocks.indexOf(stock)];
-    });
+    for (var stock in stocks) {
+      content[stock.keys.first.ticker.getName()] = stock.values.first;
+    }
     return content;
   }
 
-  double getBalance(List<Stock> stocks, List<int> quantity) {
+
+  double getBalance(){
     double balance = 0;
-    stocks.forEach((stock) {
-      balance += stock.quotesHistory.values.last * quantity[stocks.indexOf(stock)];
-    });
+    for (var stock in stocks) {
+      balance += stock.keys.first.quotesHistory[nowDate] ?? 0 * stock.values.first;
+    }
     return balance;
   }
 }

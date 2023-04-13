@@ -9,8 +9,6 @@ class Account with _$Account {
   const factory Account({
     required int id,
     required String name,
-    required String email,
-    required String password,
     List<Session>? sessions,
   }) = _Account;
 }

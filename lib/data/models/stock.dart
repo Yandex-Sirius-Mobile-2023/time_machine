@@ -27,6 +27,7 @@ class Stock with _$Stock {
       required Map<DateTime, double> quotesHistory}) = _Stock;
 
 
+
 }
 
 extension StockExtension on StockTicker {
