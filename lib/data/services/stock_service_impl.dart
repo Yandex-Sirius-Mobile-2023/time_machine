@@ -17,8 +17,7 @@ class StockServiceImpl extends StockService {
 
   @override
   Future<List<Stock>> getStockList() async {
-    final analytics = Analytics(
-        '/Users/igo320341/Desktop/time_machine/assets/data/close_data_2010-2023.csv');
+    final analytics = Analytics('assets/data/close_data_2010-2023.csv');
     final rawStockList = await analytics.getStockList();
     List<Stock> stockList = [];
     for (Map<String, dynamic> rawStock in rawStockList) {
