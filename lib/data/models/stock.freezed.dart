@@ -14,11 +14,16 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
+Stock _$StockFromJson(Map<String, dynamic> json) {
+  return _Stock.fromJson(json);
+}
+
 /// @nodoc
 mixin _$Stock {
   StockTicker get ticker => throw _privateConstructorUsedError;
   Map<DateTime, double> get quotesHistory => throw _privateConstructorUsedError;
 
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $StockCopyWith<Stock> get copyWith => throw _privateConstructorUsedError;
 }
@@ -95,12 +100,15 @@ class __$$_StockCopyWithImpl<$Res> extends _$StockCopyWithImpl<$Res, _$_Stock>
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$_Stock implements _Stock {
   const _$_Stock(
       {required this.ticker,
       required final Map<DateTime, double> quotesHistory})
       : _quotesHistory = quotesHistory;
+
+  factory _$_Stock.fromJson(Map<String, dynamic> json) =>
+      _$$_StockFromJson(json);
 
   @override
   final StockTicker ticker;
@@ -127,6 +135,7 @@ class _$_Stock implements _Stock {
                 .equals(other._quotesHistory, _quotesHistory));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType, ticker, const DeepCollectionEquality().hash(_quotesHistory));
@@ -136,12 +145,21 @@ class _$_Stock implements _Stock {
   @pragma('vm:prefer-inline')
   _$$_StockCopyWith<_$_Stock> get copyWith =>
       __$$_StockCopyWithImpl<_$_Stock>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_StockToJson(
+      this,
+    );
+  }
 }
 
 abstract class _Stock implements Stock {
   const factory _Stock(
       {required final StockTicker ticker,
       required final Map<DateTime, double> quotesHistory}) = _$_Stock;
+
+  factory _Stock.fromJson(Map<String, dynamic> json) = _$_Stock.fromJson;
 
   @override
   StockTicker get ticker;
