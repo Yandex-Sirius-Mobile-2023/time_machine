@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:time_machine/data/auth/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -12,9 +14,10 @@ class FirebaseAuthService implements AuthService {
   final FirebaseAuth _firebaseAuth;
   final GoogleSignIn _googleAuth;
 
-  FirebaseAuthService(
-      {required FirebaseAuth firebaseAuth, required GoogleSignIn googleAuth})
-      : _firebaseAuth = firebaseAuth,
+  FirebaseAuthService({
+    required FirebaseAuth firebaseAuth,
+    required GoogleSignIn googleAuth,
+  })  : _firebaseAuth = firebaseAuth,
         _googleAuth = googleAuth;
 
   /// User in current log session.
@@ -24,6 +27,7 @@ class FirebaseAuthService implements AuthService {
       : null;
 
   /// Attempts to create  user via email and password.
+  ///
   /// Throws [AuthCreateException] on sign failures.
   @override
   Future<MyUser> createWithEmailAndPassword(
@@ -47,12 +51,13 @@ class FirebaseAuthService implements AuthService {
   }
 
   /// Attempts to sign in user via email and password.
+  ///
   /// Throws [EmailSignException] on sign failures.
   @override
   Future<MyUser> signInEmailAndPassword(
       {required String email, required String password}) async {
     try {
-      // Sign user
+      // Sign user.
       var credentials = await _firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
       return _myUserFromFirebase(credentials.user!);
@@ -74,13 +79,14 @@ class FirebaseAuthService implements AuthService {
   }
 
   /// Sign in with Google account.
+  ///
   /// Throws [CredentialSignException] on sign failures.
   @override
   Future<MyUser> signInWithGoogle() async {
     final GoogleSignInAccount? googleUser = await _googleAuth.signIn();
     final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
 
-    // Create a new credential
+    // Create a new credential.
     final credential = GoogleAuthProvider.credential(
       accessToken: googleAuth?.accessToken,
       idToken: googleAuth?.idToken,
@@ -104,7 +110,10 @@ class FirebaseAuthService implements AuthService {
 
   @override
   Future<void> signOut() async => await _firebaseAuth.signOut();
-
   MyUser _myUserFromFirebase(User user) =>
       MyUser(name: user.displayName ?? "Not defined", uid: user.uid);
+
+  /// Listen updates of user login status.
+  StreamSubscription listenUpdates(Function callback) =>
+      _firebaseAuth.authStateChanges().asBroadcastStream().listen((_) => callback());
 }
