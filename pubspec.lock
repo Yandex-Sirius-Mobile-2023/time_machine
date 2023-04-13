@@ -136,6 +136,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.2"
+  circular_widgets:
+    dependency: "direct main"
+    description:
+      name: circular_widgets
+      sha256: "19226d02d566bdae4853e1cc1d4962e67ffead91f001b726f8661074cda66e5e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.0"
   cli_util:
     dependency: transitive
     description:
