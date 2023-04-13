@@ -39,7 +39,7 @@ class FirebaseAuthService implements AuthService {
       return _myUserFromFirebase(credentials.user!);
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
-        case "email-already-in-use:":
+        case "email-already-in-use":
           throw const AuthCreateException.emailAlreadyUsed();
         case "weak-password":
           throw const AuthCreateException.weakPassword();

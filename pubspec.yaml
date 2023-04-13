@@ -39,11 +39,12 @@ dependencies:
   google_sign_in: ^6.1.0
 
 dev_dependencies:
-  freezed: ^2.3.2
   build_runner: ^2.3.3
   flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter
+  freezed: ^2.3.2
+  mockito: ^5.4.0
 
 flutter_icons:
   android: "launcher_icon"
