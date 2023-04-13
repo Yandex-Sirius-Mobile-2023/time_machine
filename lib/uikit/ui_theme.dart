@@ -7,7 +7,7 @@ final lightScheme = ColorScheme.fromSeed(
   seedColor: seedColor,
 );
 
-final dartTheme = ColorScheme.fromSeed(
+final darkScheme = ColorScheme.fromSeed(
   brightness: Brightness.dark,
   seedColor: seedColor,
 );
