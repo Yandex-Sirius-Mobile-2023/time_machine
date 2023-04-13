@@ -38,4 +38,21 @@ class Analytics {
     }
     return stockList;
   }
+
+  Future<Map<String, dynamic>> getStock(String ticker) async {
+    Map<String, dynamic> stock = {};
+    final csvDataList = await loadCsvData();
+    final tickerList = csvDataList[0].sublist(2);
+    final quoteList = csvDataList.sublist(1);
+    Map<String, double> quotesHistory = {};
+    for (List<dynamic> quote in quoteList) {
+      final date = quote[1].toString();
+      final dateParsed =
+          '${date.substring(0, 4)}-${date.substring(4, 6)}-${date.substring(6, 8)}';
+      quotesHistory[dateParsed] = quote[tickerList.indexOf('US1.$ticker') + 2];
+    }
+    stock['ticker'] = ticker;
+    stock['quotesHistory'] = quotesHistory;
+    return stock;
+  }
 }
