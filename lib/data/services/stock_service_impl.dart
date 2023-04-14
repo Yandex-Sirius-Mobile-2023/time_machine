@@ -6,9 +6,15 @@ class StockServiceImpl extends StockService {
   final analytics = Analytics('assets/data/close_data_2010-2023.csv');
 
   @override
-  Future<double> getPortfolioRisk(Map<Stock, int> portfolio) {
-    // TODO: implement getPortfolioRisk
-    throw UnimplementedError();
+  Future<List<double>> getStockRisk(Map<Stock, int> portfolio) async {
+    final stockList = portfolio.keys.toList();
+    List<Map<String, dynamic>> rawStockList = [];
+    for (Stock stock in stockList) {
+      final rawStock = stock.toJson();
+      rawStockList.add(rawStock);
+    }
+    final risk = analytics.getRisk(rawStockList);
+    return risk;
   }
 
   @override
@@ -28,11 +34,5 @@ class StockServiceImpl extends StockService {
       stockList.add(stock);
     }
     return stockList;
-  }
-
-  @override
-  Future<double> getStockRisk(Stock stock) {
-    // TODO: implement getStockRisk
-    throw UnimplementedError();
   }
 }
