@@ -1,9 +1,10 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'stock.freezed.dart';
+part 'stock.g.dart';
 
 enum StockTicker {
-  APPL,
+  AAPL,
   AMZN,
   BAC,
   BRK_A,
@@ -25,12 +26,14 @@ class Stock with _$Stock {
   const factory Stock(
       {required StockTicker ticker,
       required Map<DateTime, double> quotesHistory}) = _Stock;
+
+  factory Stock.fromJson(Map<String, dynamic> json) => _$StockFromJson(json);
 }
 
 extension StockExtension on StockTicker {
   String getName() {
     switch (this) {
-      case StockTicker.APPL:
+      case StockTicker.AAPL:
         return "Apple";
       case StockTicker.AMZN:
         return "Amazon";
