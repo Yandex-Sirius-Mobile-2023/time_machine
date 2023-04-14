@@ -20,6 +20,7 @@ dependencies:
   freezed_annotation: ^2.2.0
   json_annotation: ^4.8.0
   flutter_riverpod: ^2.3.4
+  fl_chart: ^0.61.0
   analytics:
     path: packages/analytics
   circular_widgets: ^3.0.0
@@ -59,3 +60,12 @@ flutter:
     - assets/images/
     - assets/icons/
     - assets/data/
+
+  fonts:
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/Inter/Inter-Medium.ttf
+        - asset: assets/fonts/Inter/Inter-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Inter/Inter-Light.ttf
+          weight: 300
