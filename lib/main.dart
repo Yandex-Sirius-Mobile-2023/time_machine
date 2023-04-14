@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:time_machine/ui/samples/card_general_cost_example_widget.dart';
 
 void main() {
   runApp(const MyApp());
@@ -28,17 +29,12 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text("Здесь будет открыта новая ветка метро",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
-          centerTitle: false,
+    return const Scaffold(
+      body: SafeArea(
+        child: Center(
+          child: CardGeneralCostExampleWidget(),
         ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const <Widget>[Text('Бум, быщ, ба-бах!')],
-          ),
-        ));
+      ),
+    );
   }
 }
