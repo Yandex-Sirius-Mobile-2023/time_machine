@@ -4,7 +4,6 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:time_machine/data/auth/firebase_auth_service.dart';
-import 'package:time_machine/data/auth/my_user.dart';
 import 'package:time_machine/data/auth/status/auth_create_exception.dart';
 import 'package:time_machine/data/auth/status/credential_sign_exception.dart';
 import 'package:time_machine/data/auth/status/email_sign_exception.dart';

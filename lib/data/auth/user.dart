@@ -1,10 +1,10 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part "my_user.freezed.dart";
+part "user.freezed.dart";
 
 @freezed
-class MyUser with _$MyUser {
-  factory MyUser({
+class User with _$User {
+  factory User({
     /// Nickname of user.
     required String name,
 
