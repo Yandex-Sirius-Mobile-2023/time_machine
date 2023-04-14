@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:logging/logging.dart';
 import 'package:time_machine/data/stocks_api/api_errors.dart';
 import 'package:time_machine/data/stocks_api/stock_info_provider.dart';
@@ -20,6 +18,7 @@ class FinhubApi implements StockInfoProvider {
   @override
   Future<StockDto> fetchStock(String ticker) async {
     ticker = ticker.toUpperCase();
+    // Empty json is returned if the ticker is invalid.
     Map<String, dynamic> json = {};
     try {
       var response = await dio.get(requestGetProfile(ticker));
@@ -28,9 +27,12 @@ class FinhubApi implements StockInfoProvider {
       logger.warning(e);
       throw const StockApiErrors.server();
     } catch (e, stackTrace) {
+      // Unknown error
       logger.severe("Unsuccesful api request", e, stackTrace);
       rethrow;
     }
+
+    // If the json is empty, the ticker is invalid.
     if (json.isEmpty) throw const StockApiErrors.invalidTicker();
     return StockDto.fromJson(json);
   }
