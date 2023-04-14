@@ -11,6 +11,7 @@ import 'user.dart';
 
 /// Firebase authentication.
 class FirebaseAuthService implements AuthService {
+  static const String notDefinedName = "Not defined";
   final firebase_auth.FirebaseAuth _firebaseAuth;
   final GoogleSignIn _googleAuth;
 
@@ -20,7 +21,7 @@ class FirebaseAuthService implements AuthService {
   })  : _firebaseAuth = firebaseAuth,
         _googleAuth = googleAuth;
 
-  /// User in current log session.
+  /// User in current logging session.
   @override
   User? get user => _firebaseAuth.currentUser != null
       ? _myUserFromFirebase(_firebaseAuth.currentUser!)
@@ -43,11 +44,11 @@ class FirebaseAuthService implements AuthService {
       return _myUserFromFirebase(credentials.user!);
     } on firebase_auth.FirebaseAuthException catch (e) {
       switch (e.code) {
-        case "email-already-in-use":
+        case FirebaseErrorCode.usedEmail:
           throw const AuthCreateException.emailAlreadyUsed();
-        case "weak-password":
+        case FirebaseErrorCode.weakPassword:
           throw const AuthCreateException.weakPassword();
-        case "invalid-email":
+        case FirebaseErrorCode.invalidEmail:
         default:
           throw const AuthCreateException.invalidEmail();
       }
@@ -71,10 +72,10 @@ class FirebaseAuthService implements AuthService {
       return _myUserFromFirebase(credentials.user!);
     } on firebase_auth.FirebaseAuthException catch (e) {
       switch (e.code) {
-        case "user-not-found":
+        case FirebaseErrorCode.userNotFound:
           throw const EmailSignException.userNotFound();
-        case "wrong-password":
-        case "invalid-email":
+        case FirebaseErrorCode.wrongPassword:
+        case FirebaseErrorCode.invalidEmail:
         default:
           throw const EmailSignException.wrondCredentials();
       }
@@ -99,11 +100,11 @@ class FirebaseAuthService implements AuthService {
       return _myUserFromFirebase(firebaseCredential.user!);
     } on firebase_auth.FirebaseAuthException catch (e) {
       switch (e.code) {
-        case "account-exists-with-different-credential":
+        case FirebaseErrorCode.exsistWithAnotherCredential:
           throw const CredentialSignException.exsistAnother();
-        case "invalid-credential":
+        case FirebaseErrorCode.invalidCredential:
           throw const CredentialSignException.invalidCredential();
-        case "user-not-found":
+        case FirebaseErrorCode.userNotFound:
         default:
           throw const CredentialSignException.userNotFound();
       }
@@ -112,10 +113,23 @@ class FirebaseAuthService implements AuthService {
 
   @override
   Future<void> signOut() async => await _firebaseAuth.signOut();
+
   User _myUserFromFirebase(firebase_auth.User user) =>
-      User(name: user.displayName ?? "Not defined", uid: user.uid);
+      User(name: user.displayName ?? notDefinedName, uid: user.uid);
 
   /// Listen updates of user login status.
   StreamSubscription listenUpdates(Function callback) =>
       _firebaseAuth.authStateChanges().asBroadcastStream().listen((_) => callback());
+}
+
+/// Error codes of Firebase Auth package.
+abstract class FirebaseErrorCode {
+  static const String usedEmail = "email-already-in-use";
+  static const String weakPassword = "weak-password";
+  static const String invalidEmail = "invalid-email";
+  static const String userNotFound = "user-not-found";
+  static const String wrongPassword = "wrong-password";
+  static const String invalidCredential = "email-already-in-use";
+  static const String exsistWithAnotherCredential =
+      "account-exists-with-different-credential";
 }
