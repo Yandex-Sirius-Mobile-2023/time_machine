@@ -1,8 +1,6 @@
 import 'package:logging/logging.dart';
 import "dart:developer";
 
-Logger logger = Logger("dsffdsfsd");
-
 /// Config logger prefernces.
 ///
 /// Example of logging info.
