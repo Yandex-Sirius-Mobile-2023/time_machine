@@ -95,6 +95,45 @@ class Analytics {
     res[0] = -weightXmu - sqrt(m2) * quantile;
     return res;
   }
+
+  List<double> cutRiskAssets(List<double> weight, List<double> riskData,
+      double minRisk, double maxRisk) {
+    final n = weight.length;
+    List<double> newWeight = List.filled(n, 0);
+    double deletedWeights = 0;
+    double weightNorm = 0;
+    int lowRiskCnt = 0;
+
+    for (int i = 0; i < n; i++) {
+      if (riskData[i + 1] < maxRisk) {
+        newWeight[i] = weight[i];
+        weightNorm += newWeight[i];
+        if (riskData[i + 1] < minRisk) {
+          lowRiskCnt += 1;
+        }
+      } else {
+        deletedWeights += weight[i];
+      }
+    }
+
+    if (lowRiskCnt > 0) {
+      for (int i = 0; i < n; i++) {
+        if (riskData[i + 1] < minRisk) {
+          newWeight[i] += deletedWeights / lowRiskCnt;
+        }
+      }
+    } else {
+      if (weightNorm > 0) {
+        for (int i = 0; i < n; i++) {
+          newWeight[i] = newWeight[i] / weightNorm;
+        }
+      } else {
+        newWeight = List.filled(n, 0);
+      }
+    }
+
+    return newWeight;
+  }
 }
 
 extension AnalyticsMathExtension on Analytics {
