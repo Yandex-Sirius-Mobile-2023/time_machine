@@ -23,6 +23,7 @@ dependencies:
   analytics:
     path: packages/analytics
   circular_widgets: ^3.0.0
+  logging: ^1.1.1
 
 dev_dependencies:
   flutter_test:
