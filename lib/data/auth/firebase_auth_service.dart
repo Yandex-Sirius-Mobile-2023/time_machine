@@ -82,7 +82,7 @@ class FirebaseAuthService implements AuthService {
     }
   }
 
-  /// Sign in with Google account.
+  /// Attempts to sign in a user using their Google account.
   ///
   /// Throws [CredentialSignException] on sign failures.
   Future<User> signInWithGoogle() async {
@@ -114,8 +114,10 @@ class FirebaseAuthService implements AuthService {
   @override
   Future<void> signOut() async => await _firebaseAuth.signOut();
 
-  User _myUserFromFirebase(firebase_auth.User user) =>
-      User(name: user.displayName ?? notDefinedName, uid: user.uid);
+  User _myUserFromFirebase(firebase_auth.User user) => User(
+        name: user.displayName ?? notDefinedName,
+        uid: user.uid,
+      );
 
   /// Listen updates of user login status.
   StreamSubscription listenUpdates(Function callback) =>
