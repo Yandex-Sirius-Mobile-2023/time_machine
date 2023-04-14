@@ -29,7 +29,7 @@ void main() {
           ).thenAnswer(
             (realInvocation) async => Response(
               requestOptions: RequestOptions(),
-              data: succesfulResponse,
+              data: jsonDecode(succesfulResponse),
             ),
           );
 

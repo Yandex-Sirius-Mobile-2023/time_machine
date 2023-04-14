@@ -15,4 +15,4 @@ const String succesfulResponse = """
 }
 """;
 
-const String wrongTickerResponse = "{}";
+const Map<String, dynamic> wrongTickerResponse = {};

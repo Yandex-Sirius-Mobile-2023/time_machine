@@ -20,12 +20,10 @@ class FinhubApi implements StockInfoProvider {
   @override
   Future<StockDto> fetchStock(String ticker) async {
     ticker = ticker.toUpperCase();
+    Map<String, dynamic> json = {};
     try {
       var response = await dio.get(requestGetProfile(ticker));
-      var json = jsonDecode(response.data) as Map<String, dynamic>;
-
-      if (json.isEmpty) throw const StockApiErrors.invalidTicker();
-      return StockDto.fromJson(jsonDecode(response.data));
+      json = response.data;
     } on DioError catch (e) {
       logger.warning(e);
       throw const StockApiErrors.server();
@@ -33,6 +31,8 @@ class FinhubApi implements StockInfoProvider {
       logger.severe("Unsuccesful api request", e, stackTrace);
       rethrow;
     }
+    if (json.isEmpty) throw const StockApiErrors.invalidTicker();
+    return StockDto.fromJson(json);
   }
 
   /// Returns a GET-request for information about the ticker.
