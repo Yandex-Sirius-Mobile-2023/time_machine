@@ -9,9 +9,11 @@ environment:
   sdk: ">=2.19.0 <3.0.0"
 
 dependencies:
+  firebase_auth: ^4.4.0
+  firebase_core: ^2.9.0
   flutter:
     sdk: flutter
-
+  google_sign_in: ^6.1.0
   cupertino_icons: ^1.0.2
   flutter_launcher_icons: ^0.13.0
   riverpod: ^2.3.4
@@ -26,7 +28,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
+  mockito: ^5.4.0
   flutter_lints: ^2.0.0
   freezed: ^2.3.2
   build_runner: ^2.3.3
