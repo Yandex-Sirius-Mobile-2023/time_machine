@@ -30,12 +30,16 @@ class FirebaseAuthService implements AuthService {
   ///
   /// Throws [AuthCreateException] on sign failures.
   @override
-  Future<User> createWithEmailAndPassword(
-      {required String email, required String password}) async {
+  Future<User> createWithEmailAndPassword({
+    required String email,
+    required String password,
+  }) async {
     try {
       // Sign user
       var credentials = await _firebaseAuth.createUserWithEmailAndPassword(
-          email: email, password: password);
+        email: email,
+        password: password,
+      );
       return _myUserFromFirebase(credentials.user!);
     } on firebase_auth.FirebaseAuthException catch (e) {
       switch (e.code) {
@@ -54,12 +58,16 @@ class FirebaseAuthService implements AuthService {
   ///
   /// Throws [EmailSignException] on sign failures.
   @override
-  Future<User> signInEmailAndPassword(
-      {required String email, required String password}) async {
+  Future<User> signInEmailAndPassword({
+    required String email,
+    required String password,
+  }) async {
     try {
       // Sign user.
       var credentials = await _firebaseAuth.signInWithEmailAndPassword(
-          email: email, password: password);
+        email: email,
+        password: password,
+      );
       return _myUserFromFirebase(credentials.user!);
     } on firebase_auth.FirebaseAuthException catch (e) {
       switch (e.code) {

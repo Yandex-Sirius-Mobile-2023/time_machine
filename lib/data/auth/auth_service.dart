@@ -7,12 +7,16 @@ abstract class AuthService {
   User? get user;
 
   /// Attempts to sign in a user with the given email address and password.
-  Future<User> signInEmailAndPassword(
-      {required String email, required String password});
+  Future<User> signInEmailAndPassword({
+    required String email,
+    required String password,
+  });
 
   /// Attempts to create in a user with the given email address and password.
-  Future<User> createWithEmailAndPassword(
-      {required String email, required String password});
+  Future<User> createWithEmailAndPassword({
+    required String email,
+    required String password,
+  });
 
   /// Sign out current user.
   Future<void> signOut();
