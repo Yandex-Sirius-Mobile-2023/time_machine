@@ -8,7 +8,7 @@ import 'card_graph_cost_widget.dart';
 class CardGeneralCostWidget extends StatelessWidget {
   final String costStocks;
   final String costCache;
-  final List<List> data;
+  final List<List<double>> data;
   final double delta;
 
   const CardGeneralCostWidget({

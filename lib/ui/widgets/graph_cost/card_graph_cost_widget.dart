@@ -12,7 +12,7 @@ class CardGraphCostWidget extends StatelessWidget {
     required this.delta,
   });
 
-  final List<List> data;
+  final List<List<double>> data;
   final String costStocks;
   final String costCache;
   final double delta;
@@ -42,7 +42,10 @@ class CardGraphCostWidget extends StatelessWidget {
           children: [
             GraphCostWidget(data: data),
             InfoCardGeneralCostWidget(
-                costStocks: costStocks, costCache: costCache, delta: delta),
+              costStocks: costStocks,
+              costCache: costCache,
+              delta: delta,
+            ),
           ],
         ),
       ),
