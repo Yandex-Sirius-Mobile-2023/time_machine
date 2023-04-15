@@ -38,39 +38,37 @@ class _AuthPageState extends State<AuthPage> {
     );
 
     return Scaffold(
-      body: SafeArea(
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(32.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 500),
-                  transitionBuilder: (child, animation) => FadeTransition(
-                    opacity: Tween<double>(
-                      begin: 0,
-                      end: 1,
-                    ).animate(animation),
-                    child: child,
-                  ),
-                  child: AnimatedSwitcher(
-                    key: ValueKey(nowLoging ? "logingSwitcher" : "registerSwitcher"),
-                    duration: const Duration(milliseconds: 500),
-                    child: nowLoging
-                        ? SignInForm(
-                            key: signFormKey,
-                            goToRegistration: () => setLoginStatus(false),
-                          )
-                        : RegisterForm(
-                            key: registrationFormKey,
-                            goToLogin: () => setLoginStatus(true),
-                          ),
-                  ),
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(32.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              AnimatedSwitcher(
+                duration: const Duration(milliseconds: 500),
+                transitionBuilder: (child, animation) => FadeTransition(
+                  opacity: Tween<double>(
+                    begin: 0,
+                    end: 1,
+                  ).animate(animation),
+                  child: child,
                 ),
-              ],
-            ),
+                child: AnimatedSwitcher(
+                  key: ValueKey(nowLoging ? "logingSwitcher" : "registerSwitcher"),
+                  duration: const Duration(milliseconds: 500),
+                  child: nowLoging
+                      ? SignInForm(
+                          key: signFormKey,
+                          goToRegistration: () => setLoginStatus(false),
+                        )
+                      : RegisterForm(
+                          key: registrationFormKey,
+                          goToLogin: () => setLoginStatus(true),
+                        ),
+                ),
+              ),
+            ],
           ),
         ),
       ),
