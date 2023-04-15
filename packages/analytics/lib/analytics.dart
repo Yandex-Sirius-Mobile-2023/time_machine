@@ -1,25 +1,13 @@
 library analytics;
 
-import 'dart:convert';
-import 'dart:io';
 import 'dart:math';
-import 'package:csv/csv.dart';
 
 class Analytics {
-  final String fileName;
+  List<List<dynamic>> csvDataList;
 
-  Analytics(this.fileName);
-
-  Future<List<List<dynamic>>> _loadCsvData() async {
-    final csvFile = File(fileName).openRead();
-    return await csvFile
-        .transform(utf8.decoder)
-        .transform(const CsvToListConverter())
-        .toList();
-  }
+  Analytics(this.csvDataList);
 
   Future<List<Map<String, dynamic>>> getStockList() async {
-    final csvDataList = await _loadCsvData();
     final tickerList = csvDataList[0].sublist(2);
     final quoteList = csvDataList.sublist(1);
     List<Map<String, dynamic>> stockList = [];
@@ -41,7 +29,6 @@ class Analytics {
 
   Future<Map<String, dynamic>> getStock(String ticker) async {
     Map<String, dynamic> stock = {};
-    final csvDataList = await _loadCsvData();
     final tickerList = csvDataList[0].sublist(2);
     final quoteList = csvDataList.sublist(1);
     Map<String, double> quotesHistory = {};
@@ -95,6 +82,45 @@ class Analytics {
 
     res[0] = -weightXmu - sqrt(m2) * quantile;
     return res;
+  }
+
+  List<double> cutRiskAssets(List<double> weight, List<double> riskData,
+      double minRisk, double maxRisk) {
+    final n = weight.length;
+    List<double> newWeight = List.filled(n, 0);
+    double deletedWeights = 0;
+    double weightNorm = 0;
+    int lowRiskCnt = 0;
+
+    for (int i = 0; i < n; i++) {
+      if (riskData[i + 1] < maxRisk) {
+        newWeight[i] = weight[i];
+        weightNorm += newWeight[i];
+        if (riskData[i + 1] < minRisk) {
+          lowRiskCnt += 1;
+        }
+      } else {
+        deletedWeights += weight[i];
+      }
+    }
+
+    if (lowRiskCnt > 0) {
+      for (int i = 0; i < n; i++) {
+        if (riskData[i + 1] < minRisk) {
+          newWeight[i] += deletedWeights / lowRiskCnt;
+        }
+      }
+    } else {
+      if (weightNorm > 0) {
+        for (int i = 0; i < n; i++) {
+          newWeight[i] = newWeight[i] / weightNorm;
+        }
+      } else {
+        newWeight = List.filled(n, 0);
+      }
+    }
+
+    return newWeight;
   }
 }
 
