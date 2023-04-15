@@ -18,7 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$Portfolio {
   int get id => throw _privateConstructorUsedError;
   DateTime get createdAt => throw _privateConstructorUsedError;
-  List<Map<Stock, int>> get stocks => throw _privateConstructorUsedError;
+  List<Step> get steps => throw _privateConstructorUsedError;
   DateTime get nowDate => throw _privateConstructorUsedError;
   double? get balance => throw _privateConstructorUsedError;
 
@@ -35,7 +35,7 @@ abstract class $PortfolioCopyWith<$Res> {
   $Res call(
       {int id,
       DateTime createdAt,
-      List<Map<Stock, int>> stocks,
+      List<Step> steps,
       DateTime nowDate,
       double? balance});
 }
@@ -55,7 +55,7 @@ class _$PortfolioCopyWithImpl<$Res, $Val extends Portfolio>
   $Res call({
     Object? id = null,
     Object? createdAt = null,
-    Object? stocks = null,
+    Object? steps = null,
     Object? nowDate = null,
     Object? balance = freezed,
   }) {
@@ -68,10 +68,10 @@ class _$PortfolioCopyWithImpl<$Res, $Val extends Portfolio>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      stocks: null == stocks
-          ? _value.stocks
-          : stocks // ignore: cast_nullable_to_non_nullable
-              as List<Map<Stock, int>>,
+      steps: null == steps
+          ? _value.steps
+          : steps // ignore: cast_nullable_to_non_nullable
+              as List<Step>,
       nowDate: null == nowDate
           ? _value.nowDate
           : nowDate // ignore: cast_nullable_to_non_nullable
@@ -94,7 +94,7 @@ abstract class _$$_PortfolioCopyWith<$Res> implements $PortfolioCopyWith<$Res> {
   $Res call(
       {int id,
       DateTime createdAt,
-      List<Map<Stock, int>> stocks,
+      List<Step> steps,
       DateTime nowDate,
       double? balance});
 }
@@ -112,7 +112,7 @@ class __$$_PortfolioCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? createdAt = null,
-    Object? stocks = null,
+    Object? steps = null,
     Object? nowDate = null,
     Object? balance = freezed,
   }) {
@@ -125,10 +125,10 @@ class __$$_PortfolioCopyWithImpl<$Res>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      stocks: null == stocks
-          ? _value._stocks
-          : stocks // ignore: cast_nullable_to_non_nullable
-              as List<Map<Stock, int>>,
+      steps: null == steps
+          ? _value._steps
+          : steps // ignore: cast_nullable_to_non_nullable
+              as List<Step>,
       nowDate: null == nowDate
           ? _value.nowDate
           : nowDate // ignore: cast_nullable_to_non_nullable
@@ -147,21 +147,21 @@ class _$_Portfolio implements _Portfolio {
   const _$_Portfolio(
       {required this.id,
       required this.createdAt,
-      required final List<Map<Stock, int>> stocks,
+      required final List<Step> steps,
       required this.nowDate,
       this.balance})
-      : _stocks = stocks;
+      : _steps = steps;
 
   @override
   final int id;
   @override
   final DateTime createdAt;
-  final List<Map<Stock, int>> _stocks;
+  final List<Step> _steps;
   @override
-  List<Map<Stock, int>> get stocks {
-    if (_stocks is EqualUnmodifiableListView) return _stocks;
+  List<Step> get steps {
+    if (_steps is EqualUnmodifiableListView) return _steps;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_stocks);
+    return EqualUnmodifiableListView(_steps);
   }
 
   @override
@@ -171,7 +171,7 @@ class _$_Portfolio implements _Portfolio {
 
   @override
   String toString() {
-    return 'Portfolio(id: $id, createdAt: $createdAt, stocks: $stocks, nowDate: $nowDate, balance: $balance)';
+    return 'Portfolio(id: $id, createdAt: $createdAt, steps: $steps, nowDate: $nowDate, balance: $balance)';
   }
 
   @override
@@ -182,14 +182,14 @@ class _$_Portfolio implements _Portfolio {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
-            const DeepCollectionEquality().equals(other._stocks, _stocks) &&
+            const DeepCollectionEquality().equals(other._steps, _steps) &&
             (identical(other.nowDate, nowDate) || other.nowDate == nowDate) &&
             (identical(other.balance, balance) || other.balance == balance));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, id, createdAt,
-      const DeepCollectionEquality().hash(_stocks), nowDate, balance);
+      const DeepCollectionEquality().hash(_steps), nowDate, balance);
 
   @JsonKey(ignore: true)
   @override
@@ -202,7 +202,7 @@ abstract class _Portfolio implements Portfolio {
   const factory _Portfolio(
       {required final int id,
       required final DateTime createdAt,
-      required final List<Map<Stock, int>> stocks,
+      required final List<Step> steps,
       required final DateTime nowDate,
       final double? balance}) = _$_Portfolio;
 
@@ -211,7 +211,7 @@ abstract class _Portfolio implements Portfolio {
   @override
   DateTime get createdAt;
   @override
-  List<Map<Stock, int>> get stocks;
+  List<Step> get steps;
   @override
   DateTime get nowDate;
   @override

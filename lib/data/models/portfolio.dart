@@ -12,27 +12,27 @@ class Portfolio with _$Portfolio {
   const factory Portfolio({
     required int id,
     required DateTime createdAt,
-    required List<Map<Stock,int>> stocks,
+    required List<Step> steps,
     required DateTime nowDate,
     double? balance,
   }) = _Portfolio;
 }
 
 extension PortfolioExtension on Portfolio {
-  Map<String, int> getContent() {
-    Map<String, int> content = {};
-    for (var stock in stocks) {
-      content[stock.keys.first.ticker.getName()] = stock.values.first;
-    }
-    return content;
-  }
+  // Map<String, int> getContent() {
+  //   Map<String, int> content = {};
+  //   for (var stock in stocks) {
+  //     content[stock.keys.first.ticker.getName()] = stock.values.first;
+  //   }
+  //   return content;
+  // }
 
 
-  double getBalance(){
-    double balance = 0;
-    for (var stock in stocks) {
-      balance += stock.keys.first.quotesHistory[nowDate] ?? 0 * stock.values.first;
-    }
-    return balance;
-  }
+  // double getBalance(){
+  //   double balance = 0;
+  //   for (var stock in stocks) {
+  //     balance += stock.keys.first.quotesHistory[nowDate] ?? 0 * stock.values.first;
+  //   }
+  //   return balance;
+  // }
 }
