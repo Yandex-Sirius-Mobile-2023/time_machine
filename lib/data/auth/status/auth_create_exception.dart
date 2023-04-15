@@ -6,7 +6,6 @@ part 'auth_create_exception.freezed.dart';
 class AuthCreateException with _$AuthCreateException {
   const AuthCreateException._();
 
-  const factory AuthCreateException.usedEmail() = UsedEmailCreateException;
   const factory AuthCreateException.invalidEmail() = InvalidEmailCreateException;
   const factory AuthCreateException.emailAlreadyUsed() =
       EmailAlreadyUsedCreateException;

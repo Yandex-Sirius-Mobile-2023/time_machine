@@ -10,5 +10,5 @@ class User with _$User {
 
     /// Unical user code.
     required String uid,
-  }) = _MyUser;
+  }) = _User;
 }

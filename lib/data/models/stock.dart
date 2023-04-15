@@ -27,6 +27,7 @@ class Stock with _$Stock {
       {required StockTicker ticker,
       required Map<DateTime, double> quotesHistory}) = _Stock;
 
+
   factory Stock.fromJson(Map<String, dynamic> json) => _$StockFromJson(json);
 }
 

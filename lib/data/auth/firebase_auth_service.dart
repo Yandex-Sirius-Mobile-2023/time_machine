@@ -10,7 +10,7 @@ import 'package:time_machine/data/auth/status/email_sign_exception.dart';
 import 'user.dart';
 
 /// Firebase authentication.
-class FirebaseAuthService implements AuthService {
+class FirebaseAuthService implements EmailAuthService, GoogleAuthService {
   static const String notDefinedName = "Not defined";
   final firebase_auth.FirebaseAuth _firebaseAuth;
   final GoogleSignIn _googleAuth;
@@ -85,6 +85,7 @@ class FirebaseAuthService implements AuthService {
   /// Attempts to sign in a user using their Google account.
   ///
   /// Throws [CredentialSignException] on sign failures.
+  @override
   Future<User> signInWithGoogle() async {
     final GoogleSignInAccount? googleUser = await _googleAuth.signIn();
     final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
@@ -131,7 +132,7 @@ abstract class FirebaseErrorCode {
   static const String invalidEmail = "invalid-email";
   static const String userNotFound = "user-not-found";
   static const String wrongPassword = "wrong-password";
-  static const String invalidCredential = "email-already-in-use";
+  static const String invalidCredential = "invalid-credential";
   static const String exsistWithAnotherCredential =
       "account-exists-with-different-credential";
 }
