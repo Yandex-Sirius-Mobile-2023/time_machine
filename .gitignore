@@ -133,6 +133,9 @@ app.*.symbols
 !/dev/ci/**/Gemfile.lock
 !.vscode/settings.json
 
+# Files with API keys
+.env
+
 # Generated files
 *.g.dart
 *.freezed.dart
