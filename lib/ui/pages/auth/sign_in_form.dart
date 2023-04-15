@@ -1,6 +1,13 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:logging/logging.dart';
 import 'package:time_machine/core/provider/auth_provider.dart';
+import 'package:time_machine/data/auth/auth_service.dart';
+import 'package:time_machine/data/auth/status/email_sign_exception.dart';
+
+Logger logger = Logger("SignInForm");
 
 String? passwordValidator(String? password) {
   if (password == null || password.length < 6) {
@@ -18,7 +25,14 @@ String? emailValidator(String? email) {
   return null;
 }
 
-class SignInForm extends ConsumerWidget {
+class SignInForm extends StatefulWidget {
+  const SignInForm({Key? key}) : super(key: key);
+
+  @override
+  State<SignInForm> createState() => _SignInFormState();
+}
+
+class _SignInFormState extends State<SignInForm> {
   static const String enterEmailAdressLabel = "Your email addres";
   static const String enterEmailAdressHint = "Enter email addres";
   static const String enterPasswordLabel = "Your password";
@@ -33,11 +47,12 @@ class SignInForm extends ConsumerWidget {
   );
 
   final _formKey = GlobalKey<FormState>();
-
-  SignInForm({Key? key}) : super(key: key);
+  final _emailTextContoler = TextEditingController();
+  final _passwordTextContoler = TextEditingController();
+  bool currentLogging = false;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return Form(
       key: _formKey,
       child: Column(
@@ -47,6 +62,7 @@ class SignInForm extends ConsumerWidget {
           const Text(enterEmailAdressLabel),
           smallSpacer,
           TextFormField(
+            controller: _emailTextContoler,
             decoration: textDecoration.copyWith(
               hintText: enterEmailAdressHint,
             ),
@@ -57,6 +73,7 @@ class SignInForm extends ConsumerWidget {
           const Text(enterPasswordLabel),
           smallSpacer,
           TextFormField(
+            controller: _passwordTextContoler,
             obscureText: true,
             enableSuggestions: false,
             autocorrect: false,
@@ -66,20 +83,57 @@ class SignInForm extends ConsumerWidget {
             validator: passwordValidator,
           ),
           columnSpacer,
-          SignButton(
-            onPressed: () {
-              print("hello_world");
-              if (!_formKey.currentState!.validate()) return;
-              var service = ref.read(emailSignProvider);
-              service.createWithEmailAndPassword(
-                email: "axcdddsdds@mail.ru",
-                password: "21312331",
-              );
-            },
-            createAccountText: createAccountText,
+          Consumer(
+            builder: (_, ref, __) => SignButton(
+              onPressed: () {
+                if (!_formKey.currentState!.validate()) return;
+                var service = ref.read(emailSignProvider);
+                emailSign(service, context);
+              },
+              createAccountText: createAccountText,
+            ),
           )
         ],
       ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _passwordTextContoler.dispose();
+    _emailTextContoler.dispose();
+    super.dispose();
+  }
+
+  void emailSign(EmailAuthService authService, BuildContext context) {
+    if (currentLogging) {
+      logger.info("Cancel login. User already await login results.");
+      return;
+    }
+    currentLogging = true;
+    authService
+        .signInEmailAndPassword(
+          email: _emailTextContoler.text,
+          password: _passwordTextContoler.text,
+        )
+        // Free login status
+        .whenComplete(() => currentLogging = false)
+        .then(
+          (value) => logger.info("User logged."),
+        )
+        .onError(
+      (error, stackTrace) {
+        if (error is! EmailSignException) throw error!;
+        String errorMessage = error.when<String>(
+          wrondCredentials: () => "Wrong credentials",
+          userNotFound: () => "User not found",
+        );
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(errorMessage),
+          ),
+        );
+      },
     );
   }
 }

@@ -7,22 +7,23 @@ class AuthPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SafeArea(
-      child: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(32.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text("Create you free account"),
-              Text("To get started with Roflo-Investor, create you account"),
-              SizedBox(height: 32),
-              SignInForm(),
-            ],
+      body: SafeArea(
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(32.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: const [
+                Text("Create you free account"),
+                Text("To get started with Roflo-Investor, create you account"),
+                SizedBox(height: 32),
+                SignInForm(),
+              ],
+            ),
           ),
         ),
       ),
-    ));
+    );
   }
 }
