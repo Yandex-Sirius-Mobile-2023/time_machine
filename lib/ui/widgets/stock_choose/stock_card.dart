@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:time_machine/core/provider/stock_choose/stock_provider.dart';
 import 'package:time_machine/data/models/stock.dart';
 
@@ -33,9 +34,15 @@ class StockCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                const CircleAvatar(
-                  backgroundColor: Colors.red,
-                ),
+                Consumer(builder: (context, ref, child) {
+                  return ref.watch(stockImageProvider).when(
+                      data: (images) => ClipRRect(
+                            borderRadius: BorderRadius.circular(32),
+                            child: SvgPicture.network(images[ticker]!),
+                          ),
+                      error: (err, stack) => Text('Error: $err'),
+                      loading: () => const CircularProgressIndicator());
+                }),
                 const SizedBox(width: 16),
                 _StockNameHeader(ticker: ticker),
                 Expanded(
@@ -70,7 +77,8 @@ class _CostRow extends StatelessWidget {
   });
 
   Color get growColor => grow > 0 ? Colors.greenAccent : Colors.redAccent;
-  IconData get growIcon => grow > 0 ? Icons.arrow_drop_up : Icons.arrow_drop_down;
+  IconData get growIcon =>
+      grow > 0 ? Icons.arrow_drop_up : Icons.arrow_drop_down;
 
   @override
   Widget build(BuildContext context) {
@@ -132,8 +140,9 @@ class _StockChooseButton extends ConsumerWidget {
         height: 32,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color:
-              ref.watch(stockChooseProvider)[ticker]! ? Colors.green : Colors.blue,
+          color: ref.watch(stockChooseProvider)[ticker]!
+              ? Colors.green
+              : Colors.blue,
         ),
         child: Icon(Icons.keyboard_double_arrow_right_sharp),
       ),
