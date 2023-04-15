@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:time_machine/core/provider/stock_choose/stock_provider.dart';
 import 'package:time_machine/data/models/stock.dart';
 
+/// Card that represent a tickers that can be choosen.
 class StockCard extends StatelessWidget {
   final StockTicker ticker;
   final int grow;
@@ -17,8 +18,11 @@ class StockCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 0,
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16),
+        color: Theme.of(context).colorScheme.surface,
+      ),
       child: Padding(
         padding: const EdgeInsets.symmetric(
           vertical: 8,
@@ -53,6 +57,7 @@ class StockCard extends StatelessWidget {
   }
 }
 
+// Row with cost and grow text
 class _CostRow extends StatelessWidget {
   /// Grow from prev year.
   final int grow;
@@ -106,7 +111,7 @@ class _CostRow extends StatelessWidget {
   }
 }
 
-// Button to choose ticker in
+// Button to choose ticker in.
 class _StockChooseButton extends ConsumerWidget {
   const _StockChooseButton({
     super.key,
@@ -123,17 +128,20 @@ class _StockChooseButton extends ConsumerWidget {
       },
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
-        color: ref.watch(stockChooseProvider)[ticker]! ? Colors.green : Colors.blue,
-        child: const SizedBox(
-          height: 32,
-          width: 32,
+        width: 32,
+        height: 32,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color:
+              ref.watch(stockChooseProvider)[ticker]! ? Colors.green : Colors.blue,
         ),
+        child: Icon(Icons.keyboard_double_arrow_right_sharp),
       ),
     );
   }
 }
 
-// Widget that displays stock ticker and full name.
+// Widget that displays stock ticker name and full name.
 class _StockNameHeader extends StatelessWidget {
   final StockTicker ticker;
 

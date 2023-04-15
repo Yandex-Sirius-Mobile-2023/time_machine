@@ -18,10 +18,13 @@ class StockListView extends ConsumerWidget {
       clipBehavior: Clip.none,
       itemExtent: 128,
       itemCount: tickers.length,
-      itemBuilder: (context, index) => StockCard(
-        ticker: tickers[index],
-        grow: -132,
-        cost: 246.23,
+      itemBuilder: (context, index) => Padding(
+        padding: const EdgeInsets.symmetric(vertical: 4.0),
+        child: StockCard(
+          ticker: tickers[index],
+          grow: 34,
+          cost: 2136.23,
+        ),
       ),
     );
   }
