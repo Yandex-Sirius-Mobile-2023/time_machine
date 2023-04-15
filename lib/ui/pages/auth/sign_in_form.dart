@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logging/logging.dart';
 import 'package:time_machine/core/provider/auth_provider.dart';
 import 'package:time_machine/data/auth/auth_service.dart';
+import 'package:time_machine/data/auth/status/credential_sign_exception.dart';
 import 'package:time_machine/data/auth/status/email_sign_exception.dart';
 
 import 'email_password_container.dart';
@@ -53,6 +54,18 @@ class _SignInFormState extends State<SignInForm> {
               text: createAccountText,
             ),
           ),
+          const SizedBox(height: 8),
+          const Center(child: Text("or")),
+          const SizedBox(height: 8),
+          Consumer(
+            builder: (_, ref, __) => AuthButton(
+              onPressed: () {
+                final service = ref.watch(googleSignProvider);
+                googleSignIn(service, context);
+              },
+              text: "Sign with Google",
+            ),
+          ),
           Center(
             child: TextButton(
               onPressed: widget.goToRegistration,
@@ -93,6 +106,35 @@ class _SignInFormState extends State<SignInForm> {
         String errorMessage = error.when<String>(
           wrondCredentials: () => "Wrong credentials",
           userNotFound: () => "User not found",
+        );
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(errorMessage),
+          ),
+        );
+      },
+    );
+  }
+
+  void googleSignIn(GoogleAuthService service, BuildContext context) {
+    if (currentLogging) {
+      logger.info("Cancel login. User already await login results.");
+      return;
+    }
+    currentLogging = true;
+    service
+        .signInWithGoogle()
+        .whenComplete(() => currentLogging = false)
+        .then(
+          (value) => logger.info("User logged."),
+        )
+        .onError(
+      (error, stackTrace) {
+        if (error is! CredentialSignException) throw error!;
+        String errorMessage = error.when<String>(
+          userNotFound: () => "Unknown user",
+          invalidCredential: () => "Invalid credential",
+          exsistAnother: () => "Already exsist another",
         );
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
