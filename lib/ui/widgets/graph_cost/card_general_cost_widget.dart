@@ -2,6 +2,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:time_machine/uikit/ui_colors.dart';
 
 import 'card_graph_cost_widget.dart';
 
@@ -23,8 +24,8 @@ class CardGeneralCostWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     const LinearGradient gradient = LinearGradient(
       colors: [
-        Color.fromRGBO(0, 130, 140, 1),
-        Color.fromRGBO(0, 190, 180, 1),
+        UIColors.cyanDark,
+        UIColors.cyanBright,
       ],
       begin: Alignment.topLeft,
       end: Alignment.bottomRight,

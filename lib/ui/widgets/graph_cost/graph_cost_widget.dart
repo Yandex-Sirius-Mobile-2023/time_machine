@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:time_machine/uikit/ui_colors.dart';
 
 class GraphCostWidget extends StatelessWidget {
   const GraphCostWidget({
@@ -16,8 +17,6 @@ class GraphCostWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     const double defaultPadding = 15;
 
-    const Color backgroundPrice = Color.fromRGBO(215, 245, 245, 1);
-
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 3 * defaultPadding),
       child: LineChart(
@@ -28,7 +27,7 @@ class GraphCostWidget extends StatelessWidget {
                 fitInsideHorizontally: true,
                 fitInsideVertically:
                     true, // чтобы кликабельные окошки не попадали за виджет
-                tooltipBgColor: backgroundPrice.withOpacity(1),
+                tooltipBgColor: UIColors.white.withOpacity(0.3),
                 getTooltipItems: (List<LineBarSpot> touchedBarSpots) {
                   return touchedBarSpots.map((barSpot) {
                     return LineTooltipItem(
@@ -36,7 +35,7 @@ class GraphCostWidget extends StatelessWidget {
                       const TextStyle(
                         fontFamily: 'Inter',
                         fontSize: 10,
-                        color: Colors.black,
+                        color: UIColors.white,
                       ),
                     );
                   }).toList();
@@ -46,7 +45,7 @@ class GraphCostWidget extends StatelessWidget {
                     spotIndexes.map((spotIndex) {
               return TouchedSpotIndicatorData(
                 FlLine(
-                  color: const Color.fromRGBO(20, 20, 20, 0.2),
+                  color: UIColors.black.withOpacity(0.2),
                   strokeWidth: 1,
                   dashArray: [3, 6],
                 ),
@@ -54,9 +53,9 @@ class GraphCostWidget extends StatelessWidget {
                   getDotPainter: (spot, percent, barData, index) {
                     return FlDotCirclePainter(
                       radius: 1,
-                      color: Colors.white54,
+                      color: UIColors.white.withOpacity(0.54),
                       strokeWidth: 2,
-                      strokeColor: const Color.fromRGBO(20, 20, 20, 0.2),
+                      strokeColor: UIColors.black.withOpacity(0.2),
                     );
                   },
                 ),
@@ -84,8 +83,8 @@ class GraphCostWidget extends StatelessWidget {
           lineBarsData: [
             LineChartBarData(
               color: isSingleWidget
-                  ? const Color.fromRGBO(0, 190, 180, 1)
-                  : const Color.fromRGBO(20, 20, 20, 0.2),
+                  ? UIColors.cyanBright
+                  : UIColors.black.withOpacity(0.2),
               spots:
                   data.map((List e) => FlSpot(e[0], e[1].toDouble())).toList(),
               isCurved: false,
@@ -96,10 +95,10 @@ class GraphCostWidget extends StatelessWidget {
               ),
               belowBarData: BarAreaData(
                 show: true,
-                gradient: const LinearGradient(
+                gradient: LinearGradient(
                   colors: [
-                    Color.fromRGBO(0, 190, 180, 0.5),
-                    Color.fromRGBO(0, 190, 180, 0),
+                    UIColors.cyanBright.withOpacity(0.3),
+                    UIColors.cyanBright.withOpacity(0),
                   ],
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
