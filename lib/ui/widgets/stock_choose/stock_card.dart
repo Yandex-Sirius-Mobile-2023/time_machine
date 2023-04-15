@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:time_machine/core/provider/stock_choose/stock_provider.dart';
+import 'package:time_machine/data/models/stock.dart';
 
-import '../../../data/models/stock.dart';
-
-class StockCard extends ConsumerWidget {
+class StockCard extends StatelessWidget {
   final StockTicker ticker;
-  const StockCard({super.key, required this.ticker});
+  final int grow;
+  final double cost;
+
+  const StockCard({
+    required this.grow,
+    super.key,
+    required this.ticker,
+    required this.cost,
+  });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return Card(
       elevation: 0,
       child: Padding(
@@ -35,7 +42,10 @@ class StockCard extends ConsumerWidget {
                 ),
               ],
             ),
-            _CostRow(),
+            _CostRow(
+              grow: grow,
+              cost: cost,
+            ),
           ],
         ),
       ),
@@ -44,31 +54,51 @@ class StockCard extends ConsumerWidget {
 }
 
 class _CostRow extends StatelessWidget {
+  /// Grow from prev year.
+  final int grow;
+  final double cost;
+
   const _CostRow({
     super.key,
+    required this.grow,
+    required this.cost,
   });
+
+  Color get growColor => grow > 0 ? Colors.greenAccent : Colors.redAccent;
+  IconData get growIcon => grow > 0 ? Icons.arrow_drop_up : Icons.arrow_drop_down;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: const [
+      children: [
         Align(
           alignment: Alignment.centerLeft,
           child: Text(
-            r"$0.99",
-            style: TextStyle(
-              fontSize: 20,
+            "\$${cost.toStringAsFixed(2)}",
+            style: const TextStyle(
+              fontSize: 18,
               fontWeight: FontWeight.bold,
             ),
           ),
         ),
-        Align(
-          alignment: Alignment.centerLeft,
-          child: Text(
-            r"+132",
-            style: TextStyle(
-                fontSize: 16, fontWeight: FontWeight.bold, color: Colors.lightGreen),
+        Expanded(
+          child: Align(
+            alignment: Alignment.centerRight,
+            child: Icon(
+              growIcon,
+              color: growColor,
+              size: 32,
+            ),
+          ),
+        ),
+        Text(
+          "${grow.abs()}%",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+            color: growColor,
           ),
         ),
       ],
@@ -76,6 +106,7 @@ class _CostRow extends StatelessWidget {
   }
 }
 
+// Button to choose ticker in
 class _StockChooseButton extends ConsumerWidget {
   const _StockChooseButton({
     super.key,
@@ -91,7 +122,7 @@ class _StockChooseButton extends ConsumerWidget {
         ref.read(stockChooseProvider.notifier).updateTicker(ticker);
       },
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 300),
+        duration: const Duration(milliseconds: 200),
         color: ref.watch(stockChooseProvider)[ticker]! ? Colors.green : Colors.blue,
         child: const SizedBox(
           height: 32,
