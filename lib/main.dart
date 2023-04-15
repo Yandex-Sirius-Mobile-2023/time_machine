@@ -13,5 +13,5 @@ void main() async {
   );
   initLogger();
 
-  runApp(ProviderScope(child: const App()));
+  runApp(const ProviderScope(child: App()));
 }
