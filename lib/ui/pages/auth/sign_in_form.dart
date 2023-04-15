@@ -98,7 +98,7 @@ class _SignInFormState extends State<SignInForm> {
         // Free login status
         .whenComplete(() => currentLogging = false)
         .then(
-          (value) => logger.info("User logged."),
+          (value) => logger.info("User logged by email."),
         )
         .onError(
       (error, stackTrace) {
@@ -126,7 +126,7 @@ class _SignInFormState extends State<SignInForm> {
         .signInWithGoogle()
         .whenComplete(() => currentLogging = false)
         .then(
-          (value) => logger.info("User logged."),
+          (value) => logger.info("User logged by google."),
         )
         .onError(
       (error, stackTrace) {

@@ -85,7 +85,7 @@ class _RegisterFormState extends State<RegisterForm> {
         // Free login status
         .whenComplete(() => currentCreating = false)
         .then(
-          (value) => logger.info("User logged."),
+          (value) => logger.info("User create account."),
         )
         .onError(
       (error, stackTrace) {
