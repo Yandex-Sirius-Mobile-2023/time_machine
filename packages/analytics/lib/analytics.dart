@@ -1,25 +1,13 @@
 library analytics;
 
-import 'dart:convert';
-import 'dart:io';
 import 'dart:math';
-import 'package:csv/csv.dart';
 
 class Analytics {
-  final String fileName;
+  List<List<dynamic>> csvDataList;
 
-  Analytics(this.fileName);
-
-  Future<List<List<dynamic>>> _loadCsvData() async {
-    final csvFile = File(fileName).openRead();
-    return await csvFile
-        .transform(utf8.decoder)
-        .transform(const CsvToListConverter())
-        .toList();
-  }
+  Analytics(this.csvDataList);
 
   Future<List<Map<String, dynamic>>> getStockList() async {
-    final csvDataList = await _loadCsvData();
     final tickerList = csvDataList[0].sublist(2);
     final quoteList = csvDataList.sublist(1);
     List<Map<String, dynamic>> stockList = [];
@@ -41,7 +29,6 @@ class Analytics {
 
   Future<Map<String, dynamic>> getStock(String ticker) async {
     Map<String, dynamic> stock = {};
-    final csvDataList = await _loadCsvData();
     final tickerList = csvDataList[0].sublist(2);
     final quoteList = csvDataList.sublist(1);
     Map<String, double> quotesHistory = {};
