@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:time_machine/uikit/ui_colors.dart';
 
 class InfoCardGeneralCostWidget extends StatelessWidget {
   const InfoCardGeneralCostWidget({
@@ -16,11 +17,6 @@ class InfoCardGeneralCostWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     const double defaultPadding = 15;
 
-    const Color gray = Color.fromRGBO(215, 215, 215, 1);
-    const Color backgroundPrice = Color.fromRGBO(215, 245, 245, 1);
-    const Color green = Color.fromRGBO(15, 220, 120, 1);
-    const Color red = Color.fromRGBO(240, 90, 80, 1);
-
     return Padding(
       padding: const EdgeInsets.all(defaultPadding),
       child: Column(
@@ -29,7 +25,7 @@ class InfoCardGeneralCostWidget extends StatelessWidget {
           const Text(
             "Общая стоимость ценных бумаг",
             style: TextStyle(
-              color: gray,
+              color: UIColors.gray,
               fontFamily: "Inter",
               fontSize: 16,
             ),
@@ -38,7 +34,7 @@ class InfoCardGeneralCostWidget extends StatelessWidget {
           Text(
             costStocks,
             style: const TextStyle(
-              color: Colors.white,
+              color: UIColors.white,
               fontFamily: "Inter",
               fontSize: 24,
               fontWeight: FontWeight.bold,
@@ -54,7 +50,7 @@ class InfoCardGeneralCostWidget extends StatelessWidget {
                   const Text(
                     "Осталось наличных денег",
                     style: TextStyle(
-                      color: gray,
+                      color: UIColors.gray,
                       fontFamily: "Inter",
                       fontSize: 16,
                     ),
@@ -63,7 +59,7 @@ class InfoCardGeneralCostWidget extends StatelessWidget {
                   Text(
                     costCache,
                     style: const TextStyle(
-                      color: Colors.white,
+                      color: UIColors.white,
                       fontFamily: "Inter",
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -77,7 +73,7 @@ class InfoCardGeneralCostWidget extends StatelessWidget {
                     vertical: defaultPadding / 4,
                     horizontal: defaultPadding / 2),
                 decoration: BoxDecoration(
-                  color: backgroundPrice,
+                  color: UIColors.white,
                   borderRadius: BorderRadius.circular(2 * defaultPadding),
                 ),
                 child: Row(
@@ -86,13 +82,13 @@ class InfoCardGeneralCostWidget extends StatelessWidget {
                         delta < 0
                             ? Icons.keyboard_arrow_down_rounded
                             : Icons.keyboard_arrow_up_rounded,
-                        color: delta < 0 ? red : green,
+                        color: delta < 0 ? UIColors.red : UIColors.green,
                         size: 25),
                     const SizedBox(width: defaultPadding / 2),
                     Text(
                       delta.abs().toString(),
                       style: TextStyle(
-                        color: delta < 0 ? red : green,
+                        color: delta < 0 ? UIColors.red : UIColors.green,
                         fontFamily: "Inter",
                         fontSize: 16,
                       ),
