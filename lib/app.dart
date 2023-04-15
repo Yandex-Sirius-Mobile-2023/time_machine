@@ -12,7 +12,7 @@ class App extends StatelessWidget {
         colorScheme: darkScheme,
         textTheme: textTheme,
       ),
-      // home: const SomeHomePage(),
+      // home: const StockChoosePage(),
     );
   }
 }
