@@ -36,7 +36,8 @@ class StockCard extends StatelessWidget {
               children: [
                 Consumer(builder: (context, ref, child) {
                   return ref.watch(stockImageProvider).when(
-                      data: (images) => CircleAvatar(
+                      data: (images) => ClipRRect(
+                            borderRadius: BorderRadius.circular(32),
                             child: SvgPicture.network(images[ticker]!),
                           ),
                       error: (err, stack) => Text('Error: $err'),
