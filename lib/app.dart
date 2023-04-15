@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:time_machine/ui/samples/graph_cost_example_widget.dart';
 import 'package:time_machine/uikit/ui_theme.dart';
 
 class App extends StatelessWidget {
@@ -8,8 +9,9 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        colorScheme: darkScheme,
+        colorScheme: lightScheme,
       ),
+      home: const Scaffold(body: Center(child: GraphCostExampleWidget())),
       // home: const SomeHomePage(),
     );
   }
