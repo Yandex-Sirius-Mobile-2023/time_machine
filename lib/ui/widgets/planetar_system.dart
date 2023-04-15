@@ -12,23 +12,27 @@ class PlanetarSystem extends StatelessWidget {
     required this.centralWidget,
     this.innerSpacing = 10,
     this.satellitesSpacing = 20,
+    this.calculatedConfigGetter,
   });
   final List<Widget> satellites;
   final Widget centralWidget;
   final double innerSpacing;
   final double satellitesSpacing;
+  final Function(CircularWidgetConfig)? calculatedConfigGetter;
 
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (_, constraints) {
+        final config = CircularWidgetConfigCreator.bySpacings(
+          satellitesCount: satellites.length,
+          systemRadius: min(constraints.maxWidth, constraints.maxHeight) / 2,
+          innerSpacing: innerSpacing,
+          satellitesSpacing: satellitesSpacing,
+        );
+        calculatedConfigGetter?.call(config);
         return CircularWidgets(
-          config: CircularWidgetConfigCreator.bySpacings(
-            satellitesCount: satellites.length,
-            systemRadius: min(constraints.maxWidth, constraints.maxHeight) / 2,
-            innerSpacing: innerSpacing,
-            satellitesSpacing: satellitesSpacing,
-          ),
+          config: config,
           centerWidgetBuilder: (_) => ClipOval(child: centralWidget),
           itemBuilder: (_, i) => ClipOval(child: satellites[i]),
           itemsLength: satellites.length,

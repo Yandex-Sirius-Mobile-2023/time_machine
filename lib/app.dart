@@ -16,7 +16,7 @@ class App extends StatelessWidget {
           child: CentralButtonExampleWidget(),
         ),
       ),
-      // home: const SomeHomePage(),
+      // home: const StockChoosePage(),
     );
   }
 }

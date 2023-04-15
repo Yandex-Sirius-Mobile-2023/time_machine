@@ -6,9 +6,11 @@ import 'stock_card.dart';
 
 class StockListView extends ConsumerWidget {
   final List<StockTicker> tickers;
+  final Map<StockTicker, double> costs;
   const StockListView({
     super.key,
     required this.tickers,
+    required this.costs,
   });
 
   @override
@@ -23,7 +25,7 @@ class StockListView extends ConsumerWidget {
         child: StockCard(
           ticker: tickers[index],
           grow: 34,
-          cost: 2136.23,
+          cost: costs[tickers[index]]!,
         ),
       ),
     );
