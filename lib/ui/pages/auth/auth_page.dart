@@ -1,8 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:time_machine/ui/pages/auth/sign_in_form.dart';
 
-class AuthPage extends StatelessWidget {
+import 'register_form.dart';
+
+class AuthPage extends StatefulWidget {
   const AuthPage({Key? key}) : super(key: key);
+
+  @override
+  State<AuthPage> createState() => _AuthPageState();
+}
+
+class _AuthPageState extends State<AuthPage> {
+  final UniqueKey signFormKey = UniqueKey();
+  final UniqueKey registrationFormKey = UniqueKey();
+
+  bool nowLoging = true;
 
   @override
   Widget build(BuildContext context) {
@@ -14,16 +26,41 @@ class AuthPage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                Text("Create you free account"),
-                Text("To get started with Roflo-Investor, create you account"),
-                SizedBox(height: 32),
-                SignInForm(),
+              children: [
+                AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 500),
+                  transitionBuilder: (child, animation) => FadeTransition(
+                    opacity: Tween<double>(
+                      begin: 0,
+                      end: 1,
+                    ).animate(animation),
+                    child: child,
+                  ),
+                  child: AnimatedSwitcher(
+                    key: ValueKey(nowLoging ? "logingSwitcher" : "registerSwitcher"),
+                    duration: const Duration(milliseconds: 500),
+                    child: nowLoging
+                        ? SignInForm(
+                            key: signFormKey,
+                            goToRegistration: () => setLoginStatus(false),
+                          )
+                        : RegisterForm(
+                            key: registrationFormKey,
+                            goToLogin: () => setLoginStatus(true),
+                          ),
+                  ),
+                ),
               ],
             ),
           ),
         ),
       ),
     );
+  }
+
+  void setLoginStatus(bool toLoging) {
+    if (nowLoging == toLoging) return;
+    nowLoging = toLoging;
+    setState(() {});
   }
 }

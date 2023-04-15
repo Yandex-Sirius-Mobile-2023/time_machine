@@ -13,14 +13,16 @@ import 'sign_button.dart';
 Logger logger = Logger("SignInForm");
 
 class RegisterForm extends StatefulWidget {
-  const RegisterForm({Key? key}) : super(key: key);
+  final Function() goToLogin;
+
+  const RegisterForm({Key? key, required this.goToLogin}) : super(key: key);
 
   @override
   State<RegisterForm> createState() => _RegisterFormState();
 }
 
 class _RegisterFormState extends State<RegisterForm> {
-  static const String registerAccountText = "Register account text";
+  static const String registerAccountText = "Register account";
 
   final _formKey = GlobalKey<FormState>();
   final _emailTextContoler = TextEditingController();
@@ -34,6 +36,9 @@ class _RegisterFormState extends State<RegisterForm> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          const Text("Create you free account"),
+          const Text("To get started with Roflo-Investor, create you account"),
+          const SizedBox(height: 32),
           EmailPasswordContainer(
             emailTextContoler: _emailTextContoler,
             passwordTextContoler: _passwordTextContoler,
@@ -46,6 +51,12 @@ class _RegisterFormState extends State<RegisterForm> {
                 emailCreate(service, context);
               },
               text: registerAccountText,
+            ),
+          ),
+          Center(
+            child: TextButton(
+              onPressed: widget.goToLogin,
+              child: const Text("Already have account?"),
             ),
           )
         ],

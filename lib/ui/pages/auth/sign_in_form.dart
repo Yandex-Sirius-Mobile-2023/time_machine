@@ -9,19 +9,20 @@ import 'package:time_machine/data/auth/status/email_sign_exception.dart';
 
 import 'email_password_container.dart';
 import 'sign_button.dart';
-import 'validators.dart';
 
 Logger logger = Logger("SignInForm");
 
 class SignInForm extends StatefulWidget {
-  const SignInForm({Key? key}) : super(key: key);
+  final Function() goToRegistration;
+
+  const SignInForm({Key? key, required this.goToRegistration}) : super(key: key);
 
   @override
   State<SignInForm> createState() => _SignInFormState();
 }
 
 class _SignInFormState extends State<SignInForm> {
-  static const String createAccountText = "Create account text";
+  static const String createAccountText = "Create account";
 
   final _formKey = GlobalKey<FormState>();
   final _emailTextContoler = TextEditingController();
@@ -35,6 +36,9 @@ class _SignInFormState extends State<SignInForm> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          const Text("Sign in to account"),
+          const Text("To get started with Roflo-Investor you need write normal UI"),
+          const SizedBox(height: 32),
           EmailPasswordContainer(
             emailTextContoler: _emailTextContoler,
             passwordTextContoler: _passwordTextContoler,
@@ -48,7 +52,13 @@ class _SignInFormState extends State<SignInForm> {
               },
               text: createAccountText,
             ),
-          )
+          ),
+          Center(
+            child: TextButton(
+              onPressed: widget.goToRegistration,
+              child: const Text("Go to registration"),
+            ),
+          ),
         ],
       ),
     );
