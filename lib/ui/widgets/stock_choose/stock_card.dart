@@ -7,7 +7,7 @@ import 'package:time_machine/data/models/stock.dart';
 /// Card that represent a tickers that can be choosen.
 class StockCard extends StatelessWidget {
   final StockTicker ticker;
-  final int grow;
+  final double grow;
   final double cost;
 
   const StockCard({
@@ -67,7 +67,7 @@ class StockCard extends StatelessWidget {
 // Row with cost and grow text
 class _CostRow extends StatelessWidget {
   /// Grow from prev year.
-  final int grow;
+  final double grow;
   final double cost;
 
   const _CostRow({
@@ -106,7 +106,7 @@ class _CostRow extends StatelessWidget {
           ),
         ),
         Text(
-          "${grow.abs()}%",
+          "${grow.abs().toStringAsFixed(2)}%",
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 16,

@@ -10,14 +10,17 @@ final stockChooseProvider =
     StateNotifierProvider<StockChooser, Map<StockTicker, bool>>(
         (ref) => StockChooser(StockTicker.values));
 
-final stockCostProvider = FutureProvider<Map<StockTicker, double>>((ref) async {
+final stockQuotesInfoProvider = FutureProvider<List<List<double>>>((ref) async {
   final service = StockServiceImpl();
   final stocks = await service.getStockList();
-  Map<StockTicker, double> stockCosts = {};
+  List<double> costs = [];
+  List<double> grows = [];
   for (Stock stock in stocks) {
-    stockCosts[stock.ticker] = stock.quotesHistory.values.toList()[0];
+    final quotes = stock.quotesHistory.values.toList();
+    costs.add(quotes[365]);
+    grows.add((quotes[365] / quotes[0]) * 100 - 100);
   }
-  return stockCosts;
+  return [costs, grows];
 });
 
 final stockImageProvider =
