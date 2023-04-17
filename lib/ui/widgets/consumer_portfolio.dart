@@ -5,17 +5,18 @@ import 'package:time_machine/data/models/portfolio.dart';
 
 class PortfolioWidget extends ConsumerWidget {
   final Portfolio portfolio;
-  const PortfolioWidget({Key? key, required this.portfolio,}) : super(key: key);
+  const PortfolioWidget({
+    Key? key,
+    required this.portfolio,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(activePortfolioProvider(portfolio)) ;
+    final state = ref.watch(activePortfolioProvider(portfolio));
 
     return Center(
       child: Column(
-        children: [
-          PortfolioWidget(portfolio: portfolio)
-        ],
+        children: [PortfolioWidget(portfolio: portfolio)],
       ),
     );
   }

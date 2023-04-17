@@ -61,7 +61,8 @@ void main() {
             .thenAnswer((realInvocation) =>
                 throw FirebaseAuthException(code: "email-already-in-use"));
         expectLater(
-          authService.createWithEmailAndPassword(password: "123", email: "used"),
+          authService.createWithEmailAndPassword(
+              password: "123", email: "used"),
           throwsA(isA<EmailAlreadyUsedCreateException>()),
         );
       });
@@ -96,7 +97,8 @@ void main() {
             .thenAnswer((realInvocation) =>
                 throw FirebaseAuthException(code: "invalid-email"));
         expectLater(
-          authService.signInEmailAndPassword(password: "wrong", email: "invalid"),
+          authService.signInEmailAndPassword(
+              password: "wrong", email: "invalid"),
           throwsA(isA<EmailWrongCredentialException>()),
         );
       });

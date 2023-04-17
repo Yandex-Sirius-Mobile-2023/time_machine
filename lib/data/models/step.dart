@@ -5,7 +5,5 @@ part 'step.freezed.dart';
 
 @freezed
 class Step with _$Step {
-  const factory Step({
-    Map<Stock, int>? stocks,
-  }) = _Step;
+  const factory Step(Map<Stock, int> stocks) = _Step;
 }

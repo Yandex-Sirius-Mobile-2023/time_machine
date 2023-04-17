@@ -16,7 +16,8 @@ Logger logger = Logger("SignInForm");
 class SignInForm extends StatefulWidget {
   final Function() goToRegistration;
 
-  const SignInForm({Key? key, required this.goToRegistration}) : super(key: key);
+  const SignInForm({Key? key, required this.goToRegistration})
+      : super(key: key);
 
   @override
   State<SignInForm> createState() => _SignInFormState();
@@ -38,7 +39,8 @@ class _SignInFormState extends State<SignInForm> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text("Sign in to account"),
-          const Text("To get started with Roflo-Investor you need write normal UI"),
+          const Text(
+              "To get started with Roflo-Investor you need write normal UI"),
           const SizedBox(height: 32),
           EmailPasswordContainer(
             emailTextContoler: _emailTextContoler,
