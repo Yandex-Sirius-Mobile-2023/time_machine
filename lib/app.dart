@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:time_machine/ui/portfoliopage.dart';
 import 'package:time_machine/uikit/ui_theme.dart';
 
 class App extends StatelessWidget {
@@ -10,7 +11,7 @@ class App extends StatelessWidget {
       theme: ThemeData(
         colorScheme: darkScheme,
       ),
-      // home: const SomeHomePage(),
+      home: const PortfolioPage(),
     );
   }
 }

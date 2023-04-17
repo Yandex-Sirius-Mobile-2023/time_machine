@@ -10,6 +10,7 @@ class Portfolio with _$Portfolio {
     required DateTime createdAt,
     required List<Step> steps,
     required DateTime nowDate,
-    double? balance,
+    required double balance,
   }) = _Portfolio;
 }
+
