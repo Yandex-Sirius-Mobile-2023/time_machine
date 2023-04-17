@@ -20,7 +20,7 @@ class App extends StatelessWidget {
         AppRoutes.chooseStockURL: (_) => const StockChoosePage(),
         AppRoutes.tradingUrl: (_) => const TradingPage()
       },
-      initialRoute: AppRoutes.tradingUrl,
+      initialRoute: needSignIn ? AppRoutes.loginURL : AppRoutes.chooseStockURL,
       theme: ThemeData(
         colorScheme: darkScheme,
         textTheme: textTheme,
