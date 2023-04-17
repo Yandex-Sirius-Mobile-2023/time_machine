@@ -28,7 +28,7 @@ class _BlurCentralButtonWidgetState extends State<BlurCentralButtonWidget> {
   bool isBlur = false;
   void onTap() => setState(() {
         isBlur = !isBlur;
-        onTap();
+        widget.onTap();
       });
 
   @override
