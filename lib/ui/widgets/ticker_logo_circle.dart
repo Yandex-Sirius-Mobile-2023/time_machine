@@ -19,15 +19,27 @@ class TickerLogoCircle extends ConsumerWidget {
       aspectRatio: 1,
       child: ClipOval(
         child: imageService.when(
-          data: (imageurl) => SvgPicture.network(imageurl),
-          error: (err, stack) => Text('Error: $err'),
-          loading: () => Shimmer.fromColors(
-            baseColor: UIColors.cyanDark,
-            highlightColor: UIColors.cyanBright,
-            child: Container(color: Colors.black),
+          data: (imageurl) => SvgPicture.network(
+            imageurl,
+            placeholderBuilder: (_) => const _TickerShimmer(),
           ),
+          error: (err, stack) => Text('Error: $err'),
+          loading: () => const _TickerShimmer(),
         ),
       ),
+    );
+  }
+}
+
+class _TickerShimmer extends StatelessWidget {
+  const _TickerShimmer({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Shimmer.fromColors(
+      baseColor: UIColors.cyanDark,
+      highlightColor: UIColors.cyanBright,
+      child: Container(color: Colors.black),
     );
   }
 }
