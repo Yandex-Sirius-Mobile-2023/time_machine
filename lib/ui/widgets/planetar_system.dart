@@ -34,7 +34,7 @@ class PlanetarSystem extends StatelessWidget {
         return CircularWidgets(
           config: config,
           centerWidgetBuilder: (_) => ClipOval(child: centralWidget),
-          itemBuilder: (_, i) => ClipOval(child: satellites[i]),
+          itemBuilder: (_, i) => satellites[i],
           itemsLength: satellites.length,
         );
       },
