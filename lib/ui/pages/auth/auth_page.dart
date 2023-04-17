@@ -54,19 +54,15 @@ class _AuthPageState extends State<AuthPage> {
                   ).animate(animation),
                   child: child,
                 ),
-                child: AnimatedSwitcher(
-                  key: ValueKey(nowLoging ? "logingSwitcher" : "registerSwitcher"),
-                  duration: const Duration(milliseconds: 500),
-                  child: nowLoging
-                      ? SignInForm(
-                          key: signFormKey,
-                          goToRegistration: () => setLoginStatus(false),
-                        )
-                      : RegisterForm(
-                          key: registrationFormKey,
-                          goToLogin: () => setLoginStatus(true),
-                        ),
-                ),
+                child: nowLoging
+                    ? SignInForm(
+                        key: signFormKey,
+                        goToRegistration: () => setLoginStatus(false),
+                      )
+                    : RegisterForm(
+                        key: registrationFormKey,
+                        goToLogin: () => setLoginStatus(true),
+                      ),
               ),
             ],
           ),
