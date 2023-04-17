@@ -10,11 +10,13 @@ import 'central_item_button_widget.dart';
 class CentralButtonWidget extends StatelessWidget {
   final VoidCallback onTap;
   final Function(double) getRadius;
+  final List<Widget> satellites;
 
   const CentralButtonWidget({
     Key? key,
     required this.onTap,
     required this.getRadius,
+    required this.satellites,
   }) : super(key: key);
 
   @override
@@ -27,16 +29,7 @@ class CentralButtonWidget extends StatelessWidget {
         calculatedConfigGetter: (config) {
           getRadius(config.centerWidgetRadius);
         },
-        satellites: [
-          Image.asset("assets/images/ali.png"),
-          Image.asset("assets/images/microsoft.png"),
-          Image.asset("assets/images/amazon.png"),
-          Image.asset("assets/images/apple.png"),
-          Image.asset("assets/images/mac.png"),
-          Image.asset("assets/images/tesla.png"),
-          Image.asset("assets/images/toyota.png"),
-          Image.asset("assets/images/yandex.png"),
-        ],
+        satellites: satellites,
         centralWidget: CentralItemButtonWidget(
           text: text,
           onTap: onTap,

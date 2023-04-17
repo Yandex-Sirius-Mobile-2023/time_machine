@@ -19,7 +19,10 @@ class _CentralButtonExampleWidgetState
     return Padding(
       padding: const EdgeInsets.all(15),
       child: Center(
-        child: BlurCentralButtonWidget(onTap: onTap),
+        child: BlurCentralButtonWidget(
+          satellites: [],
+          onTap: onTap,
+        ),
       ),
     );
   }
