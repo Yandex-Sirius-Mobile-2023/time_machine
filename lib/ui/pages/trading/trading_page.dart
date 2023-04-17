@@ -17,6 +17,8 @@ class TradingPage extends ConsumerWidget {
     final id = ModalRoute.of(context)!.settings.arguments as int;
     Portfolio activePortfolio =
         ref.watch(userPortfolioProvider.notifier).getPortfolio(id);
+    List<List<double>> graphData =
+        ref.watch(portfolioGraphDataProvider(activePortfolio));
 
     var satellites = [
       for (var stock in activePortfolio.steps.last.stocks.keys)
@@ -43,10 +45,7 @@ class TradingPage extends ConsumerWidget {
                 delta: 12,
                 costStocks: activePortfolio.totalValue.toString(),
                 costCache: activePortfolio.balance.toString(),
-                data: const [
-                  [1, 2],
-                  [1, 100],
-                ],
+                data: graphData,
               ),
             ),
             Flexible(
