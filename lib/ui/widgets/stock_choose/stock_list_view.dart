@@ -6,11 +6,13 @@ import 'stock_card.dart';
 
 class StockListView extends ConsumerWidget {
   final List<StockTicker> tickers;
-  final Map<StockTicker, double> costs;
+  final List<double> costs;
+  final List<double> grows;
   const StockListView({
     super.key,
     required this.tickers,
     required this.costs,
+    required this.grows,
   });
 
   @override
@@ -24,8 +26,8 @@ class StockListView extends ConsumerWidget {
         padding: const EdgeInsets.symmetric(vertical: 4.0),
         child: StockCard(
           ticker: tickers[index],
-          grow: 34,
-          cost: costs[tickers[index]]!,
+          grow: grows[index],
+          cost: costs[index],
         ),
       ),
     );

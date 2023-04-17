@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:time_machine/core/provider/image_provider.dart';
 import 'package:time_machine/core/provider/stock_choose/stock_provider.dart';
 import 'package:time_machine/data/models/stock.dart';
 import 'package:time_machine/uikit/ui_consts.dart';
@@ -7,7 +9,7 @@ import 'package:time_machine/uikit/ui_consts.dart';
 /// Card that represent a tickers that can be choosen.
 class StockCard extends StatelessWidget {
   final StockTicker ticker;
-  final int grow;
+  final double grow;
   final double cost;
 
   const StockCard({
@@ -34,9 +36,15 @@ class StockCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                const CircleAvatar(
-                  backgroundColor: Colors.red,
-                ),
+                Consumer(builder: (context, ref, child) {
+                  return ref.watch(stockImageProvider(ticker)).when(
+                      data: (imageUrl) => ClipRRect(
+                            borderRadius: BorderRadius.circular(32),
+                            child: SvgPicture.network(imageUrl),
+                          ),
+                      error: (err, stack) => Text('Error: $err'),
+                      loading: () => const CircularProgressIndicator());
+                }),
                 const SizedBox(width: 16),
                 _StockNameHeader(ticker: ticker),
                 Expanded(
@@ -61,7 +69,7 @@ class StockCard extends StatelessWidget {
 // Row with cost and grow text
 class _CostRow extends StatelessWidget {
   /// Grow from prev year.
-  final int grow;
+  final double grow;
   final double cost;
 
   const _CostRow({
@@ -100,7 +108,7 @@ class _CostRow extends StatelessWidget {
           ),
         ),
         Text(
-          "${grow.abs()}%",
+          "${grow.abs().toStringAsFixed(2)}%",
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 16,
