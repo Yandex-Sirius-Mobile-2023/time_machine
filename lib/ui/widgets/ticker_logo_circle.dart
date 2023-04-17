@@ -4,7 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:time_machine/core/provider/image_provider.dart';
 import 'package:time_machine/data/models/stock.dart';
-import 'package:time_machine/uikit/ui_colors.dart';
+import 'package:time_machine/uikit/themes/ui_colors.dart';
 
 /// Widget that display logo stock in circle.
 class TickerLogoCircle extends ConsumerWidget {

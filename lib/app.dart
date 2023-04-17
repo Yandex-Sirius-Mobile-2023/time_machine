@@ -5,9 +5,9 @@ import 'package:time_machine/core/provider/auth_provider.dart';
 import 'package:time_machine/ui/pages/profiile/profile_page.dart';
 import 'package:time_machine/ui/pages/stock_choose/stock_choose_page.dart';
 import 'package:time_machine/ui/pages/trading/trading_page.dart';
-import 'package:time_machine/uikit/ui_text_theme.dart';
-import 'package:time_machine/uikit/ui_theme.dart';
 import 'package:time_machine/ui/pages/auth/auth_page.dart';
+
+import 'uikit/themes/light_theme.dart';
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
@@ -24,14 +24,7 @@ class App extends StatelessWidget {
         AppRoutes.profileUrl: (_) => const ProfilePage(),
       },
       initialRoute: needSignIn ? AppRoutes.loginURL : AppRoutes.profileUrl,
-      theme: ThemeData(
-        colorScheme: lightScheme,
-      ),
-      home: const Scaffold(
-        body: Center(
-          child: CentralButtonExampleWidget(),
-        ),
-      ),
+      theme: lightTheme,
     );
   }
 }
