@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:time_machine/ui/samples/central_button_example_widget.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:time_machine/core/provider/auth_provider.dart';
 import 'package:time_machine/ui/pages/stock_choose/stock_choose_page.dart';
@@ -22,8 +23,12 @@ class App extends StatelessWidget {
       },
       initialRoute: needSignIn ? AppRoutes.loginURL : AppRoutes.chooseStockURL,
       theme: ThemeData(
-        colorScheme: darkScheme,
-        textTheme: textTheme,
+        colorScheme: lightScheme,
+      ),
+      home: const Scaffold(
+        body: Center(
+          child: CentralButtonExampleWidget(),
+        ),
       ),
     );
   }

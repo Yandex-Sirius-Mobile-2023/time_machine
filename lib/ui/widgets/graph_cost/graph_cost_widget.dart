@@ -1,14 +1,17 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:time_machine/uikit/ui_colors.dart';
 
 class GraphCostWidget extends StatelessWidget {
   const GraphCostWidget({
-    super.key,
+    Key? key,
     required this.data,
-  });
+    required this.isSingleWidget,
+  }) : super(key: key);
 
   final List<List<double>> data;
+  final bool isSingleWidget;
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +82,9 @@ class GraphCostWidget extends StatelessWidget {
           // //     1, //set to highest v
           lineBarsData: [
             LineChartBarData(
-              color: UIColors.black.withOpacity(0.2),
+              color: isSingleWidget
+                  ? UIColors.cyanBright
+                  : UIColors.black.withOpacity(0.2),
               spots:
                   data.map((List e) => FlSpot(e[0], e[1].toDouble())).toList(),
               isCurved: false,

@@ -41,7 +41,7 @@ class CardGraphCostWidget extends StatelessWidget {
         ),
         child: Stack(
           children: [
-            GraphCostWidget(data: data),
+            GraphCostWidget(data: data, isSingleWidget: false),
             InfoCardGeneralCostWidget(
               costStocks: costStocks,
               costCache: costCache,

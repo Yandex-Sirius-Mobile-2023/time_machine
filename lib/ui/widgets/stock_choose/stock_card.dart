@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:time_machine/core/provider/image_provider.dart';
 import 'package:time_machine/core/provider/stock_choose/stock_provider.dart';
 import 'package:time_machine/data/models/stock.dart';
+import 'package:time_machine/uikit/ui_consts.dart';
 
 /// Card that represent a tickers that can be choosen.
 class StockCard extends StatelessWidget {
@@ -78,7 +79,8 @@ class _CostRow extends StatelessWidget {
   });
 
   Color get growColor => grow > 0 ? Colors.greenAccent : Colors.redAccent;
-  IconData get growIcon => grow > 0 ? Icons.arrow_drop_up : Icons.arrow_drop_down;
+  IconData get growIcon =>
+      grow > 0 ? Icons.arrow_drop_up : Icons.arrow_drop_down;
 
   @override
   Widget build(BuildContext context) {
@@ -135,13 +137,14 @@ class _StockChooseButton extends ConsumerWidget {
         ref.read(stockChooseProvider.notifier).updateTicker(ticker);
       },
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
+        duration: UIConsts.duration,
         width: 32,
         height: 32,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color:
-              ref.watch(stockChooseProvider)[ticker]! ? Colors.green : Colors.blue,
+          color: ref.watch(stockChooseProvider)[ticker]!
+              ? Colors.green
+              : Colors.blue,
         ),
         child: const Icon(Icons.keyboard_double_arrow_right_sharp),
       ),
