@@ -22,7 +22,7 @@ class App extends StatelessWidget {
         AppRoutes.tradingUrl: (_) => const TradingPage(),
         AppRoutes.profileUrl: (_) => const ProfilePage(),
       },
-      initialRoute: AppRoutes.profileUrl,
+      initialRoute: needSignIn ? AppRoutes.loginURL : AppRoutes.profileUrl,
       theme: ThemeData(
         colorScheme: darkScheme,
         textTheme: textTheme,
