@@ -23,7 +23,8 @@ class _AuthPageState extends State<AuthPage> {
   final UniqueKey registrationFormKey = UniqueKey();
 
   bool nowLoging = true;
-  late StreamSubscription subscription = const Stream.empty().listen((event) {});
+  late StreamSubscription subscription =
+      const Stream.empty().listen((event) {});
 
   @override
   Widget build(BuildContext context) {

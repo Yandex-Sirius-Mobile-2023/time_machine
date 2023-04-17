@@ -88,7 +88,8 @@ class FirebaseAuthService implements EmailAuthService, GoogleAuthService {
   @override
   Future<User> signInWithGoogle() async {
     final GoogleSignInAccount? googleUser = await _googleAuth.signIn();
-    final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+    final GoogleSignInAuthentication? googleAuth =
+        await googleUser?.authentication;
 
     // Create a new credential.
     final credential = firebase_auth.GoogleAuthProvider.credential(
@@ -97,7 +98,8 @@ class FirebaseAuthService implements EmailAuthService, GoogleAuthService {
     );
 
     try {
-      var firebaseCredential = await _firebaseAuth.signInWithCredential(credential);
+      var firebaseCredential =
+          await _firebaseAuth.signInWithCredential(credential);
       return _myUserFromFirebase(firebaseCredential.user!);
     } on firebase_auth.FirebaseAuthException catch (e) {
       switch (e.code) {
@@ -121,8 +123,10 @@ class FirebaseAuthService implements EmailAuthService, GoogleAuthService {
       );
 
   /// Listen updates of user login status.
-  StreamSubscription listenUpdates(Function callback) =>
-      _firebaseAuth.authStateChanges().asBroadcastStream().listen((_) => callback());
+  StreamSubscription listenUpdates(Function callback) => _firebaseAuth
+      .authStateChanges()
+      .asBroadcastStream()
+      .listen((_) => callback());
 }
 
 /// Error codes of Firebase Auth package.
