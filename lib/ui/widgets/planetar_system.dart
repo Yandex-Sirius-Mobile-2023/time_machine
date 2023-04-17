@@ -12,29 +12,34 @@ class PlanetarSystem extends StatelessWidget {
     required this.centralWidget,
     this.innerSpacing = 10,
     this.satellitesSpacing = 20,
+    this.minimalCentralRadius,
     this.calculatedConfigGetter,
   });
   final List<Widget> satellites;
   final Widget centralWidget;
   final double innerSpacing;
   final double satellitesSpacing;
+  final double? minimalCentralRadius;
   final Function(CircularWidgetConfig)? calculatedConfigGetter;
 
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (_, constraints) {
+        final minimalDimension =
+            min(constraints.maxWidth, constraints.maxHeight);
         final config = CircularWidgetConfigCreator.bySpacings(
           satellitesCount: satellites.length,
-          systemRadius: min(constraints.maxWidth, constraints.maxHeight) / 2,
+          systemRadius: minimalDimension / 2,
           innerSpacing: innerSpacing,
           satellitesSpacing: satellitesSpacing,
+          minimalCentralRadius: minimalDimension * 0.3 / 2,
         );
         calculatedConfigGetter?.call(config);
         return CircularWidgets(
           config: config,
           centerWidgetBuilder: (_) => ClipOval(child: centralWidget),
-          itemBuilder: (_, i) => satellites[i],
+          itemBuilder: (_, i) => ClipOval(child: satellites[i]),
           itemsLength: satellites.length,
         );
       },
@@ -56,6 +61,9 @@ extension CircularWidgetConfigCreator on CircularWidgetConfig {
 
     /// Радиус системы
     required double systemRadius,
+
+    /// Миинимальный радиус центрального виджета
+    double? minimalCentralRadius,
   }) {
     const degrees2Radians = pi / 180.0;
     double radians(double degrees) => degrees * degrees2Radians;
@@ -69,6 +77,15 @@ extension CircularWidgetConfigCreator on CircularWidgetConfig {
     final itemRadius =
         (2 * s * systemRadius - satellitesSpacing) / (2 * (1 + s));
     final centerWidgetRadius = systemRadius - 2 * itemRadius - innerSpacing;
+
+    if (minimalCentralRadius != null &&
+        minimalCentralRadius > centerWidgetRadius) {
+      return CircularWidgetConfig(
+        innerSpacing: innerSpacing,
+        itemRadius: (systemRadius - innerSpacing - minimalCentralRadius) / 2,
+        centerWidgetRadius: minimalCentralRadius,
+      );
+    }
 
     return CircularWidgetConfig(
       innerSpacing: innerSpacing,
