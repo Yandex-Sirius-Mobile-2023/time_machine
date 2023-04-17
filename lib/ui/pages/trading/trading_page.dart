@@ -10,11 +10,14 @@ class TradingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        minimum: const EdgeInsets.all(8),
+        minimum: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 8,
+        ),
         child: Column(
-          children: const [
-            Flexible(
-              flex: 2,
+          children: [
+            const Flexible(
+              flex: 5,
               fit: FlexFit.tight,
               child: CardGeneralCostWidget(
                 delta: 12,
@@ -27,40 +30,18 @@ class TradingPage extends StatelessWidget {
               ),
             ),
             Flexible(
-              flex: 4,
+              flex: 9,
               fit: FlexFit.tight,
               child: PlanetarSystem(
-                centralWidget: ColoredBox(color: Colors.white),
-                satellites: [
-                  StockCirclePreview(
+                centralWidget: const ColoredBox(color: Colors.white),
+                satellites: List.generate(
+                  8,
+                  (_) => StockCirclePreview(
                     count: 12,
-                    child: ColoredBox(color: Colors.white),
+                    child: const ColoredBox(color: Colors.white),
+                    onPressed: () {},
                   ),
-                  StockCirclePreview(
-                    count: 12,
-                    child: ColoredBox(color: Colors.white),
-                  ),
-                  StockCirclePreview(
-                    count: 12,
-                    child: ColoredBox(color: Colors.white),
-                  ),
-                  StockCirclePreview(
-                    count: 12,
-                    child: ColoredBox(color: Colors.white),
-                  ),
-                  StockCirclePreview(
-                    count: 12,
-                    child: ColoredBox(color: Colors.white),
-                  ),
-                  StockCirclePreview(
-                    count: 12,
-                    child: ColoredBox(color: Colors.white),
-                  ),
-                  StockCirclePreview(
-                    count: 12,
-                    child: ColoredBox(color: Colors.white),
-                  ),
-                ],
+                ),
               ),
             ),
           ],
