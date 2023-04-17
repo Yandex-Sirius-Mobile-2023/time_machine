@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:time_machine/core/operations.dart';
 import 'package:time_machine/data/models/portfolio.dart';
 import 'package:time_machine/ui/widgets/graph_cost/card_general_cost_widget.dart';
 import 'package:time_machine/ui/widgets/planetar_system.dart';
-import 'package:time_machine/ui/widgets/ticker_circle.dart';
+import 'package:time_machine/ui/widgets/ticker_logo_circle.dart';
 import 'package:time_machine/ui/widgets/trading/stock_circle_preview.dart';
 
 class TradingPage extends ConsumerWidget {
@@ -16,6 +15,7 @@ class TradingPage extends ConsumerWidget {
     final id = ModalRoute.of(context)!.settings.arguments as int;
     Portfolio activePortfolio =
         ref.watch(userPortfolioProvider.notifier).getPortfolio(id);
+
     return Scaffold(
       body: SafeArea(
         minimum: const EdgeInsets.symmetric(

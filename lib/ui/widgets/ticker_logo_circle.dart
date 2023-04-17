@@ -13,10 +13,12 @@ class TickerLogoCircle extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final imageService = ref.watch(stockImageProvider(ticker));
 
-    return imageService.when(
-      data: (imageurl) => SvgPicture.network(imageurl),
-      error: (err, stack) => Text('Error: $err'),
-      loading: () => const CircularProgressIndicator(),
+    return ClipOval(
+      child: imageService.when(
+        data: (imageurl) => SvgPicture.network(imageurl),
+        error: (err, stack) => Text('Error: $err'),
+        loading: () => const CircularProgressIndicator(),
+      ),
     );
   }
 }
