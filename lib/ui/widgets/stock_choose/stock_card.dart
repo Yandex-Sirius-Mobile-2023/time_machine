@@ -29,28 +29,37 @@ class StockCard extends StatelessWidget {
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(
-          vertical: 8,
+          vertical: 16,
           horizontal: 32,
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Row(
-              children: [
-                TickerLogoCircle(ticker: ticker),
-                const SizedBox(width: 16),
-                _StockNameHeader(ticker: ticker),
-                Expanded(
-                  child: Align(
-                    alignment: Alignment.centerRight,
-                    child: _StockChooseButton(ticker: ticker),
+            Flexible(
+              flex: 2,
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(4),
+                    child: TickerLogoCircle(ticker: ticker),
                   ),
-                ),
-              ],
+                  const SizedBox(width: 12),
+                  _StockNameHeader(ticker: ticker),
+                  Expanded(
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: _StockChooseButton(ticker: ticker),
+                    ),
+                  ),
+                ],
+              ),
             ),
-            _CostRow(
-              grow: grow,
-              cost: cost,
+            Flexible(
+              flex: 1,
+              child: _CostRow(
+                grow: grow,
+                cost: cost,
+              ),
             ),
           ],
         ),
@@ -153,7 +162,7 @@ class _StockNameHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Align(
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
