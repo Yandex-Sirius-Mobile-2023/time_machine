@@ -26,13 +26,14 @@ class PlanetarSystem extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (_, constraints) {
-        final minimalDimension = min(constraints.maxWidth, constraints.maxHeight);
+        final minimalDimension =
+            min(constraints.maxWidth, constraints.maxHeight);
         final config = CircularWidgetConfigCreator.bySpacings(
           satellitesCount: satellites.length,
           systemRadius: minimalDimension / 2,
           innerSpacing: innerSpacing,
           satellitesSpacing: satellitesSpacing,
-          minimalCentralRadius: minimalDimension * 0.3 / 2,
+          minimalCentralRadius: minimalDimension * 0.5 / 2,
         );
         calculatedConfigGetter?.call(config);
         return CircularWidgets(
@@ -73,10 +74,12 @@ extension CircularWidgetConfigCreator on CircularWidgetConfig {
     // distanceBetweenItemCenters = 2*itemRadius + satellitespacing
     // distanceBetweenItemCenters = 2*sin(angleBetweensatellites/2)*(systemRadius - itemRadius)
     final s = sin(radians(angleBetweenSatellites / 2));
-    final itemRadius = (2 * s * systemRadius - satellitesSpacing) / (2 * (1 + s));
+    final itemRadius =
+        (2 * s * systemRadius - satellitesSpacing) / (2 * (1 + s));
     final centerWidgetRadius = systemRadius - 2 * itemRadius - innerSpacing;
 
-    if (minimalCentralRadius != null && minimalCentralRadius > centerWidgetRadius) {
+    if (minimalCentralRadius != null &&
+        minimalCentralRadius > centerWidgetRadius) {
       return CircularWidgetConfig(
         innerSpacing: innerSpacing,
         itemRadius: (systemRadius - innerSpacing - minimalCentralRadius) / 2,
