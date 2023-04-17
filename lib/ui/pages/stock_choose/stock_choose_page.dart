@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logging/logging.dart';
+import 'package:time_machine/core/provider/quotes_info/quotes_info_provider.dart';
 import 'package:time_machine/core/provider/stock_choose/stock_provider.dart';
 import 'package:time_machine/ui/widgets/stock_choose/stock_list_view.dart';
 
@@ -22,11 +23,11 @@ class StockChoosePage extends StatelessWidget {
                 .toList();
             return ref.watch(stockQuotesInfoProvider).when(
                   loading: () => const CircularProgressIndicator(),
-                  data: (values) {
+                  data: (value) {
                     return StockListView(
                       tickers: tickers,
-                      costs: values[0],
-                      grows: values[1],
+                      costs: value.costs,
+                      grows: value.grows,
                     );
                   },
                   error: (err, stack) => Text('Error: $err'),
