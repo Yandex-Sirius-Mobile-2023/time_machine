@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logging/logging.dart';
+import 'package:time_machine/app.dart';
 import 'package:time_machine/core/provider/auth_provider.dart';
 import 'package:time_machine/ui/pages/auth/sign_in_form.dart';
 
@@ -33,7 +34,7 @@ class _AuthPageState extends State<AuthPage> {
     );
     subscription = firebaseAuth.listenUpdates(
       () {
-        if (firebaseAuth.user != null) succesfulLoginAction();
+        if (firebaseAuth.user != null) succesfulLoginAction(context);
       },
     );
 
@@ -77,7 +78,7 @@ class _AuthPageState extends State<AuthPage> {
     setState(() {});
   }
 
-  void succesfulLoginAction() {
-    logger.info("Succesful login");
+  void succesfulLoginAction(BuildContext context) {
+    Navigator.of(context).pushReplacementNamed(AppRoutes.chooseStockURL);
   }
 }
