@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:time_machine/ui/widgets/graph_cost/card_general_cost_widget.dart';
 import 'package:time_machine/ui/widgets/planetar_system.dart';
+import 'package:time_machine/ui/widgets/trading/stock_circle_preview.dart';
 
 class TradingPage extends StatelessWidget {
   const TradingPage({Key? key}) : super(key: key);
@@ -20,8 +21,8 @@ class TradingPage extends StatelessWidget {
                 costStocks: "132123",
                 costCache: "123123",
                 data: [
-                  [1, 2, 3, 4, 5, 6, 5, 4, 5],
-                  [1, 2, 3, 4, 5, 6, 7, 8, 9],
+                  [1, 2],
+                  [1, 100],
                 ],
               ),
             ),
@@ -31,14 +32,34 @@ class TradingPage extends StatelessWidget {
               child: PlanetarSystem(
                 centralWidget: ColoredBox(color: Colors.white),
                 satellites: [
-                  ColoredBox(color: Colors.white),
-                  ColoredBox(color: Colors.green),
-                  ColoredBox(color: Colors.black),
-                  ColoredBox(color: Colors.red),
-                  ColoredBox(color: Colors.orange),
-                  ColoredBox(color: Colors.white),
-                  ColoredBox(color: Colors.white),
-                  ColoredBox(color: Colors.white),
+                  StockCirclePreview(
+                    count: 12,
+                    child: ColoredBox(color: Colors.white),
+                  ),
+                  StockCirclePreview(
+                    count: 12,
+                    child: ColoredBox(color: Colors.white),
+                  ),
+                  StockCirclePreview(
+                    count: 12,
+                    child: ColoredBox(color: Colors.white),
+                  ),
+                  StockCirclePreview(
+                    count: 12,
+                    child: ColoredBox(color: Colors.white),
+                  ),
+                  StockCirclePreview(
+                    count: 12,
+                    child: ColoredBox(color: Colors.white),
+                  ),
+                  StockCirclePreview(
+                    count: 12,
+                    child: ColoredBox(color: Colors.white),
+                  ),
+                  StockCirclePreview(
+                    count: 12,
+                    child: ColoredBox(color: Colors.white),
+                  ),
                 ],
               ),
             ),
