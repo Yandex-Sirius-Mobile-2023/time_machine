@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:time_machine/core/provider/auth_provider.dart';
-import 'package:time_machine/data/auth/auth_service.dart';
 import 'package:time_machine/ui/pages/stock_choose/stock_choose_page.dart';
 import 'package:time_machine/uikit/ui_text_theme.dart';
 import 'package:time_machine/uikit/ui_theme.dart';
