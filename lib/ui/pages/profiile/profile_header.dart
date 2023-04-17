@@ -9,19 +9,19 @@ class ProfileHeader extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: const [
-          Flexible(
+        children: [
+          const Flexible(
             flex: 3,
             child: Center(child: _GreetingsMessage()),
           ),
           Flexible(
             flex: 2,
-            child: SizedBox.expand(
-              child: ClipOval(
-                child: SizedBox(
-                  child: ColoredBox(
-                    color: Colors.white,
-                  ),
+            child: Center(
+              child: SizedBox(
+                height: 86,
+                width: 86,
+                child: ClipOval(
+                  child: Image.asset("assets/demo_icon.png"),
                 ),
               ),
             ),

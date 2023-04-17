@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:time_machine/app.dart';
 import 'package:time_machine/uikit/ui_colors.dart';
 
 class SettingsContainer extends StatelessWidget {
@@ -20,17 +21,19 @@ class SettingsContainer extends StatelessWidget {
           horizontal: 16,
         ),
         child: Row(
-          children: const [
+          children: [
             Expanded(
               child: _StartGameButton(
                 rounded: rounded,
                 textPadding: textPadding,
+                onPressed: () => Navigator.of(context)
+                    .pushReplacementNamed(AppRoutes.chooseStockURL),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               width: 16,
             ),
-            Expanded(
+            const Expanded(
               child: _SettingsButton(
                 textPadding: textPadding,
                 rounded: rounded,
@@ -44,10 +47,12 @@ class SettingsContainer extends StatelessWidget {
 }
 
 class _StartGameButton extends StatelessWidget {
+  final Function() onPressed;
   const _StartGameButton({
     super.key,
     required this.rounded,
     required this.textPadding,
+    required this.onPressed,
   });
 
   final double rounded;
@@ -56,7 +61,7 @@ class _StartGameButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FilledButton(
-      onPressed: () {},
+      onPressed: onPressed,
       style: FilledButton.styleFrom(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(rounded),
