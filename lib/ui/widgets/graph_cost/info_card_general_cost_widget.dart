@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:time_machine/uikit/ui_colors.dart';
+import 'package:time_machine/uikit/themes/ui_colors.dart';
 
 class InfoCardGeneralCostWidget extends StatelessWidget {
   const InfoCardGeneralCostWidget({
@@ -34,7 +34,7 @@ class InfoCardGeneralCostWidget extends StatelessWidget {
           Text(
             costStocks,
             style: const TextStyle(
-              color: UIColors.white,
+              color: UIColors.whiteBackground,
               fontFamily: "Inter",
               fontSize: 24,
               fontWeight: FontWeight.bold,
@@ -59,7 +59,7 @@ class InfoCardGeneralCostWidget extends StatelessWidget {
                   Text(
                     costCache,
                     style: const TextStyle(
-                      color: UIColors.white,
+                      color: UIColors.whiteBackground,
                       fontFamily: "Inter",
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -70,10 +70,9 @@ class InfoCardGeneralCostWidget extends StatelessWidget {
               const Spacer(),
               Container(
                 padding: const EdgeInsets.symmetric(
-                    vertical: defaultPadding / 4,
-                    horizontal: defaultPadding / 2),
+                    vertical: defaultPadding / 4, horizontal: defaultPadding / 2),
                 decoration: BoxDecoration(
-                  color: UIColors.white,
+                  color: UIColors.whiteBackground,
                   borderRadius: BorderRadius.circular(2 * defaultPadding),
                 ),
                 child: Row(

@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:time_machine/ui/widgets/central_button/blured_text_central_button.dart';
 
-import 'package:time_machine/uikit/ui_colors.dart';
+import 'package:time_machine/uikit/themes/ui_colors.dart';
 import 'package:time_machine/uikit/ui_consts.dart';
 
 class CentralItemButtonWidget extends StatelessWidget {
@@ -67,7 +67,7 @@ class _InitTextCentralButton extends StatelessWidget {
           child: Text(
             text,
             style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                  color: UIColors.white,
+                  color: UIColors.whiteBackground,
                 ),
           ),
         ),
@@ -98,7 +98,7 @@ class _InitTextCentralButton extends StatelessWidget {
           textButton,
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                color: UIColors.white,
+                color: UIColors.whiteBackground,
               ),
         ),
       ],

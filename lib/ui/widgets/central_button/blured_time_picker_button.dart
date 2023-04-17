@@ -4,7 +4,7 @@ import 'dart:math';
 import 'package:circular_widgets/circular_widgets.dart';
 import 'package:flutter/material.dart';
 
-import 'package:time_machine/uikit/ui_colors.dart';
+import 'package:time_machine/uikit/themes/ui_colors.dart';
 import 'package:time_machine/uikit/ui_consts.dart';
 
 class BluredTimePickerButton extends StatefulWidget {
@@ -123,7 +123,7 @@ class _ItemBluredTimePickerButton extends StatelessWidget {
           child: Text(
             text,
             style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                  color: UIColors.white,
+                  color: UIColors.whiteBackground,
                   fontSize: size,
                 ),
             textAlign: TextAlign.center,

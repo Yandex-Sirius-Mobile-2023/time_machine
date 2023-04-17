@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:time_machine/ui/pages/profiile/profile_header.dart';
 import 'package:time_machine/ui/pages/profiile/settings_container.dart';
-import 'package:time_machine/uikit/ui_colors.dart';
+import 'package:time_machine/uikit/themes/ui_colors.dart';
 
 import 'game_preview.dart';
 
@@ -69,7 +69,7 @@ class _ProfileBackground extends StatelessWidget {
         ),
         const Expanded(
           child: ColoredBox(
-            color: UIColors.white,
+            color: UIColors.whiteBackground,
           ),
         ),
       ],

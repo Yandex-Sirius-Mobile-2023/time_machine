@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:time_machine/app.dart';
-import 'package:time_machine/uikit/ui_colors.dart';
+import 'package:time_machine/uikit/themes/ui_colors.dart';
 
 class SettingsContainer extends StatelessWidget {
   const SettingsContainer({super.key});
