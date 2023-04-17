@@ -14,6 +14,8 @@ class StockChoosePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var navigator = Navigator.of(context);
+
     return Scaffold(
       body: SafeArea(
         child: Consumer(
@@ -38,12 +40,14 @@ class StockChoosePage extends StatelessWidget {
         ),
       ),
       floatingActionButton: Consumer(
-        builder: (context, ref, child){
+        builder: (context, ref, child) {
           return FloatingActionButton(
             onPressed: () async {
               var tickers = ref.watch(stockChooseProvider.notifier).choosen;
-              int id =  await ref.watch(userPortfolioProvider.notifier).createPortfolio(tickers);
-              Navigator.of(context).pushReplacementNamed(AppRoutes.tradingUrl, arguments: id);
+              int id = await ref
+                  .watch(userPortfolioProvider.notifier)
+                  .createPortfolio(tickers);
+              navigator.pushReplacementNamed(AppRoutes.tradingUrl, arguments: id);
             },
             child: const Icon(Icons.access_alarms_outlined),
           );
