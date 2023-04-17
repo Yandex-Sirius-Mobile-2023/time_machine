@@ -11,6 +11,10 @@ abstract class UIColors {
   static const blackSurface = Color.fromARGB(255, 28, 28, 28);
   static const whiteSurface = Color.fromRGBO(252, 252, 252, 1);
   static const whiteBackground = Color.fromRGBO(220, 225, 225, 1);
-  static const green = Color.fromRGBO(15, 220, 120, 1);
-  static const red = Color.fromRGBO(240, 90, 80, 1);
+
+  /// Stock grow color.
+  static const growColor = Color.fromRGBO(15, 220, 120, 1);
+
+  /// Stock drop color.
+  static const dropColor = Color.fromRGBO(240, 90, 80, 1);
 }

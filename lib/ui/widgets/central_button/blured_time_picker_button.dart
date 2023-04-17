@@ -107,12 +107,12 @@ class _ItemBluredTimePickerButton extends StatelessWidget {
         angle: angle,
         child: Container(
           decoration: BoxDecoration(
-            color: isTouched ? UIColors.green : UIColors.cyanBright,
+            color: isTouched ? UIColors.growColor : UIColors.cyanBright,
             borderRadius: BorderRadius.circular(UIConsts.paddings),
             boxShadow: isTouched
                 ? [
                     const BoxShadow(
-                      color: UIColors.green,
+                      color: UIColors.growColor,
                       blurRadius: 20,
                     ),
                   ]
