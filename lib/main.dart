@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:time_machine/core/utils/logging.dart.dart';
 
 import 'app.dart';
@@ -11,8 +12,8 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   initLogger();
-  
-  runApp(const App());
+
+  runApp(const ProviderScope(child: App()));
 }
 
 
