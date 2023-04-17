@@ -48,7 +48,7 @@ class ProfilePage extends StatelessWidget {
 }
 
 class _ProfileBackground extends StatelessWidget {
-  static const double gradientRotation = .5;
+  static const double gradientRotation = -0.3;
 
   @override
   Widget build(BuildContext context) {
