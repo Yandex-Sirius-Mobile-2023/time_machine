@@ -8,12 +8,10 @@ import 'package:time_machine/ui/widgets/central_button/central_item_button_widge
 import 'package:time_machine/uikit/ui_consts.dart';
 
 class BlurCentralButtonWidget extends StatefulWidget {
-  final bool isBlur;
   final VoidCallback onTap;
 
   const BlurCentralButtonWidget({
     Key? key,
-    required this.isBlur,
     required this.onTap,
   }) : super(key: key);
 
@@ -25,23 +23,25 @@ class BlurCentralButtonWidget extends StatefulWidget {
 class _BlurCentralButtonWidgetState extends State<BlurCentralButtonWidget> {
   String delta = "7 дн";
   double radius = 0;
+  bool isBlur = false;
 
   @override
   Widget build(BuildContext context) {
     final double maxWidth =
         (MediaQuery.of(context).size.width - UIConsts.doublePaddings) * 0.7;
-    final double blur = widget.isBlur ? 30 : 0;
 
     return Stack(
       alignment: Alignment.center,
       children: [
         CentralButtonWidget(
-          onTap: widget.onTap,
+          onTap: () => setState(() {
+            isBlur = !isBlur;
+          }),
           getRadius: (double r) =>
               Future.microtask(() => setState(() => radius = r * 2)),
         ),
         TweenAnimationBuilder<double>(
-          tween: Tween<double>(begin: 0.0, end: blur),
+          tween: Tween<double>(begin: 0.0, end: isBlur ? 0 : 30),
           duration: UIConsts.duration,
           builder: (_, value, child) {
             return BackdropFilter(
@@ -55,12 +55,12 @@ class _BlurCentralButtonWidgetState extends State<BlurCentralButtonWidget> {
             ),
           ),
         ),
-        widget.isBlur
+        isBlur
             ? CentralItemButtonWidget(
                 text: delta,
-                size: widget.isBlur ? maxWidth : radius,
+                size: isBlur ? maxWidth : radius,
                 onTap: widget.onTap,
-                isBlur: widget.isBlur,
+                isBlur: isBlur,
               )
             : const SizedBox(),
       ],

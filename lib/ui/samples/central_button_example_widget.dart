@@ -12,14 +12,14 @@ class CentralButtonExampleWidget extends StatefulWidget {
 class _CentralButtonExampleWidgetState
     extends State<CentralButtonExampleWidget> {
   bool isBlur = false;
-  void onTap() => setState(() => isBlur = !isBlur);
+  void onTap() => ({});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(15),
       child: Center(
-        child: BlurCentralButtonWidget(isBlur: isBlur, onTap: onTap),
+        child: BlurCentralButtonWidget(onTap: onTap),
       ),
     );
   }
