@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:time_machine/core/model/portfolio_state.dart';
 import 'package:time_machine/core/operations.dart';
 import 'package:time_machine/data/models/portfolio.dart';
 import 'package:time_machine/ui/widgets/central_button/blur_central_button_widget.dart';
@@ -16,16 +17,27 @@ class TradingPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final id = ModalRoute.of(context)!.settings.arguments as int;
     Portfolio activePortfolio =
-        ref.watch(userPortfolioProvider.notifier).getPortfolio(id);
+        ref.read(userPortfolioProvider.notifier).getPortfolio(id);
+
     List<List<double>> graphData =
         ref.watch(portfolioGraphDataProvider(activePortfolio));
+
+    PortfolioState portfolioState =
+        ref.watch(activePortfolioProvider(activePortfolio));
+
+    var currentStep = portfolioState.currentStep;
 
     var satellites = [
       for (var stock in activePortfolio.steps.last.stocks.keys)
         StockCirclePreview(
-            count: activePortfolio.steps.last.stocks[stock]!,
+            count: currentStep.stocks[stock]!,
             onPressed: () {
-              //TODO bottom sheet
+              ref
+                  .read(activePortfolioProvider(activePortfolio).notifier)
+                  .addStock(stock, 1);
+              ref
+                  .read(activePortfolioProvider(activePortfolio).notifier)
+                  .updateBalanceAndTotalValue();
             },
             child: TickerLogoCircle(ticker: stock.ticker))
     ];
@@ -42,9 +54,13 @@ class TradingPage extends ConsumerWidget {
               flex: 5,
               fit: FlexFit.tight,
               child: CardGeneralCostWidget(
-                delta: 12,
-                costStocks: activePortfolio.totalValue.toString(),
-                costCache: activePortfolio.balance.toString(),
+                delta: ref
+                    .read(activePortfolioProvider(activePortfolio).notifier)
+                    .getGrowth(50)
+                    .toStringAsFixed(1),
+                costStocks:
+                    portfolioState.portfolio.totalValue.toStringAsFixed(2),
+                costCache: portfolioState.portfolio.balance.toStringAsFixed(2),
                 data: graphData,
               ),
             ),

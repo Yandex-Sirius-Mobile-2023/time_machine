@@ -11,7 +11,7 @@ class InfoCardGeneralCostWidget extends StatelessWidget {
 
   final String costStocks;
   final String costCache;
-  final double delta;
+  final String delta;
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +70,8 @@ class InfoCardGeneralCostWidget extends StatelessWidget {
               const Spacer(),
               Container(
                 padding: const EdgeInsets.symmetric(
-                    vertical: defaultPadding / 4, horizontal: defaultPadding / 2),
+                    vertical: defaultPadding / 4,
+                    horizontal: defaultPadding / 2),
                 decoration: BoxDecoration(
                   color: UIColors.whiteBackground,
                   borderRadius: BorderRadius.circular(2 * defaultPadding),
@@ -78,16 +79,20 @@ class InfoCardGeneralCostWidget extends StatelessWidget {
                 child: Row(
                   children: [
                     Icon(
-                        delta < 0
+                        double.parse(delta) < 0
                             ? Icons.keyboard_arrow_down_rounded
                             : Icons.keyboard_arrow_up_rounded,
-                        color: delta < 0 ? UIColors.dropColor : UIColors.growColor,
+                        color: double.parse(delta) < 0
+                            ? UIColors.dropColor
+                            : UIColors.growColor,
                         size: 25),
                     const SizedBox(width: defaultPadding / 2),
                     Text(
-                      delta.abs().toString(),
+                      delta,
                       style: TextStyle(
-                        color: delta < 0 ? UIColors.dropColor : UIColors.growColor,
+                        color: double.parse(delta) < 0
+                            ? UIColors.dropColor
+                            : UIColors.growColor,
                         fontFamily: "Inter",
                         fontSize: 16,
                       ),

@@ -85,7 +85,8 @@ class GraphCostWidget extends StatelessWidget {
               color: isSingleWidget
                   ? UIColors.cyanBright
                   : UIColors.black.withOpacity(0.2),
-              spots: data.map((List e) => FlSpot(e[0], e[1].toDouble())).toList(),
+              spots:
+                  data.map((List e) => FlSpot(e[0], e[1].toDouble())).toList(),
               isCurved: false,
               barWidth: 2,
               isStrokeCapRound: false,
