@@ -17,7 +17,7 @@ abstract class UIColors {
   static const whiteSecondaryContainer = Color.fromARGB(255, 232, 234, 236);
 
   /// Stock grow color.
-  static const growColor = Color.fromRGBO(15, 220, 120, 1);
+  static const growColor = Color.fromARGB(255, 15, 202, 112);
 
   /// Stock drop color.
   static const dropColor = Color.fromRGBO(240, 90, 80, 1);
