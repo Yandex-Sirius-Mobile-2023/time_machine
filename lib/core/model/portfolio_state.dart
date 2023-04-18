@@ -7,7 +7,6 @@ part 'portfolio_state.freezed.dart';
 
 @freezed
 class PortfolioState with _$PortfolioState {
-    const factory PortfolioState(Portfolio portfolio, Step currentStep) = _PortfolioState;
+  const factory PortfolioState(Portfolio portfolio, Step currentStep) =
+      _PortfolioState;
 }
-
-

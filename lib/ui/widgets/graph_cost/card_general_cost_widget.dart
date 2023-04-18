@@ -2,7 +2,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:time_machine/uikit/ui_colors.dart';
+import 'package:time_machine/uikit/themes/ui_colors.dart';
 
 import 'card_graph_cost_widget.dart';
 
@@ -48,8 +48,7 @@ class CardGeneralCostWidget extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
           child: BackdropFilter(
-            filter: ImageFilter.blur(
-                sigmaX: defaultPadding, sigmaY: defaultPadding),
+            filter: ImageFilter.blur(sigmaX: defaultPadding, sigmaY: defaultPadding),
             child: Container(
               height: 50,
               color: Colors.white.withOpacity(0),
@@ -57,10 +56,7 @@ class CardGeneralCostWidget extends StatelessWidget {
           ),
         ),
         CardGraphCostWidget(
-            data: data,
-            costStocks: costStocks,
-            costCache: costCache,
-            delta: delta),
+            data: data, costStocks: costStocks, costCache: costCache, delta: delta),
       ],
     );
   }

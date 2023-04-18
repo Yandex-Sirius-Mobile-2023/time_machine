@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:time_machine/uikit/ui_colors.dart';
+import 'package:time_machine/uikit/themes/ui_colors.dart';
 
 import 'graph_cost_widget.dart';
 import 'info_card_general_cost_widget.dart';
@@ -41,7 +41,7 @@ class CardGraphCostWidget extends StatelessWidget {
         ),
         child: Stack(
           children: [
-            GraphCostWidget(data: data),
+            GraphCostWidget(data: data, isSingleWidget: false),
             InfoCardGeneralCostWidget(
               costStocks: costStocks,
               costCache: costCache,

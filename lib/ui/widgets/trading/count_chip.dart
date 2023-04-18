@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:time_machine/uikit/ui_colors.dart';
+import 'package:time_machine/uikit/themes/ui_colors.dart';
 
 /// Chip with number display.
 class CountChip extends StatelessWidget {
