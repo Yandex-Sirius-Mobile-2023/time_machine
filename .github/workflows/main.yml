@@ -8,7 +8,7 @@ jobs:
       - shell: bash
         env:
           FINHUB_KEY: ${{ secrets.FINHUB_KEY }}
-        run: echo "$FINHUB_KEY" > .env
+        run: echo "$FINHUB_KEY" > .env | cat .env
       
       - name: Checkout code
         uses: actions/checkout@v3
