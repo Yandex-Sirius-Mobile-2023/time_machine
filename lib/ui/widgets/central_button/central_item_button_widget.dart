@@ -69,7 +69,7 @@ class _InitTextCentralButton extends StatelessWidget {
           child: Text(
             text,
             style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                  color: UIColors.white,
+                  color: UIColors.whiteBackground,
                 ),
           ),
         ),
@@ -100,7 +100,7 @@ class _InitTextCentralButton extends StatelessWidget {
           textButton,
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                color: UIColors.white,
+                color: UIColors.whiteBackground,
               ),
         ),
       ],

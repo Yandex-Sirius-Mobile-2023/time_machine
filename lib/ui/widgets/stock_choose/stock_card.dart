@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:time_machine/core/provider/stock_choose/stock_provider.dart';
 import 'package:time_machine/data/models/stock.dart';
-import 'package:time_machine/uikit/ui_consts.dart';
+import 'package:time_machine/ui/widgets/stock_choose/short_info_row.dart';
+import 'package:time_machine/uikit/themes/ui_colors.dart';
 
 /// Card that represent a tickers that can be choosen.
 class StockCard extends StatelessWidget {
   final StockTicker ticker;
-  final int grow;
+  final double grow;
   final double cost;
 
   const StockCard({
@@ -21,35 +20,33 @@ class StockCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return DecoratedBox(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        color: Theme.of(context).colorScheme.surface,
-      ),
+          borderRadius: BorderRadius.circular(16),
+          color: Theme.of(context).colorScheme.surface,
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.black26,
+              offset: Offset(0, 2),
+              blurRadius: 6,
+            )
+          ]),
       child: Padding(
         padding: const EdgeInsets.symmetric(
-          vertical: 8,
+          vertical: 16,
           horizontal: 32,
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Row(
-              children: [
-                const CircleAvatar(
-                  backgroundColor: Colors.red,
-                ),
-                const SizedBox(width: 16),
-                _StockNameHeader(ticker: ticker),
-                Expanded(
-                  child: Align(
-                    alignment: Alignment.centerRight,
-                    child: _StockChooseButton(ticker: ticker),
-                  ),
-                ),
-              ],
+            Flexible(
+              flex: 2,
+              child: ShortInfoRow(ticker: ticker),
             ),
-            _CostRow(
-              grow: grow,
-              cost: cost,
+            Flexible(
+              flex: 1,
+              child: _CostRow(
+                grow: grow,
+                cost: cost,
+              ),
             ),
           ],
         ),
@@ -61,7 +58,7 @@ class StockCard extends StatelessWidget {
 // Row with cost and grow text
 class _CostRow extends StatelessWidget {
   /// Grow from prev year.
-  final int grow;
+  final double grow;
   final double cost;
 
   const _CostRow({
@@ -70,9 +67,8 @@ class _CostRow extends StatelessWidget {
     required this.cost,
   });
 
-  Color get growColor => grow > 0 ? Colors.greenAccent : Colors.redAccent;
-  IconData get growIcon =>
-      grow > 0 ? Icons.arrow_drop_up : Icons.arrow_drop_down;
+  Color get growColor => grow > 0 ? UIColors.growColor : UIColors.dropColor;
+  IconData get growIcon => grow > 0 ? Icons.arrow_drop_up : Icons.arrow_drop_down;
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +96,7 @@ class _CostRow extends StatelessWidget {
           ),
         ),
         Text(
-          "${grow.abs()}%",
+          "${grow.abs().toStringAsFixed(2)}%",
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 16,
@@ -109,67 +105,6 @@ class _CostRow extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-// Button to choose ticker in.
-class _StockChooseButton extends ConsumerWidget {
-  const _StockChooseButton({
-    super.key,
-    required this.ticker,
-  });
-
-  final StockTicker ticker;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return GestureDetector(
-      onTap: () {
-        ref.read(stockChooseProvider.notifier).updateTicker(ticker);
-      },
-      child: AnimatedContainer(
-        duration: UIConsts.duration,
-        width: 32,
-        height: 32,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: ref.watch(stockChooseProvider)[ticker]!
-              ? Colors.green
-              : Colors.blue,
-        ),
-        child: const Icon(Icons.keyboard_double_arrow_right_sharp),
-      ),
-    );
-  }
-}
-
-// Widget that displays stock ticker name and full name.
-class _StockNameHeader extends StatelessWidget {
-  final StockTicker ticker;
-
-  const _StockNameHeader({super.key, required this.ticker});
-
-  @override
-  Widget build(BuildContext context) {
-    return Align(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            ticker.name,
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 18,
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            ticker.getName(),
-          ),
-        ],
-      ),
     );
   }
 }

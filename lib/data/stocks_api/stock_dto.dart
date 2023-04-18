@@ -14,5 +14,6 @@ abstract class StockDto with _$StockDto {
     required String logo,
   }) = _StockDto;
 
-  factory StockDto.fromJson(Map<String, dynamic> json) => _$StockDtoFromJson(json);
+  factory StockDto.fromJson(Map<String, dynamic> json) =>
+      _$StockDtoFromJson(json);
 }

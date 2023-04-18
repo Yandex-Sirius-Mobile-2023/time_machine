@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:time_machine/uikit/ui_colors.dart';
+import 'package:time_machine/uikit/themes/ui_colors.dart';
 
 class InfoCardGeneralCostWidget extends StatelessWidget {
   const InfoCardGeneralCostWidget({
@@ -11,7 +11,7 @@ class InfoCardGeneralCostWidget extends StatelessWidget {
 
   final String costStocks;
   final String costCache;
-  final double delta;
+  final String delta;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class InfoCardGeneralCostWidget extends StatelessWidget {
           const Text(
             "Общая стоимость ценных бумаг",
             style: TextStyle(
-              color: UIColors.gray,
+              color: UIColors.grey,
               fontFamily: "Inter",
               fontSize: 16,
             ),
@@ -34,7 +34,7 @@ class InfoCardGeneralCostWidget extends StatelessWidget {
           Text(
             costStocks,
             style: const TextStyle(
-              color: UIColors.white,
+              color: UIColors.whiteBackground,
               fontFamily: "Inter",
               fontSize: 24,
               fontWeight: FontWeight.bold,
@@ -50,7 +50,7 @@ class InfoCardGeneralCostWidget extends StatelessWidget {
                   const Text(
                     "Осталось наличных денег",
                     style: TextStyle(
-                      color: UIColors.gray,
+                      color: UIColors.grey,
                       fontFamily: "Inter",
                       fontSize: 16,
                     ),
@@ -59,7 +59,7 @@ class InfoCardGeneralCostWidget extends StatelessWidget {
                   Text(
                     costCache,
                     style: const TextStyle(
-                      color: UIColors.white,
+                      color: UIColors.whiteBackground,
                       fontFamily: "Inter",
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -73,22 +73,26 @@ class InfoCardGeneralCostWidget extends StatelessWidget {
                     vertical: defaultPadding / 4,
                     horizontal: defaultPadding / 2),
                 decoration: BoxDecoration(
-                  color: UIColors.white,
+                  color: UIColors.whiteBackground,
                   borderRadius: BorderRadius.circular(2 * defaultPadding),
                 ),
                 child: Row(
                   children: [
                     Icon(
-                        delta < 0
+                        double.parse(delta) < 0
                             ? Icons.keyboard_arrow_down_rounded
                             : Icons.keyboard_arrow_up_rounded,
-                        color: delta < 0 ? UIColors.red : UIColors.green,
+                        color: double.parse(delta) < 0
+                            ? UIColors.dropColor
+                            : UIColors.growColor,
                         size: 25),
                     const SizedBox(width: defaultPadding / 2),
                     Text(
-                      delta.abs().toString(),
+                      delta,
                       style: TextStyle(
-                        color: delta < 0 ? UIColors.red : UIColors.green,
+                        color: double.parse(delta) < 0
+                            ? UIColors.dropColor
+                            : UIColors.growColor,
                         fontFamily: "Inter",
                         fontSize: 16,
                       ),

@@ -2,7 +2,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:time_machine/uikit/ui_colors.dart';
+import 'package:time_machine/uikit/themes/ui_colors.dart';
 
 import 'card_graph_cost_widget.dart';
 
@@ -10,7 +10,7 @@ class CardGeneralCostWidget extends StatelessWidget {
   final String costStocks;
   final String costCache;
   final List<List<double>> data;
-  final double delta;
+  final String delta;
 
   const CardGeneralCostWidget({
     Key? key,

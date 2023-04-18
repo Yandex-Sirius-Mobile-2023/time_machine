@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:time_machine/uikit/ui_colors.dart';
+import 'package:time_machine/uikit/themes/ui_colors.dart';
 
 import 'graph_cost_widget.dart';
 import 'info_card_general_cost_widget.dart';
@@ -16,7 +16,7 @@ class CardGraphCostWidget extends StatelessWidget {
   final List<List<double>> data;
   final String costStocks;
   final String costCache;
-  final double delta;
+  final String delta;
 
   @override
   Widget build(BuildContext context) {

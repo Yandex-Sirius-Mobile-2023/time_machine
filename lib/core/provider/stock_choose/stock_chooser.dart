@@ -22,5 +22,6 @@ class StockChooser extends StateNotifier<Map<StockTicker, bool>> {
   }
 
   // List of choosen tickers.
-  List<StockTicker> get choosen => state.keys.where((key) => state[key]!).toList();
+  List<StockTicker> get choosen =>
+      state.keys.where((key) => state[key]!).toList();
 }

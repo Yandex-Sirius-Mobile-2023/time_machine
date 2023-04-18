@@ -1,15 +1,16 @@
-import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:time_machine/data/models/step.dart';
 
 part 'portfolio.freezed.dart';
 
-@freezed
+@Freezed(makeCollectionsUnmodifiable: false)
 class Portfolio with _$Portfolio {
-  const factory Portfolio({
-    required int id,
-    required DateTime createdAt,
-    required List<Step> steps,
-    required DateTime nowDate,
-    double? balance,
-  }) = _Portfolio;
+  const factory Portfolio(
+    int id,
+    DateTime createdAt,
+    List<Step> steps,
+    DateTime nowDate,
+    double balance,
+    double totalValue,
+  ) = _Portfolio;
 }

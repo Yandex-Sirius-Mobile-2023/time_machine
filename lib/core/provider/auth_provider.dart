@@ -5,7 +5,7 @@ import 'package:time_machine/data/auth/firebase_auth_service.dart';
 
 import '../../data/auth/auth_service.dart';
 
-final _firebaseAuthProvider = Provider<FirebaseAuthService>(
+final firebaseAuthProvider = Provider<FirebaseAuthService>(
   (ref) => FirebaseAuthService(
     firebaseAuth: FirebaseAuth.instance,
     googleAuth: GoogleSignIn(),
@@ -13,7 +13,7 @@ final _firebaseAuthProvider = Provider<FirebaseAuthService>(
 );
 
 final emailSignProvider =
-    Provider<EmailAuthService>((ref) => ref.watch(_firebaseAuthProvider));
+    Provider<EmailAuthService>((ref) => ref.watch(firebaseAuthProvider));
 
 final googleSignProvider =
-    Provider<GoogleAuthService>((ref) => ref.watch(_firebaseAuthProvider));
+    Provider<GoogleAuthService>((ref) => ref.watch(firebaseAuthProvider));
