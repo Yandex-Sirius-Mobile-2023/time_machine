@@ -8,6 +8,7 @@ import 'package:time_machine/data/auth/auth_service.dart';
 import 'package:time_machine/data/auth/status/credential_sign_exception.dart';
 import 'package:time_machine/data/auth/status/email_sign_exception.dart';
 import 'package:time_machine/ui/pages/auth/commons/header_text.dart';
+import 'package:time_machine/uikit/themes/text/text_style.dart';
 
 import 'email_password_container.dart';
 import 'sign_button.dart';
@@ -38,6 +39,7 @@ class _SignInFormState extends State<SignInForm> {
     return Form(
       key: _formKey,
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SignHeaderText(
@@ -67,7 +69,12 @@ class _SignInFormState extends State<SignInForm> {
               child: const Text("Dont have an account? Sign up"),
             ),
           ),
-          const Center(child: Text("or")),
+          const Center(
+            child: Text(
+              "or",
+              style: infoStyle,
+            ),
+          ),
           const SizedBox(height: 8),
           Consumer(
             builder: (_, ref, __) => AuthButton(

@@ -38,6 +38,7 @@ class _RegisterFormState extends State<RegisterForm> {
     return Form(
       key: _formKey,
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SignHeaderText(
