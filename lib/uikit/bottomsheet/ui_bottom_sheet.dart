@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 
-Future<T?> showUIBottomSheet<T>(BuildContext context, Widget content) {
+Future<T?> showUIBottomSheet<T>({
+  required BuildContext context,
+  required Widget content,
+}) {
   return showModalBottomSheet<T>(
     context: context,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(32),
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(32)),
     ),
     builder: (_) => UIBottomSheetFrame(
       child: content,
@@ -22,11 +25,16 @@ class UIBottomSheetFrame extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        _buildHandler(),
-        child,
-      ],
+    return Padding(
+      padding:
+          EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildHandler(),
+          Flexible(child: child),
+        ],
+      ),
     );
   }
 
