@@ -5,8 +5,8 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'portfolio_state.freezed.dart';
 
-@freezed
+@unfreezed
 class PortfolioState with _$PortfolioState {
-  const factory PortfolioState(Portfolio portfolio, Step currentStep) =
+  factory PortfolioState(Portfolio portfolio, Step currentStep) =
       _PortfolioState;
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:time_machine/ui/samples/central_button_example_widget.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:time_machine/core/provider/auth_provider.dart';
 import 'package:time_machine/ui/pages/profiile/profile_page.dart';

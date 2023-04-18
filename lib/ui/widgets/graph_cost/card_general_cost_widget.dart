@@ -10,7 +10,7 @@ class CardGeneralCostWidget extends StatelessWidget {
   final String costStocks;
   final String costCache;
   final List<List<double>> data;
-  final double delta;
+  final String delta;
 
   const CardGeneralCostWidget({
     Key? key,
@@ -48,7 +48,8 @@ class CardGeneralCostWidget extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
           child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: defaultPadding, sigmaY: defaultPadding),
+            filter: ImageFilter.blur(
+                sigmaX: defaultPadding, sigmaY: defaultPadding),
             child: Container(
               height: 50,
               color: Colors.white.withOpacity(0),
@@ -56,7 +57,10 @@ class CardGeneralCostWidget extends StatelessWidget {
           ),
         ),
         CardGraphCostWidget(
-            data: data, costStocks: costStocks, costCache: costCache, delta: delta),
+            data: data,
+            costStocks: costStocks,
+            costCache: costCache,
+            delta: delta),
       ],
     );
   }

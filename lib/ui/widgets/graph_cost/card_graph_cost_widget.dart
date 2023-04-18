@@ -16,7 +16,7 @@ class CardGraphCostWidget extends StatelessWidget {
   final List<List<double>> data;
   final String costStocks;
   final String costCache;
-  final double delta;
+  final String delta;
 
   @override
   Widget build(BuildContext context) {

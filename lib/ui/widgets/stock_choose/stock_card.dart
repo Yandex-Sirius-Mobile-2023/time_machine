@@ -61,7 +61,8 @@ class _CostRow extends StatelessWidget {
   });
 
   Color get growColor => grow > 0 ? Colors.greenAccent : Colors.redAccent;
-  IconData get growIcon => grow > 0 ? Icons.arrow_drop_up : Icons.arrow_drop_down;
+  IconData get growIcon =>
+      grow > 0 ? Icons.arrow_drop_up : Icons.arrow_drop_down;
 
   @override
   Widget build(BuildContext context) {
