@@ -17,6 +17,12 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
         
+        env:
+          FINHUB_KEY: ${{ secrets.FINHUB_KEY }}
+      
+      - name: Create envirnroment variable
+        run: echo "$FINHUB_KEY" > .env
+        
       - name: Run codegen
         run: sh script_codegen.sh
         
