@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:time_machine/data/models/stock.dart';
@@ -8,39 +6,26 @@ import 'package:time_machine/uikit/themes/ui_colors.dart';
 import 'package:time_machine/uikit/ui_consts.dart';
 import 'package:time_machine/uikit/ui_text.dart';
 
-class StockInfoBottomSheetBody extends StatefulWidget {
+class StockInfoBottomSheetBody extends StatelessWidget {
   const StockInfoBottomSheetBody({
     Key? key,
     required this.stock,
-    required this.boughtStockCount,
-    required this.onStockCountChanged,
   }) : super(key: key);
 
   final Stock stock;
-  final int boughtStockCount;
-  final Function(int) onStockCountChanged;
-
-  @override
-  State<StockInfoBottomSheetBody> createState() =>
-      _StockInfoBottomSheetBodyState();
-}
-
-class _StockInfoBottomSheetBodyState extends State<StockInfoBottomSheetBody> {
-  final _countController = TextEditingController();
-  late int _curCount = widget.boughtStockCount;
 
   @override
   Widget build(BuildContext context) {
-    final history = widget.stock.quotesHistory;
+    final history = stock.quotesHistory;
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        UIText(widget.stock.ticker.getName()),
+        UIText(stock.ticker.getName()),
         UIText('\$${history.entries.last.value}'),
         _buildLastComparison(history),
         _buildChart(history),
         const Spacer(),
-        _buildStockCard(widget.stock, widget.boughtStockCount),
+        _buildStockCard(stock),
         const SizedBox(height: UIConsts.paddings),
       ],
     );
@@ -76,7 +61,7 @@ class _StockInfoBottomSheetBodyState extends State<StockInfoBottomSheetBody> {
     );
   }
 
-  Widget _buildStockCard(Stock stock, int boughtStockCount) {
+  Widget _buildStockCard(Stock stock) {
     return Container(
       padding: const EdgeInsets.all(UIConsts.paddings),
       color: UIColors.whiteBackground,
@@ -89,37 +74,28 @@ class _StockInfoBottomSheetBodyState extends State<StockInfoBottomSheetBody> {
           ),
           UIText(stock.ticker.getName()),
           const Spacer(),
-          _buildStockCounter(boughtStockCount),
+          _buildStockCounter(),
         ],
       ),
     );
   }
 
-  Widget _buildStockCounter(int boughtStockCount) {
-    _countController.text = '$_curCount';
+  Widget _buildStockCounter() {
     return Consumer(
       builder: (context, ref, _) {
         return Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             IconButton(
-              onPressed: () {
-                setState(() {
-                  _curCount = max(_curCount - 1, 0);
-                });
-                widget.onStockCountChanged(_curCount);
-              },
+              onPressed: () => ref.watch(_counterProvider.notifier).decrement(),
               icon: const Icon(
                 Icons.remove_circle,
                 color: UIColors.dropColor,
               ),
             ),
-            Text('$_curCount'),
+            Text(ref.watch(_counterProvider).toString()),
             IconButton(
-              onPressed: () {
-                setState(() => _curCount += 1);
-                widget.onStockCountChanged(_curCount);
-              },
+              onPressed: () => ref.watch(_counterProvider.notifier).increment(),
               icon: const Icon(
                 Icons.add_circle,
                 color: UIColors.growColor,
@@ -130,16 +106,19 @@ class _StockInfoBottomSheetBodyState extends State<StockInfoBottomSheetBody> {
       },
     );
   }
-
-  @override
-  void dispose() {
-    _countController.dispose();
-    super.dispose();
-  }
 }
 
 extension IterableExtension<T> on Iterable<T> {
   T fromEnd(int i) {
     return toList().reversed.toList()[i];
   }
+}
+
+//TODO заменить. Вставил чисто как пример
+final _counterProvider = StateNotifierProvider((ref) => _Counter());
+
+class _Counter extends StateNotifier<int> {
+  _Counter() : super(5);
+  void increment() => state += 1;
+  void decrement() => state -= 1;
 }
