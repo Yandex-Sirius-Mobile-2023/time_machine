@@ -5,6 +5,9 @@ jobs:
   install:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
       - shell: bash
         env:
           FINHUB_KEY: ${{ secrets.FINHUB_KEY }}
@@ -17,9 +20,6 @@ jobs:
         
       - shell: bash
         run: ls -la
-        
-      - name: Checkout code
-        uses: actions/checkout@v3
 
       - name: Install Flutter
         uses: subosito/flutter-action@v2
