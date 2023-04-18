@@ -6,6 +6,7 @@ import 'package:logging/logging.dart';
 import 'package:time_machine/core/provider/auth_provider.dart';
 import 'package:time_machine/data/auth/auth_service.dart';
 import 'package:time_machine/data/auth/status/auth_create_exception.dart';
+import 'package:time_machine/ui/pages/auth/commons/header_text.dart';
 
 import 'email_password_container.dart';
 import 'sign_button.dart';
@@ -23,6 +24,9 @@ class RegisterForm extends StatefulWidget {
 
 class _RegisterFormState extends State<RegisterForm> {
   static const String registerAccountText = "Register account";
+  static const String headerMessage = "Create you free account!";
+  static const String headerBottomMessage =
+      "To get started with Roflo-Investor, create you account.";
 
   final _formKey = GlobalKey<FormState>();
   final _emailTextContoler = TextEditingController();
@@ -34,15 +38,19 @@ class _RegisterFormState extends State<RegisterForm> {
     return Form(
       key: _formKey,
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text("Create you free account"),
-          const Text("To get started with Roflo-Investor, create you account"),
+          const SignHeaderText(
+            message: headerMessage,
+            bottomMessage: headerBottomMessage,
+          ),
           const SizedBox(height: 32),
           EmailPasswordContainer(
             emailTextContoler: _emailTextContoler,
             passwordTextContoler: _passwordTextContoler,
           ),
+          const SizedBox(height: 32),
           Consumer(
             builder: (_, ref, __) => AuthButton(
               onPressed: () {

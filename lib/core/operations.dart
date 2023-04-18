@@ -21,7 +21,12 @@ class ActivePortfolioNotifier extends StateNotifier<PortfolioState> {
         Step(state.currentStep.stocks..remove(stock), state.portfolio.nowDate));
   }
 
-  void goToFuture() {}
+  void goToFuture(int period) {
+    var dates = state.currentStep.stocks.keys.first.quotesHistory.keys.toList();
+    state.portfolio = state.portfolio.copyWith(
+      nowDate: (dates.length-1 > dates.indexOf(state.portfolio.nowDate)+period) ? dates[dates.indexOf(state.portfolio.nowDate)+period]  : dates.last
+    );
+  }
 
   double getGrowth(int period) {
     double previous = 0;
@@ -33,8 +38,6 @@ class ActivePortfolioNotifier extends StateNotifier<PortfolioState> {
       previous += quantity * quote;
     }
 
-    print(state.portfolio.totalValue);
-    print(previous);
 
     return (previous == 0)
         ? 0
@@ -58,6 +61,9 @@ class ActivePortfolioNotifier extends StateNotifier<PortfolioState> {
 
   void commit(currentStep) {
     state.portfolio.steps.add(currentStep);
+    state.currentStep = Step(state.currentStep.stocks, state.portfolio.nowDate);
+    state = PortfolioState(state.portfolio, state.currentStep);
+    updateBalanceAndTotalValue();
   }
 }
 

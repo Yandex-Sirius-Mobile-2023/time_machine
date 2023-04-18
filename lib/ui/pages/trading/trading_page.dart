@@ -11,13 +11,13 @@ import 'package:time_machine/ui/widgets/trading/stock_circle_preview.dart';
 class TradingPage extends ConsumerWidget {
   const TradingPage({Key? key}) : super(key: key);
 
-  void onTap() => ({});
+  void onTap(){}
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final id = ModalRoute.of(context)!.settings.arguments as int;
     Portfolio activePortfolio =
-        ref.read(userPortfolioProvider.notifier).getPortfolio(id);
+        ref.watch(userPortfolioProvider.notifier).getPortfolio(id);
 
     List<List<double>> graphData =
         ref.watch(portfolioGraphDataProvider(activePortfolio));
@@ -71,6 +71,19 @@ class TradingPage extends ConsumerWidget {
                 satellites: satellites,
                 onTap: onTap,
               ),
+            ),
+            Flexible(
+              flex: 3,
+                child:
+                ElevatedButton(
+                  onPressed: () {
+                    //TODO reanimate balance and total
+                    ref.read(activePortfolioProvider(activePortfolio).notifier).goToFuture(7);
+                    ref.read(activePortfolioProvider(activePortfolio).notifier).commit(currentStep);
+                    ref.read(userPortfolioProvider.notifier).updatePortfolio(portfolioState.portfolio);
+                  },
+                  child: const Text('Press me'),
+                )
             )
           ],
         ),
