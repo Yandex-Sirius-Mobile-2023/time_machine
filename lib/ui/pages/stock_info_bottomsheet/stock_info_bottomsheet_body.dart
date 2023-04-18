@@ -1,73 +1,45 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:time_machine/data/models/stock.dart';
-import 'package:time_machine/ui/pages/stock_info_bottomsheet/stock_info_manager.dart';
-import 'package:time_machine/ui/pages/stock_info_bottomsheet/stock_info_state.dart';
 import 'package:time_machine/ui/widgets/graph_cost/graph_cost_widget.dart';
 import 'package:time_machine/uikit/themes/ui_colors.dart';
 import 'package:time_machine/uikit/ui_consts.dart';
 import 'package:time_machine/uikit/ui_text.dart';
 
-class StockInfoBottomSheetBody extends ConsumerStatefulWidget {
+class StockInfoBottomSheetBody extends StatefulWidget {
   const StockInfoBottomSheetBody({
     Key? key,
-    required this.ticker,
+    required this.stock,
+    required this.boughtStockCount,
+    required this.setStockCount,
   }) : super(key: key);
 
-  final StockTicker ticker;
+  final Stock stock;
+  final int boughtStockCount;
+  final Function(int) setStockCount;
 
   @override
-  ConsumerState createState() => _StockInfoBottomSheetBodyState();
+  State<StockInfoBottomSheetBody> createState() =>
+      _StockInfoBottomSheetBodyState();
 }
 
-class _StockInfoBottomSheetBodyState
-    extends ConsumerState<StockInfoBottomSheetBody> {
+class _StockInfoBottomSheetBodyState extends State<StockInfoBottomSheetBody> {
   final _countController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(stockInfoProvider.notifier).loadStocks(widget.ticker);
-    });
-  }
-
-  @override
-  void didUpdateWidget(covariant StockInfoBottomSheetBody oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (oldWidget.ticker != widget.ticker) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        ref.read(stockInfoProvider.notifier).loadStocks(widget.ticker);
-      });
-    }
-  }
+  late int _curCount = widget.boughtStockCount;
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(stockInfoProvider);
-    return state.map(
-      loading: _buildStateLoading,
-      content: _buildStateContent,
-    );
-  }
-
-  Widget _buildStateLoading(StockInfoStateLoading state) {
-    return const Center(
-      child: CircularProgressIndicator(),
-    );
-  }
-
-  Widget _buildStateContent(StockInfoStateContent state) {
-    final stock = state.stock;
-    final history = stock.quotesHistory;
+    final history = widget.stock.quotesHistory;
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        UIText(stock.ticker.getName()),
+        UIText(widget.stock.ticker.getName()),
         UIText('\$${history.entries.last.value}'),
         _buildLastComparison(history),
         _buildChart(history),
-        _buildStockCard(stock, state.boughtStockCount),
+        _buildStockCard(widget.stock, widget.boughtStockCount),
       ],
     );
   }
@@ -122,14 +94,19 @@ class _StockInfoBottomSheetBodyState
   }
 
   Widget _buildStockCounter(int boughtStockCount) {
-    _countController.text = '$boughtStockCount';
+    _countController.text = '$_curCount';
     return Consumer(
       builder: (context, ref, _) {
         return Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             IconButton(
-              onPressed: ref.watch(stockInfoProvider.notifier).decrementStock,
+              onPressed: () {
+                setState(() {
+                  _curCount = max(_curCount - 1, 0);
+                });
+                widget.setStockCount(_curCount);
+              },
               icon: const Icon(
                 Icons.remove_circle,
                 color: UIColors.dropColor,
@@ -138,15 +115,16 @@ class _StockInfoBottomSheetBodyState
             Flexible(
               child: TextFormField(
                 controller: _countController,
+                enabled: false,
                 keyboardType: TextInputType.number,
                 textAlign: TextAlign.center,
-                onSaved: (input) => ref
-                    .watch(stockInfoProvider.notifier)
-                    .setStockCount(int.parse(input!)),
               ),
             ),
             IconButton(
-              onPressed: ref.watch(stockInfoProvider.notifier).incrementStock,
+              onPressed: () {
+                setState(() => _curCount += 1);
+                widget.setStockCount(_curCount);
+              },
               icon: const Icon(
                 Icons.add_circle,
                 color: UIColors.growColor,

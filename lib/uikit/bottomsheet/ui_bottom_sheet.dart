@@ -25,11 +25,16 @@ class UIBottomSheetFrame extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        _buildHandler(),
-        Flexible(child: child),
-      ],
+    return Padding(
+      padding:
+          EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildHandler(),
+          Flexible(child: child),
+        ],
+      ),
     );
   }
 
