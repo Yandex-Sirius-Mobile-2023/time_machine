@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:time_machine/core/provider/theme_provider.dart';
 import 'package:time_machine/ui/pages/profiile/profile_header.dart';
 import 'package:time_machine/ui/pages/profiile/settings_container.dart';
+import 'package:time_machine/uikit/themes/dark_theme.dart';
+import 'package:time_machine/uikit/themes/light_theme.dart';
 import 'package:time_machine/uikit/themes/ui_colors.dart';
 
 import 'game_preview.dart';
@@ -42,6 +46,11 @@ class ProfilePage extends StatelessWidget {
             child: GamePreview(),
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: ProviderScope.containerOf(context)
+            .read(themeProvider.notifier)
+            .toogleTheme,
       ),
     );
   }
