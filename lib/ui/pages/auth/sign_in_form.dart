@@ -7,7 +7,6 @@ import 'package:time_machine/core/provider/auth_provider.dart';
 import 'package:time_machine/data/auth/auth_service.dart';
 import 'package:time_machine/data/auth/status/credential_sign_exception.dart';
 import 'package:time_machine/data/auth/status/email_sign_exception.dart';
-import 'package:time_machine/ui/pages/auth/commons/bottom_header_text.dart';
 import 'package:time_machine/ui/pages/auth/commons/header_text.dart';
 
 import 'email_password_container.dart';
@@ -16,7 +15,7 @@ import 'sign_button.dart';
 Logger logger = Logger("SignInForm");
 
 abstract class SignFormText {
-  static const String createAccountText = "Create your free acount";
+  static const String createAccountText = "Login in";
 }
 
 class SignInForm extends StatefulWidget {
@@ -41,15 +40,17 @@ class _SignInFormState extends State<SignInForm> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SignHeaderText("Sign in to account"),
-          const SignBottomHeaderText(
-            "To get started with Roflo-Investor you need write normal UI",
+          const SignHeaderText(
+            message: "Sign in to account",
+            bottomMessage:
+                "To get started with Roflo-Investor you need write normal UI",
           ),
           const SizedBox(height: 32),
           EmailPasswordContainer(
             emailTextContoler: _emailTextContoler,
             passwordTextContoler: _passwordTextContoler,
           ),
+          const SizedBox(height: 32),
           Consumer(
             builder: (_, ref, __) => AuthButton(
               onPressed: () {
@@ -60,7 +61,12 @@ class _SignInFormState extends State<SignInForm> {
               text: SignFormText.createAccountText,
             ),
           ),
-          const SizedBox(height: 8),
+          Center(
+            child: TextButton(
+              onPressed: widget.goToRegistration,
+              child: const Text("Dont have an account? Sign up"),
+            ),
+          ),
           const Center(child: Text("or")),
           const SizedBox(height: 8),
           Consumer(
@@ -70,12 +76,6 @@ class _SignInFormState extends State<SignInForm> {
                 googleSignIn(service, context);
               },
               text: "Sign with Google",
-            ),
-          ),
-          Center(
-            child: TextButton(
-              onPressed: widget.goToRegistration,
-              child: const Text("Go to registration"),
             ),
           ),
         ],
