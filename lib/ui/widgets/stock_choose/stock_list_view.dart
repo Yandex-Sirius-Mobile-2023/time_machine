@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:time_machine/data/models/stock.dart';
+import 'package:time_machine/uikit/ui_consts.dart';
 
 import 'stock_card.dart';
 
@@ -18,7 +19,7 @@ class StockListView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return ListView.builder(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(UIConsts.paddings),
       clipBehavior: Clip.none,
       itemExtent: 132,
       itemCount: tickers.length,
