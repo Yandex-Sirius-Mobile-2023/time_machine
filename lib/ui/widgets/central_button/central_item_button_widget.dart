@@ -1,8 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-
 import 'package:time_machine/ui/widgets/central_button/blured_text_central_button.dart';
-import 'package:time_machine/uikit/ui_colors.dart';
+
+import 'package:time_machine/uikit/themes/ui_colors.dart';
 import 'package:time_machine/uikit/ui_consts.dart';
 
 class CentralItemButtonWidget extends StatelessWidget {
@@ -10,23 +10,21 @@ class CentralItemButtonWidget extends StatelessWidget {
     Key? key,
     required this.text,
     this.size,
-    required this.onLongTap,
-    required this.isBlur,
     required this.onTap,
+    required this.isBlur,
   }) : super(key: key);
 
   final String text;
   final double? size;
-  final VoidCallback onLongTap;
-  final bool isBlur;
   final VoidCallback onTap;
+  final bool isBlur;
 
   @override
   Widget build(BuildContext context) {
     // TODO: прокинуть реакцию на короткий тап
     return GestureDetector(
-      onLongPress: () => isBlur ? null : onLongTap(),
-      onTap: onTap,
+      onLongPress: () => isBlur ? null : onTap(),
+      onTap: () {},
       child: AnimatedContainer(
         duration: UIConsts.duration,
         width: size,
@@ -37,7 +35,7 @@ class CentralItemButtonWidget extends StatelessWidget {
           border: Border.all(width: 7, color: UIColors.cyanBright),
         ),
         child: isBlur
-            ? BluredTextCentralButton(maxSize: size ?? 0, onTap: onLongTap)
+            ? BluredTextCentralButton(maxSize: size ?? 0, onTap: onTap)
             : _InitTextCentralButton(text: text),
       ),
     );
