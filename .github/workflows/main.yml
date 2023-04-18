@@ -17,5 +17,8 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
         
+      - name: Run codegen
+        run: sh script_codegen.sh
+        
       - name: Testing
         run: flutter test
