@@ -21,7 +21,7 @@ jobs:
           FINHUB_KEY: ${{ secrets.FINHUB_KEY }}
       
       - name: Create envirnroment variable
-        run: echo "$FINHUB_KEY" > .env
+        run: echo "$FINHUB_KEY" > .env | cat .env
         
       - name: Run codegen
         run: sh script_codegen.sh
