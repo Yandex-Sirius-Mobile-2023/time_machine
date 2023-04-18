@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:time_machine/data/models/stock.dart';
 import 'package:time_machine/ui/widgets/stock_choose/short_info_row.dart';
+import 'package:time_machine/uikit/themes/ui_colors.dart';
 
 /// Card that represent a tickers that can be choosen.
 class StockCard extends StatelessWidget {
@@ -19,9 +20,15 @@ class StockCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return DecoratedBox(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        color: Theme.of(context).colorScheme.surface,
-      ),
+          borderRadius: BorderRadius.circular(16),
+          color: Theme.of(context).colorScheme.surface,
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.black26,
+              offset: Offset(0, 2),
+              blurRadius: 6,
+            )
+          ]),
       child: Padding(
         padding: const EdgeInsets.symmetric(
           vertical: 16,
@@ -60,9 +67,8 @@ class _CostRow extends StatelessWidget {
     required this.cost,
   });
 
-  Color get growColor => grow > 0 ? Colors.greenAccent : Colors.redAccent;
-  IconData get growIcon =>
-      grow > 0 ? Icons.arrow_drop_up : Icons.arrow_drop_down;
+  Color get growColor => grow > 0 ? UIColors.growColor : UIColors.dropColor;
+  IconData get growIcon => grow > 0 ? Icons.arrow_drop_up : Icons.arrow_drop_down;
 
   @override
   Widget build(BuildContext context) {
