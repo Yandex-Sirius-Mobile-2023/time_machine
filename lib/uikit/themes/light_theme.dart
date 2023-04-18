@@ -17,7 +17,7 @@ final ThemeData lightTheme = ThemeData.light(
     onSecondary: UIColors.black,
     surface: UIColors.whiteSurface,
     onSurface: UIColors.black,
-    background: UIColors.whiteBackground,
+    background: UIColors.whiteSurface,
     onBackground: UIColors.black,
   ),
 );
