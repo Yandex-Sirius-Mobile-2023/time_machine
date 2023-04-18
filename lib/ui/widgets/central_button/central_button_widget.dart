@@ -39,8 +39,9 @@ class CentralButtonWidget extends StatelessWidget {
         ],
         centralWidget: CentralItemButtonWidget(
           text: text,
-          onTap: onTap,
+          onLongTap: onTap,
           isBlur: false,
+          onTap: () {},
         ));
   }
 }
