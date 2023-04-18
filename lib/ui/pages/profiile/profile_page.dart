@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:time_machine/core/provider/theme_provider.dart';
+import 'package:time_machine/data/theme/settings_save_service.dart';
 import 'package:time_machine/ui/pages/profiile/profile_header.dart';
 import 'package:time_machine/ui/pages/profiile/settings_container.dart';
-import 'package:time_machine/uikit/themes/dark_theme.dart';
-import 'package:time_machine/uikit/themes/light_theme.dart';
 import 'package:time_machine/uikit/themes/ui_colors.dart';
 
 import 'game_preview.dart';
@@ -48,9 +47,9 @@ class ProfilePage extends StatelessWidget {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: ProviderScope.containerOf(context)
-            .read(themeProvider.notifier)
-            .toogleTheme,
+        onPressed: () => ProviderScope.containerOf(context)
+            .read(themeProvider(ThemeDataNotifier.isSystemLightTheme).notifier)
+            .setTheme(ThemeSettings.dark),
       ),
     );
   }
