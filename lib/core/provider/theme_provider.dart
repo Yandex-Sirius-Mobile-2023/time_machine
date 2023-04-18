@@ -4,9 +4,9 @@ import 'package:time_machine/uikit/themes/dark_theme.dart';
 import 'package:time_machine/uikit/themes/light_theme.dart';
 
 class ThemeDataNotifier extends StateNotifier<ThemeData> {
-  ThemeDataNotifier(ThemeMode themeMode)
+  ThemeDataNotifier(bool isDarkMode)
       : super(
-          themeMode == ThemeMode.system ? darkTheme : lightTheme,
+          isDarkMode ? darkTheme : lightTheme,
         );
 
   void toogleTheme() {
@@ -15,5 +15,8 @@ class ThemeDataNotifier extends StateNotifier<ThemeData> {
 }
 
 final themeProvider = StateNotifierProvider<ThemeDataNotifier, ThemeData>(
-  (ref) => ThemeDataNotifier(ThemeMode.system),
+  (ref) => ThemeDataNotifier(
+    WidgetsBinding.instance.platformDispatcher.platformBrightness ==
+        Brightness.dark,
+  ),
 );

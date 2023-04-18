@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logging/logging.dart';
@@ -23,8 +24,7 @@ class _AuthPageState extends State<AuthPage> {
   final UniqueKey registrationFormKey = UniqueKey();
 
   bool nowLoging = true;
-  late StreamSubscription subscription =
-      const Stream.empty().listen((event) {});
+  late StreamSubscription subscription = const Stream.empty().listen((event) {});
 
   @override
   Widget build(BuildContext context) {
@@ -40,33 +40,31 @@ class _AuthPageState extends State<AuthPage> {
     );
 
     return Scaffold(
-      body: Center(
+      resizeToAvoidBottomInset: false,
+      body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(32.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              AnimatedSwitcher(
-                duration: const Duration(milliseconds: 500),
-                transitionBuilder: (child, animation) => FadeTransition(
-                  opacity: Tween<double>(
-                    begin: 0,
-                    end: 1,
-                  ).animate(animation),
-                  child: child,
-                ),
-                child: nowLoging
-                    ? SignInForm(
-                        key: signFormKey,
-                        goToRegistration: () => setLoginStatus(false),
-                      )
-                    : RegisterForm(
-                        key: registrationFormKey,
-                        goToLogin: () => setLoginStatus(true),
-                      ),
+          padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 0),
+          child: Center(
+            child: PageTransitionSwitcher(
+              duration: const Duration(milliseconds: 500),
+              reverse: nowLoging,
+              transitionBuilder: (child, primaryAnimation, secondaryAnimation) =>
+                  SharedAxisTransition(
+                animation: primaryAnimation,
+                secondaryAnimation: secondaryAnimation,
+                transitionType: SharedAxisTransitionType.vertical,
+                child: child,
               ),
-            ],
+              child: nowLoging
+                  ? SignInForm(
+                      key: signFormKey,
+                      goToRegistration: () => setLoginStatus(false),
+                    )
+                  : RegisterForm(
+                      key: registrationFormKey,
+                      goToLogin: () => setLoginStatus(true),
+                    ),
+            ),
           ),
         ),
       ),

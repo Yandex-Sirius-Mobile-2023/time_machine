@@ -11,7 +11,7 @@ abstract class UIColors {
   static const grey = Colors.grey;
   static const darkGrey = Color.fromARGB(255, 118, 118, 118);
   static const blackSurface = Color.fromARGB(255, 28, 28, 28);
-  static const whiteSurface = Color.fromRGBO(248, 253, 254, 1);
+  static const whiteSurface = Color.fromRGBO(252, 252, 252, 1);
   static const whiteBackground = Color.fromRGBO(255, 255, 255, 1);
   static const whiteSecondary = Color.fromARGB(255, 241, 243, 245);
   static const whiteSecondaryContainer = Color.fromARGB(255, 232, 234, 236);
