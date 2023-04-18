@@ -5,6 +5,10 @@ jobs:
   install:
     runs-on: ubuntu-latest
     steps:
+      - shell: bash
+        env:
+          FINHUB_KEY: ${{ secrets.FINHUB_KEY }}
+      
       - name: Checkout code
         uses: actions/checkout@v3
 
@@ -16,12 +20,9 @@ jobs:
 
       - name: Install dependencies
         run: flutter pub get
-        
-        env:
-          FINHUB_KEY: ${{ secrets.FINHUB_KEY }}
-      
+    
       - name: Create envirnroment variable
-        run: echo "$FINHUB_KEY" > .env | cat .env
+        run: echo "$FINHUB_KEY" > .env
         
       - name: Run codegen
         run: sh script_codegen.sh
