@@ -13,12 +13,12 @@ class StockInfoBottomSheetBody extends StatefulWidget {
     Key? key,
     required this.stock,
     required this.boughtStockCount,
-    required this.setStockCount,
+    required this.onStockCountChanged,
   }) : super(key: key);
 
   final Stock stock;
   final int boughtStockCount;
-  final Function(int) setStockCount;
+  final Function(int) onStockCountChanged;
 
   @override
   State<StockInfoBottomSheetBody> createState() =>
@@ -39,7 +39,9 @@ class _StockInfoBottomSheetBodyState extends State<StockInfoBottomSheetBody> {
         UIText('\$${history.entries.last.value}'),
         _buildLastComparison(history),
         _buildChart(history),
+        const Spacer(),
         _buildStockCard(widget.stock, widget.boughtStockCount),
+        const SizedBox(height: UIConsts.paddings),
       ],
     );
   }
@@ -87,7 +89,7 @@ class _StockInfoBottomSheetBodyState extends State<StockInfoBottomSheetBody> {
           ),
           UIText(stock.ticker.getName()),
           const Spacer(),
-          Flexible(child: _buildStockCounter(boughtStockCount)),
+          _buildStockCounter(boughtStockCount),
         ],
       ),
     );
@@ -105,25 +107,18 @@ class _StockInfoBottomSheetBodyState extends State<StockInfoBottomSheetBody> {
                 setState(() {
                   _curCount = max(_curCount - 1, 0);
                 });
-                widget.setStockCount(_curCount);
+                widget.onStockCountChanged(_curCount);
               },
               icon: const Icon(
                 Icons.remove_circle,
                 color: UIColors.dropColor,
               ),
             ),
-            Flexible(
-              child: TextFormField(
-                controller: _countController,
-                enabled: false,
-                keyboardType: TextInputType.number,
-                textAlign: TextAlign.center,
-              ),
-            ),
+            Text('$_curCount'),
             IconButton(
               onPressed: () {
                 setState(() => _curCount += 1);
-                widget.setStockCount(_curCount);
+                widget.onStockCountChanged(_curCount);
               },
               icon: const Icon(
                 Icons.add_circle,
