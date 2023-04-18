@@ -63,9 +63,10 @@ class _BlurCentralButtonWidgetState extends State<BlurCentralButtonWidget> {
         isBlur
             ? CentralItemButtonWidget(
                 text: delta,
-                size: isBlur ? maxWidth : radius,
-                onTap: onTap,
-                isBlur: isBlur,
+                size: widget.isBlur ? maxWidth : radius,
+                onLongTap: widget.onTap,
+                isBlur: widget.isBlur,
+                onTap: () {},
               )
             : const SizedBox(),
       ],

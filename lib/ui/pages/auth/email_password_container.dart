@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:time_machine/uikit/themes/text/text_decorations.dart';
+import 'package:time_machine/uikit/themes/text/text_style.dart';
 
 import 'validators.dart';
 
@@ -10,15 +12,6 @@ class EmailPasswordContainer extends StatelessWidget {
   static const String createAccountText = "Create account text";
   static const columnSpacer = SizedBox(height: 16);
   static const smallSpacer = SizedBox(height: 4);
-  static const textDecoration = InputDecoration(
-    filled: true,
-    fillColor: Colors.green,
-    focusColor: Colors.transparent,
-    hoverColor: Colors.transparent,
-    border: OutlineInputBorder(
-      borderSide: BorderSide(color: Colors.transparent),
-    ),
-  );
 
   final TextEditingController emailTextContoler;
   final TextEditingController passwordTextContoler;
@@ -34,25 +27,31 @@ class EmailPasswordContainer extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // Email input
-        const Text(enterEmailAdressLabel),
+        const Text(
+          enterEmailAdressLabel,
+          style: infoStyle,
+        ),
         smallSpacer,
         TextFormField(
           controller: emailTextContoler,
-          decoration: textDecoration.copyWith(
+          decoration: inputFormDecoration(context).copyWith(
             hintText: enterEmailAdressHint,
           ),
           validator: (val) => emailValidator(val),
         ),
         columnSpacer,
         // Password input
-        const Text(enterPasswordLabel),
+        const Text(
+          enterPasswordLabel,
+          style: infoStyle,
+        ),
         smallSpacer,
         TextFormField(
           controller: passwordTextContoler,
           obscureText: true,
           enableSuggestions: false,
           autocorrect: false,
-          decoration: textDecoration.copyWith(
+          decoration: inputFormDecoration(context).copyWith(
             hintText: enterPasswordHint,
           ),
           validator: passwordValidator,

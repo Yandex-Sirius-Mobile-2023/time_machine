@@ -52,8 +52,9 @@ class _StockChooseButton extends ConsumerWidget {
         height: 32,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color:
-              ref.watch(stockChooseProvider)[ticker]! ? Colors.green : Colors.blue,
+          color: ref.watch(stockChooseProvider)[ticker]!
+              ? Colors.green
+              : Colors.blue,
         ),
         child: const Icon(Icons.keyboard_double_arrow_right_sharp),
       ),

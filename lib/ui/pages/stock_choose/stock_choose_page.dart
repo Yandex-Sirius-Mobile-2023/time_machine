@@ -47,7 +47,8 @@ class StockChoosePage extends StatelessWidget {
               int id = await ref
                   .watch(userPortfolioProvider.notifier)
                   .createPortfolio(tickers);
-              navigator.pushReplacementNamed(AppRoutes.tradingUrl, arguments: id);
+              navigator.pushReplacementNamed(AppRoutes.tradingUrl,
+                  arguments: id);
             },
             child: const Icon(Icons.access_alarms_outlined),
           );
