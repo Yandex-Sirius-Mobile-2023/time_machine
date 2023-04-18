@@ -25,7 +25,7 @@ class InfoCardGeneralCostWidget extends StatelessWidget {
           const Text(
             "Общая стоимость ценных бумаг",
             style: TextStyle(
-              color: UIColors.gray,
+              color: UIColors.grey,
               fontFamily: "Inter",
               fontSize: 16,
             ),
@@ -50,7 +50,7 @@ class InfoCardGeneralCostWidget extends StatelessWidget {
                   const Text(
                     "Осталось наличных денег",
                     style: TextStyle(
-                      color: UIColors.gray,
+                      color: UIColors.grey,
                       fontFamily: "Inter",
                       fontSize: 16,
                     ),

@@ -9,7 +9,7 @@ final ThemeData darkTheme = ThemeData.dark(
   cardColor: UIColors.blackSurface,
   colorScheme: const ColorScheme.dark().copyWith(
     primary: UIColors.cyanBright,
-    primaryContainer: UIColors.cyanDark,
+    primaryContainer: UIColors.cyanLight,
     onPrimary: UIColors.whiteSurface,
     secondary: UIColors.redAccent,
     secondaryContainer: UIColors.redAccentDark,
