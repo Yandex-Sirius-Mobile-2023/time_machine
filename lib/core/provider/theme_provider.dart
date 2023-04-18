@@ -6,7 +6,7 @@ import 'package:time_machine/uikit/themes/light_theme.dart';
 class ThemeDataNotifier extends StateNotifier<ThemeData> {
   ThemeDataNotifier(ThemeMode themeMode)
       : super(
-          themeMode == ThemeMode.dark ? darkTheme : lightTheme,
+          themeMode == ThemeMode.system ? darkTheme : lightTheme,
         );
 
   void toogleTheme() {
