@@ -20,10 +20,10 @@ class StockListView extends ConsumerWidget {
     return ListView.builder(
       padding: const EdgeInsets.all(16),
       clipBehavior: Clip.none,
-      itemExtent: 132,
+      itemExtent: 134,
       itemCount: tickers.length,
       itemBuilder: (context, index) => Padding(
-        padding: const EdgeInsets.symmetric(vertical: 4.0),
+        padding: const EdgeInsets.symmetric(vertical: 6.0),
         child: StockCard(
           ticker: tickers[index],
           grow: grows[index],
