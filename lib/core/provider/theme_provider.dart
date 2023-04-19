@@ -36,9 +36,9 @@ class ThemeDataNotifier extends StateNotifier<ThemeData> {
 }
 
 final themeProvider =
-    StateNotifierProvider.family<ThemeDataNotifier, ThemeData, bool>(
-  (ref, args) => ThemeDataNotifier(
+    StateNotifierProvider<ThemeDataNotifier, ThemeData>(
+  (ref) => ThemeDataNotifier(
     settingsManager: ref.watch(settingsRepoProvider),
-    systemDarkMode: args,
+    systemDarkMode: ThemeDataNotifier.isSystemLightTheme,
   ),
 );
