@@ -22,12 +22,11 @@ class StockCirclePreview extends StatelessWidget {
     return Stack(
       fit: StackFit.expand,
       children: [
-        ClipOval(child: child),
+        child,
         Positioned(
-          right: 4,
-          top: 4,
+          right: 0,
+          top: 0,
           child: CountChip(
-            height: 28,
             count: count,
             minWidth: minWidth,
             maxWidth: maxWidth,

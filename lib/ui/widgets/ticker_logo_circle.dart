@@ -15,9 +15,9 @@ class TickerLogoCircle extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final imageService = ref.watch(stockImageProvider(ticker));
 
-    return AspectRatio(
-      aspectRatio: 1,
-      child: ClipOval(
+    return ClipOval(
+      child: AspectRatio(
+        aspectRatio: 1,
         child: imageService.when(
           data: (imageurl) => SvgPicture.network(
             imageurl,

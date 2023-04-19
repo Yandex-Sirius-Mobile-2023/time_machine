@@ -21,7 +21,7 @@ class StockListView extends ConsumerWidget {
     return ListView.builder(
       padding: const EdgeInsets.all(UIConsts.paddings),
       clipBehavior: Clip.none,
-      itemExtent: 134,
+      itemExtent: 150,
       itemCount: tickers.length,
       itemBuilder: (context, index) => Padding(
         padding: const EdgeInsets.symmetric(vertical: 6.0),
