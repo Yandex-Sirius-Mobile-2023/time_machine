@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:time_machine/app.dart';
 import 'package:time_machine/uikit/themes/ui_colors.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SettingsContainer extends StatelessWidget {
   const SettingsContainer({super.key});
@@ -69,9 +70,9 @@ class _StartGameButton extends StatelessWidget {
       ),
       child: Padding(
         padding: EdgeInsets.all(textPadding),
-        child: const Text(
-          "Начать\nигру",
-          style: TextStyle(color: Colors.white),
+        child: Text(
+          AppLocalizations.of(context)!.startGame,
+          style: const TextStyle(color: Colors.white),
           textAlign: TextAlign.center,
         ),
       ),
@@ -102,9 +103,9 @@ class _SettingsButton extends StatelessWidget {
           )),
       child: Padding(
         padding: EdgeInsets.all(textPadding),
-        child: const Text(
-          "Изменить\nНастройки",
-          style: TextStyle(color: UIColors.cyanBright),
+        child: Text(
+          AppLocalizations.of(context)!.setSettings,
+          style: const TextStyle(color: UIColors.cyanBright),
           textAlign: TextAlign.center,
         ),
       ),
