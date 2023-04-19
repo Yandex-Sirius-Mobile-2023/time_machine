@@ -23,8 +23,7 @@ class StockInfoBottomSheetBody extends StatelessWidget {
         UIText(stock.ticker.getName()),
         UIText('\$${history.entries.last.value}'),
         _buildLastComparison(history),
-        _buildChart(history),
-        const Spacer(),
+        Flexible(child: _buildChart(history)),
         _buildStockCard(stock),
         const SizedBox(height: UIConsts.paddings),
       ],
@@ -52,12 +51,9 @@ class StockInfoBottomSheetBody extends StatelessWidget {
         .map((entry) =>
             [entry.key.millisecondsSinceEpoch.toDouble(), entry.value])
         .toList();
-    return SizedBox(
-      height: 200,
-      child: GraphCostWidget(
-        data: dataForChart,
-        isSingleWidget: true,
-      ),
+    return GraphCostWidget(
+      data: dataForChart,
+      isSingleWidget: true,
     );
   }
 
