@@ -5,8 +5,8 @@ import 'package:time_machine/data/env.dart';
 import 'package:time_machine/data/stocks_api/finhub_api.dart';
 import 'package:time_machine/data/stocks_api/stock_api_repository.dart';
 import 'package:time_machine/data/stocks_api/stock_info_provider.dart';
-import 'package:time_machine/data/theme/settings_repository.dart';
-import 'package:time_machine/data/theme/settings_save_service.dart';
+import 'package:time_machine/data/settings/settings_repository.dart';
+import 'package:time_machine/data/settings/settings_manager.dart';
 
 final dioProvider = Provider<Dio>(
   (ref) => Dio(),
@@ -27,6 +27,6 @@ final stockInfoServiceProvider = Provider<StockInfoProvider>(
 
 final settingsRepoProvider = Provider<SettingsManager>(
   (ref) => SettingsRepository(
-    Hive.box("settings"),
+    Hive.box(SettingsRepository.boxPath),
   ),
 );

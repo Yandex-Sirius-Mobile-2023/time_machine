@@ -5,6 +5,7 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:time_machine/core/utils/logging.dart.dart';
 
 import 'app.dart';
+import 'data/settings/settings_repository.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -14,7 +15,7 @@ void main() async {
   );
   initLogger();
   await Hive.initFlutter();
-  await Hive.openBox("settings");
+  await Hive.openBox(SettingsRepository.boxPath);
 
   runApp(const ProviderScope(child: App()));
 }

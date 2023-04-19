@@ -1,5 +1,5 @@
 import 'package:hive/hive.dart';
-import 'package:time_machine/data/theme/settings_save_service.dart';
+import 'package:time_machine/data/settings/settings_manager.dart';
 
 extension ThemeOptionsJson on ThemeSettings {
   String toJson() => name;
@@ -12,6 +12,7 @@ abstract class SettingsRepositoryKeys {
 }
 
 class SettingsRepository implements SettingsManager {
+  static const String boxPath = "settings";
   final Box settingsBox;
 
   SettingsRepository(this.settingsBox);

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:time_machine/core/provider/theme_provider.dart';
-import 'package:time_machine/data/theme/settings_save_service.dart';
+import 'package:time_machine/data/settings/settings_manager.dart';
 import 'package:time_machine/ui/pages/profiile/profile_header.dart';
 import 'package:time_machine/ui/pages/profiile/settings_container.dart';
 import 'package:time_machine/uikit/themes/ui_colors.dart';
