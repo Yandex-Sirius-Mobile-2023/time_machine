@@ -13,10 +13,6 @@ import 'package:time_machine/uikit/bottomsheet/ui_bottom_sheet.dart';
 class TradingPage extends ConsumerWidget {
   const TradingPage({Key? key}) : super(key: key);
 
-  void onTap() {
-    // TODO: onTap
-  }
-
   void onLongPress() {
     // TODO: onLongPress
   }
@@ -34,6 +30,13 @@ class TradingPage extends ConsumerWidget {
         ref.watch(activePortfolioProvider(activePortfolio));
 
     var currentStep = portfolioState.currentStep;
+
+    void onTap() {
+      ref.read(activePortfolioProvider(activePortfolio).notifier).goToFuture();
+      ref
+          .read(activePortfolioProvider(activePortfolio).notifier)
+          .commit(currentStep);
+    }
 
     var satellites = [
       for (var stock in activePortfolio.steps.last.stocks.keys)
@@ -61,7 +64,7 @@ class TradingPage extends ConsumerWidget {
               child: CardGeneralCostWidget(
                 delta: ref
                     .read(activePortfolioProvider(activePortfolio).notifier)
-                    .getGrowth(50)
+                    .getGrowth()
                     .toStringAsFixed(1),
                 costStocks:
                     portfolioState.portfolio.totalValue.toStringAsFixed(2),
