@@ -111,11 +111,10 @@ extension IterableExtension<T> on Iterable<T> {
   }
 }
 
-//TODO заменить. Вставил чисто как пример
 final _counterProvider = StateNotifierProvider((ref) => _Counter());
 
 class _Counter extends StateNotifier<int> {
-  _Counter() : super(5);
+  _Counter() : super(0);
   void increment() => state += 1;
   void decrement() => state -= 1;
 }
