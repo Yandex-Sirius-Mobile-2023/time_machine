@@ -12,19 +12,20 @@ class CentralItemButtonWidget extends StatelessWidget {
     this.size,
     required this.onTap,
     required this.isBlur,
+    required this.onLongPress,
   }) : super(key: key);
 
   final String text;
   final double? size;
   final VoidCallback onTap;
+  final VoidCallback onLongPress;
   final bool isBlur;
 
   @override
   Widget build(BuildContext context) {
-    // TODO: прокинуть реакцию на короткий тап
     return GestureDetector(
-      onLongPress: () => isBlur ? null : onTap(),
-      onTap: () {},
+      onLongPress: () => isBlur ? null : onLongPress(),
+      onTap: () => onTap,
       child: AnimatedContainer(
         duration: UIConsts.duration,
         width: size,

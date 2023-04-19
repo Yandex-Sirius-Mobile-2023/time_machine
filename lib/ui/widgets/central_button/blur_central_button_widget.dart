@@ -9,12 +9,14 @@ import 'package:time_machine/uikit/ui_consts.dart';
 
 class BlurCentralButtonWidget extends StatefulWidget {
   final VoidCallback onTap;
+  final VoidCallback onLongPress;
   final List<Widget> satellites;
 
   const BlurCentralButtonWidget({
     Key? key,
     required this.onTap,
     required this.satellites,
+    required this.onLongPress,
   }) : super(key: key);
 
   @override
@@ -26,9 +28,9 @@ class _BlurCentralButtonWidgetState extends State<BlurCentralButtonWidget> {
   String delta = "7 дн";
   double radius = 0;
   bool isBlur = false;
-  void onTap() => setState(() {
+  void onLongPress() => setState(() {
         isBlur = !isBlur;
-        widget.onTap();
+        widget.onLongPress();
       });
 
   @override
@@ -40,7 +42,8 @@ class _BlurCentralButtonWidgetState extends State<BlurCentralButtonWidget> {
       alignment: Alignment.center,
       children: [
         CentralButtonWidget(
-          onTap: onTap,
+          onLongPress: onLongPress,
+          onTap: widget.onTap,
           getRadius: (double r) =>
               Future.microtask(() => setState(() => radius = r * 2)),
           satellites: widget.satellites,
@@ -64,7 +67,8 @@ class _BlurCentralButtonWidgetState extends State<BlurCentralButtonWidget> {
             ? CentralItemButtonWidget(
                 text: delta,
                 size: isBlur ? maxWidth : radius,
-                onTap: onTap,
+                onTap: widget.onTap,
+                onLongPress: onLongPress,
                 isBlur: isBlur,
               )
             : const SizedBox(),
