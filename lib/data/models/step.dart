@@ -5,5 +5,5 @@ part 'step.freezed.dart';
 
 @Freezed(makeCollectionsUnmodifiable: false)
 class Step with _$Step {
-  factory Step(Map<Stock, int> stocks, DateTime date) = _Step;
+  const factory Step(Map<Stock, int> stocks, DateTime date) = _Step;
 }
