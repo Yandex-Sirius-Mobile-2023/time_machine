@@ -14,10 +14,7 @@ class ShortInfoRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Padding(
-          padding: const EdgeInsets.all(4),
-          child: TickerLogoCircle(ticker: ticker),
-        ),
+        TickerLogoCircle(ticker: ticker),
         const SizedBox(width: 12),
         _StockNameHeader(ticker: ticker),
         Expanded(
