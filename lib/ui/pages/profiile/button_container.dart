@@ -43,6 +43,7 @@ class ButtonsContainer extends StatelessWidget {
             ),
             Expanded(
               child: _SettingsButton(
+                text: rightButtonText,
                 textPadding: textPadding,
                 rounded: rounded,
                 onPressed: onSwitchPressed,
@@ -91,11 +92,13 @@ class _StartGameButton extends StatelessWidget {
 class _SettingsButton extends StatelessWidget {
   final double rounded;
   final Function() onPressed;
+  final String text;
 
   const _SettingsButton({
     required this.textPadding,
     required this.rounded,
     required this.onPressed,
+    required this.text,
   });
 
   final double textPadding;
@@ -115,9 +118,9 @@ class _SettingsButton extends StatelessWidget {
       ),
       child: Padding(
         padding: EdgeInsets.all(textPadding),
-        child: const Text(
-          "Изменить\nНастройки",
-          style: TextStyle(color: UIColors.cyanBright),
+        child: Text(
+          text,
+          style: const TextStyle(color: UIColors.cyanBright),
           textAlign: TextAlign.center,
         ),
       ),

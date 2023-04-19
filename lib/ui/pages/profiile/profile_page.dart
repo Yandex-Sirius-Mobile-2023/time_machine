@@ -65,7 +65,7 @@ class _ProfilePageState extends State<ProfilePage> {
             top: headerSize - buttonsContainerHeight / 2,
             height: buttonsContainerHeight,
             child: ButtonsContainer(
-              rightButtonText: gamePreview ? "Edit settings" : "Show game",
+              rightButtonText: gamePreview ? "Edit\nsettings" : "Show\ngame",
               onSwitchPressed: switchFregments,
             ),
           ),
