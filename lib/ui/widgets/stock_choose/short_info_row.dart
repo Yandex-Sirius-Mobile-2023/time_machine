@@ -14,10 +14,7 @@ class ShortInfoRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Padding(
-          padding: const EdgeInsets.all(4),
-          child: TickerLogoCircle(ticker: ticker),
-        ),
+        TickerLogoCircle(ticker: ticker),
         const SizedBox(width: 12),
         _StockNameHeader(ticker: ticker),
         Expanded(
@@ -34,7 +31,6 @@ class ShortInfoRow extends StatelessWidget {
 /// Button to choose ticker in.
 class _StockChooseButton extends ConsumerWidget {
   const _StockChooseButton({
-    super.key,
     required this.ticker,
   });
 
@@ -66,7 +62,7 @@ class _StockChooseButton extends ConsumerWidget {
 class _StockNameHeader extends StatelessWidget {
   final StockTicker ticker;
 
-  const _StockNameHeader({super.key, required this.ticker});
+  const _StockNameHeader({required this.ticker});
 
   @override
   Widget build(BuildContext context) {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:time_machine/data/models/stock.dart';
 import 'package:time_machine/ui/widgets/stock_choose/short_info_row.dart';
 import 'package:time_machine/uikit/themes/ui_colors.dart';
+import 'package:time_machine/uikit/ui_consts.dart';
 
 /// Card that represent a tickers that can be choosen.
 class StockCard extends StatelessWidget {
@@ -41,6 +42,7 @@ class StockCard extends StatelessWidget {
               flex: 2,
               child: ShortInfoRow(ticker: ticker),
             ),
+            const SizedBox(height: UIConsts.paddings),
             Flexible(
               flex: 1,
               child: _CostRow(
@@ -62,13 +64,13 @@ class _CostRow extends StatelessWidget {
   final double cost;
 
   const _CostRow({
-    super.key,
     required this.grow,
     required this.cost,
   });
 
   Color get growColor => grow > 0 ? UIColors.growColor : UIColors.dropColor;
-  IconData get growIcon => grow > 0 ? Icons.arrow_drop_up : Icons.arrow_drop_down;
+  IconData get growIcon =>
+      grow > 0 ? Icons.arrow_drop_up : Icons.arrow_drop_down;
 
   @override
   Widget build(BuildContext context) {

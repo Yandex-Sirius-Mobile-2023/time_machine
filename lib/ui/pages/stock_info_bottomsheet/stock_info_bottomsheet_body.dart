@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:time_machine/data/models/stock.dart';
 import 'package:time_machine/ui/widgets/graph_cost/graph_cost_widget.dart';
+import 'package:time_machine/ui/widgets/ticker_logo_circle.dart';
 import 'package:time_machine/uikit/themes/ui_colors.dart';
 import 'package:time_machine/uikit/ui_consts.dart';
 import 'package:time_machine/uikit/ui_text.dart';
@@ -63,10 +64,10 @@ class StockInfoBottomSheetBody extends StatelessWidget {
       color: UIColors.whiteBackground,
       child: Row(
         children: [
-          Container(
-            color: UIColors.dropColor,
-            height: 50,
-            width: 50,
+          Expanded(
+            child: TickerLogoCircle(
+              ticker: stock.ticker,
+            ),
           ),
           UIText(stock.ticker.getName()),
           const Spacer(),
@@ -110,11 +111,10 @@ extension IterableExtension<T> on Iterable<T> {
   }
 }
 
-//TODO заменить. Вставил чисто как пример
 final _counterProvider = StateNotifierProvider((ref) => _Counter());
 
 class _Counter extends StateNotifier<int> {
-  _Counter() : super(5);
+  _Counter() : super(0);
   void increment() => state += 1;
   void decrement() => state -= 1;
 }

@@ -1,0 +1,15 @@
+{
+  "welcome": "Welcome to",
+  "startGame": "Start\ngame",
+  "setSettings": "Set\nsettings",
+  "myGames": "My games",
+  "totalCostStock": "Total value of securities",
+  "cacheLeft": "Cache left",
+  "day": "Day",
+  "week": "Week",
+  "month": "Month",
+  "quarter": "Queater",
+  "halfYear": "Half year",
+  "year": "Year",
+  "touchOrHold": "Touch /\nhold"
+}

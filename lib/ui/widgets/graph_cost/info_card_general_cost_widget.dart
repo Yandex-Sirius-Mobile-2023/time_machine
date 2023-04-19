@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:time_machine/uikit/themes/ui_colors.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class InfoCardGeneralCostWidget extends StatelessWidget {
   const InfoCardGeneralCostWidget({
@@ -22,9 +23,9 @@ class InfoCardGeneralCostWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            "Общая стоимость ценных бумаг",
-            style: TextStyle(
+          Text(
+            AppLocalizations.of(context)!.totalCostStock,
+            style: const TextStyle(
               color: UIColors.grey,
               fontFamily: "Inter",
               fontSize: 16,
@@ -47,9 +48,9 @@ class InfoCardGeneralCostWidget extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    "Осталось наличных денег",
-                    style: TextStyle(
+                  Text(
+                    AppLocalizations.of(context)!.cacheLeft,
+                    style: const TextStyle(
                       color: UIColors.grey,
                       fontFamily: "Inter",
                       fontSize: 16,

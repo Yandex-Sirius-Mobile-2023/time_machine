@@ -22,7 +22,8 @@ class UserPortfolio extends StateNotifier<Map<int, Portfolio>> {
       stocks[stock] = 0;
     }
     List<Step> steps = [Step(stocks, startDate)];
-    state[id] = Portfolio(id, now, steps, startDate, 1000000.0, 0.0);
+    state[id] =
+        Portfolio(id, now, steps, startDate, 1000000.0, 0.0, Period.week);
 
     return id;
   }

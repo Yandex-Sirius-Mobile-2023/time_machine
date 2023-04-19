@@ -9,6 +9,7 @@ import 'central_item_button_widget.dart';
 
 class CentralButtonWidget extends StatelessWidget {
   final VoidCallback onTap;
+  final VoidCallback onLongPress;
   final Function(double) getRadius;
   final List<Widget> satellites;
 
@@ -17,6 +18,7 @@ class CentralButtonWidget extends StatelessWidget {
     required this.onTap,
     required this.getRadius,
     required this.satellites,
+    required this.onLongPress,
   }) : super(key: key);
 
   @override
@@ -33,6 +35,7 @@ class CentralButtonWidget extends StatelessWidget {
         centralWidget: CentralItemButtonWidget(
           text: text,
           onTap: onTap,
+          onLongPress: onLongPress,
           isBlur: false,
         ));
   }
