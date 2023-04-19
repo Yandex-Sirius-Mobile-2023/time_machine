@@ -5,6 +5,7 @@ import 'ui_colors.dart';
 final ThemeData darkTheme = ThemeData.dark(
   useMaterial3: true,
 ).copyWith(
+  canvasColor: Colors.transparent,
   scaffoldBackgroundColor: UIColors.deepBlack,
   cardColor: UIColors.blackSurface,
   colorScheme: const ColorScheme.dark().copyWith(

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 import 'package:time_machine/uikit/themes/ui_colors.dart';
 import 'package:time_machine/uikit/ui_consts.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BluredTimePickerButton extends StatefulWidget {
   const BluredTimePickerButton({
@@ -25,12 +26,12 @@ class _BluredTimePickerButtonState extends State<BluredTimePickerButton> {
   @override
   Widget build(BuildContext context) {
     final List<String> intervals = [
-      'День',
-      'Неделя',
-      'Месяц',
-      'Квартал',
-      'Полгода',
-      'Год'
+      AppLocalizations.of(context)!.day,
+      AppLocalizations.of(context)!.week,
+      AppLocalizations.of(context)!.month,
+      AppLocalizations.of(context)!.quarter,
+      AppLocalizations.of(context)!.halfYear,
+      AppLocalizations.of(context)!.year,
     ];
 
     return MouseRegion(
