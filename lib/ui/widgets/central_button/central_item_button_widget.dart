@@ -4,6 +4,7 @@ import 'package:time_machine/ui/widgets/central_button/blured_text_central_butto
 
 import 'package:time_machine/uikit/themes/ui_colors.dart';
 import 'package:time_machine/uikit/ui_consts.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CentralItemButtonWidget extends StatelessWidget {
   const CentralItemButtonWidget({
@@ -50,7 +51,7 @@ class _InitTextCentralButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String textButton = "Нажми /\nудерживай";
+    String textButton = AppLocalizations.of(context)!.touchOrHold;
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,

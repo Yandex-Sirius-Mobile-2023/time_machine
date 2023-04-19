@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class GamePreview extends StatelessWidget {
-  static const String gamePreviewText = "My games";
-
   const GamePreview({super.key});
 
   @override
   Widget build(BuildContext context) {
+    String gamePreviewText = AppLocalizations.of(context)!.myGames;
     return ListView(
       children: [
         Padding(
