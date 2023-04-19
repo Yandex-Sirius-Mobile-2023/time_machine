@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:time_machine/core/provider/theme_provider.dart';
 import 'package:time_machine/data/settings/settings_manager.dart';
-import 'package:time_machine/data/settings/settings_repository.dart';
 import 'package:time_machine/di_providers.dart';
 import 'package:time_machine/ui/pages/profiile/commons/options_text_header.dart';
 import 'package:time_machine/ui/pages/profiile/profile_page.dart';
@@ -15,7 +14,7 @@ class SettingsFragment extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: const [
         SizedBox(height: containerBottomPadding),
         OptionsTextHeader("Options"),
@@ -45,9 +44,10 @@ class _ThemeDropdownButton extends ConsumerWidget {
     var themeNotifier = ref.watch(themeProvider.notifier);
 
     return Row(
+      mainAxisSize: MainAxisSize.min,
       children: [
         const Text(
-          "Theme settings",
+          "Theme: ",
           style: TextStyle(
             fontSize: _ThemeDropdownButton.fontSyze,
           ),

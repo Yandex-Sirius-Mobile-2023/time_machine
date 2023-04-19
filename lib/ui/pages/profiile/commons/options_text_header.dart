@@ -6,7 +6,6 @@ class OptionsTextHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var colorScheme = Theme.of(context).colorScheme;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Text(

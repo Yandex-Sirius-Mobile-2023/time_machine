@@ -58,7 +58,6 @@ class ButtonsContainer extends StatelessWidget {
 class _StartGameButton extends StatelessWidget {
   final Function() onPressed;
   const _StartGameButton({
-    super.key,
     required this.rounded,
     required this.textPadding,
     required this.onPressed,
@@ -94,7 +93,6 @@ class _SettingsButton extends StatelessWidget {
   final Function() onPressed;
 
   const _SettingsButton({
-    super.key,
     required this.textPadding,
     required this.rounded,
     required this.onPressed,

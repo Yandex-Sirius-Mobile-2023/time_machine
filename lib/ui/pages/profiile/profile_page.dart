@@ -1,8 +1,5 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:time_machine/core/provider/theme_provider.dart';
-import 'package:time_machine/data/settings/settings_manager.dart';
 import 'package:time_machine/ui/pages/profiile/fragments/settings_fragment.dart';
 import 'package:time_machine/ui/pages/profiile/profile_header.dart';
 import 'package:time_machine/ui/pages/profiile/button_container.dart';
