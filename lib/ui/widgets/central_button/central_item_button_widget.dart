@@ -36,7 +36,7 @@ class CentralItemButtonWidget extends StatelessWidget {
           border: Border.all(width: 7, color: UIColors.cyanBright),
         ),
         child: isBlur
-            ? BluredTextCentralButton(maxSize: size ?? 0, onTap: onTap)
+            ? BluredTextCentralButton(maxSize: size ?? 0, onTap: onLongPress)
             : _InitTextCentralButton(text: text),
       ),
     );
