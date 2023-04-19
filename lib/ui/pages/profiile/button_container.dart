@@ -2,17 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:time_machine/app.dart';
 import 'package:time_machine/uikit/themes/ui_colors.dart';
 
-class SettingsContainer extends StatelessWidget {
-  const SettingsContainer({super.key});
+class ButtonsContainer extends StatelessWidget {
+  final Function() onSwitchPressed;
+  final String rightButtonText;
+  const ButtonsContainer({
+    super.key,
+    required this.onSwitchPressed,
+    required this.rightButtonText,
+  });
 
   static const double textPadding = 8;
   static const double rounded = 8;
 
   @override
   Widget build(BuildContext context) {
+    var colorScheme = Theme.of(context).colorScheme;
+
     return Card(
-      color: Colors.white,
-      elevation: 4,
+      color: colorScheme.background,
+      elevation: 6,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(rounded),
       ),
@@ -33,10 +41,11 @@ class SettingsContainer extends StatelessWidget {
             const SizedBox(
               width: 16,
             ),
-            const Expanded(
+            Expanded(
               child: _SettingsButton(
                 textPadding: textPadding,
                 rounded: rounded,
+                onPressed: onSwitchPressed,
               ),
             ),
           ],
@@ -82,10 +91,13 @@ class _StartGameButton extends StatelessWidget {
 
 class _SettingsButton extends StatelessWidget {
   final double rounded;
+  final Function() onPressed;
+
   const _SettingsButton({
     super.key,
     required this.textPadding,
     required this.rounded,
+    required this.onPressed,
   });
 
   final double textPadding;
@@ -93,15 +105,16 @@ class _SettingsButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return OutlinedButton(
-      onPressed: () {},
+      onPressed: onPressed,
       style: OutlinedButton.styleFrom(
-          side: const BorderSide(
-            width: 2.0,
-            color: UIColors.cyanBright,
-          ),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(rounded),
-          )),
+        side: const BorderSide(
+          width: 2.0,
+          color: UIColors.cyanBright,
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(rounded),
+        ),
+      ),
       child: Padding(
         padding: EdgeInsets.all(textPadding),
         child: const Text(
