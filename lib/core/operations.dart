@@ -15,20 +15,23 @@ class ActivePortfolioNotifier extends StateNotifier<PortfolioState> {
             state.portfolio.nowDate));
   }
 
-  //TODO add removeStock
   void removeStock(Stock stock) {
     state = PortfolioState(state.portfolio,
         Step(state.currentStep.stocks..remove(stock), state.portfolio.nowDate));
   }
 
-  void goToFuture(int period) {
+  void goToFuture() {
+    int period = state.portfolio.period.getPeriod();
     var dates = state.currentStep.stocks.keys.first.quotesHistory.keys.toList();
     state.portfolio = state.portfolio.copyWith(
-      nowDate: (dates.length-1 > dates.indexOf(state.portfolio.nowDate)+period) ? dates[dates.indexOf(state.portfolio.nowDate)+period]  : dates.last
-    );
+        nowDate:
+            (dates.length - 1 > dates.indexOf(state.portfolio.nowDate) + period)
+                ? dates[dates.indexOf(state.portfolio.nowDate) + period]
+                : dates.last);
   }
 
-  double getGrowth(int period) {
+  double getGrowth() {
+    int period = state.portfolio.period.getPeriod();
     double previous = 0;
     for (var stock in state.currentStep.stocks.keys) {
       int quantity = state.currentStep.stocks[stock]!;
@@ -37,7 +40,6 @@ class ActivePortfolioNotifier extends StateNotifier<PortfolioState> {
               period];
       previous += quantity * quote;
     }
-
 
     return (previous == 0)
         ? 0
@@ -62,8 +64,8 @@ class ActivePortfolioNotifier extends StateNotifier<PortfolioState> {
   void commit(currentStep) {
     state.portfolio.steps.add(currentStep);
     state.currentStep = Step(state.currentStep.stocks, state.portfolio.nowDate);
-    state = PortfolioState(state.portfolio, state.currentStep);
     updateBalanceAndTotalValue();
+    state = PortfolioState(state.portfolio, state.currentStep);
   }
 }
 
@@ -85,8 +87,7 @@ final portfolioGraphDataProvider =
       stocks.first.quotesHistory.keys.toList().indexOf(portfolio.nowDate);
   final x =
       List.generate(stocks.first.quotesHistory.values.length, (index) => index)
-          .sublist(startDate - 50, startDate);
-  //TODO change upperDate ->
+          .sublist(startDate - portfolio.period.getPeriod(), startDate);
   List<List<double>> graphData = [];
   for (int i in x) {
     double y = 0;

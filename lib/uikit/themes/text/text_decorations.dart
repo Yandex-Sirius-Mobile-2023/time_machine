@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:time_machine/uikit/themes/ui_colors.dart';
 
-// TODO: Вынести поля fill ... в настройки темы.
 InputDecoration inputFormDecoration(BuildContext context) => InputDecoration(
       border: OutlineInputBorder(
         borderSide: BorderSide.none,

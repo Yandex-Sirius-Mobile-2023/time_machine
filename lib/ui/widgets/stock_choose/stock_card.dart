@@ -62,13 +62,13 @@ class _CostRow extends StatelessWidget {
   final double cost;
 
   const _CostRow({
-    super.key,
     required this.grow,
     required this.cost,
   });
 
   Color get growColor => grow > 0 ? UIColors.growColor : UIColors.dropColor;
-  IconData get growIcon => grow > 0 ? Icons.arrow_drop_up : Icons.arrow_drop_down;
+  IconData get growIcon =>
+      grow > 0 ? Icons.arrow_drop_up : Icons.arrow_drop_down;
 
   @override
   Widget build(BuildContext context) {

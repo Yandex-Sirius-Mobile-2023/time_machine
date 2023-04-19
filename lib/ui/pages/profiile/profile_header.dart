@@ -36,7 +36,7 @@ class _GreetingsMessage extends StatelessWidget {
   static const String greetingsText = "Welcome to ";
   static const String appText = "Time Machine";
 
-  const _GreetingsMessage({super.key});
+  const _GreetingsMessage();
 
   @override
   Widget build(BuildContext context) {

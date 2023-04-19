@@ -32,7 +32,7 @@ class TickerLogoCircle extends ConsumerWidget {
 }
 
 class _TickerShimmer extends StatelessWidget {
-  const _TickerShimmer({super.key});
+  const _TickerShimmer();
 
   @override
   Widget build(BuildContext context) {
