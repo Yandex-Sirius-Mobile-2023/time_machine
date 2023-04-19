@@ -13,6 +13,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   initLogger();
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
 
   runApp(const ProviderScope(child: App()));
 }
