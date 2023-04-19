@@ -1,19 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:time_machine/app.dart';
 import 'package:time_machine/uikit/themes/ui_colors.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class SettingsContainer extends StatelessWidget {
-  const SettingsContainer({super.key});
+class ButtonsContainer extends StatelessWidget {
+  final Function() onSwitchPressed;
+  final String rightButtonText;
+  const ButtonsContainer({
+    super.key,
+    required this.onSwitchPressed,
+    required this.rightButtonText,
+  });
 
   static const double textPadding = 8;
   static const double rounded = 8;
 
   @override
   Widget build(BuildContext context) {
+    var colorScheme = Theme.of(context).colorScheme;
+
     return Card(
-      color: Colors.white,
-      elevation: 4,
+      color: colorScheme.background,
+      elevation: 6,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(rounded),
       ),
@@ -34,10 +41,12 @@ class SettingsContainer extends StatelessWidget {
             const SizedBox(
               width: 16,
             ),
-            const Expanded(
+            Expanded(
               child: _SettingsButton(
+                text: rightButtonText,
                 textPadding: textPadding,
                 rounded: rounded,
+                onPressed: onSwitchPressed,
               ),
             ),
           ],
@@ -70,9 +79,9 @@ class _StartGameButton extends StatelessWidget {
       ),
       child: Padding(
         padding: EdgeInsets.all(textPadding),
-        child: Text(
-          AppLocalizations.of(context)!.startGame,
-          style: const TextStyle(color: Colors.white),
+        child: const Text(
+          "Начать\nигру",
+          style: TextStyle(color: Colors.white),
           textAlign: TextAlign.center,
         ),
       ),
@@ -82,9 +91,14 @@ class _StartGameButton extends StatelessWidget {
 
 class _SettingsButton extends StatelessWidget {
   final double rounded;
+  final Function() onPressed;
+  final String text;
+
   const _SettingsButton({
     required this.textPadding,
     required this.rounded,
+    required this.onPressed,
+    required this.text,
   });
 
   final double textPadding;
@@ -92,19 +106,20 @@ class _SettingsButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return OutlinedButton(
-      onPressed: () {},
+      onPressed: onPressed,
       style: OutlinedButton.styleFrom(
-          side: const BorderSide(
-            width: 2.0,
-            color: UIColors.cyanBright,
-          ),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(rounded),
-          )),
+        side: const BorderSide(
+          width: 2.0,
+          color: UIColors.cyanBright,
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(rounded),
+        ),
+      ),
       child: Padding(
         padding: EdgeInsets.all(textPadding),
         child: Text(
-          AppLocalizations.of(context)!.setSettings,
+          text,
           style: const TextStyle(color: UIColors.cyanBright),
           textAlign: TextAlign.center,
         ),

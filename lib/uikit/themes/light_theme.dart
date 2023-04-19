@@ -5,6 +5,7 @@ import 'ui_colors.dart';
 final ThemeData lightTheme = ThemeData.light(
   useMaterial3: true,
 ).copyWith(
+  canvasColor: Colors.transparent,
   primaryColor: UIColors.cyanBright,
   scaffoldBackgroundColor: UIColors.whiteBackground,
   cardColor: UIColors.whiteSurface,

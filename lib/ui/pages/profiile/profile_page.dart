@@ -1,18 +1,25 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:time_machine/core/provider/theme_provider.dart';
-import 'package:time_machine/data/settings/settings_manager.dart';
+import 'package:time_machine/ui/pages/profiile/fragments/settings_fragment.dart';
 import 'package:time_machine/ui/pages/profiile/profile_header.dart';
-import 'package:time_machine/ui/pages/profiile/settings_container.dart';
+import 'package:time_machine/ui/pages/profiile/button_container.dart';
 import 'package:time_machine/uikit/themes/ui_colors.dart';
 
-import 'game_preview.dart';
+import 'fragments/game_preview_fragment.dart';
 
 const double headerSize = 250;
 const double buttonsContainerHeight = 86;
+const double containerBottomPadding = buttonsContainerHeight / 2 + 12;
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
+
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  bool gamePreview = true;
 
   @override
   Widget build(BuildContext context) {
@@ -30,28 +37,47 @@ class ProfilePage extends StatelessWidget {
             left: 0,
             child: const ProfileHeader(),
           ),
-          const Positioned(
+          Positioned(
+            top: headerSize,
+            right: 0,
+            left: 0,
+            bottom: 0,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: PageTransitionSwitcher(
+                transitionBuilder:
+                    (child, primaryAnimation, secondaryAnimation) =>
+                        SharedAxisTransition(
+                  animation: primaryAnimation,
+                  secondaryAnimation: secondaryAnimation,
+                  transitionType: SharedAxisTransitionType.horizontal,
+                  child: child,
+                ),
+                child: gamePreview
+                    ? const GamePreviewFragment()
+                    : const SettingsFragment(),
+              ),
+            ),
+          ),
+          Positioned(
             left: 32,
             right: 32,
             top: headerSize - buttonsContainerHeight / 2,
             height: buttonsContainerHeight,
-            child: SettingsContainer(),
-          ),
-          const Positioned(
-            top: headerSize + buttonsContainerHeight / 2 + 24,
-            right: 0,
-            left: 0,
-            bottom: 0,
-            child: GamePreview(),
+            child: ButtonsContainer(
+              rightButtonText: gamePreview ? "Edit\nsettings" : "Show\ngame",
+              onSwitchPressed: switchFregments,
+            ),
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => ProviderScope.containerOf(context)
-            .read(themeProvider(ThemeDataNotifier.isSystemLightTheme).notifier)
-            .setTheme(ThemeSettings.dark),
-      ),
     );
+  }
+
+  void switchFregments() {
+    setState(() {
+      gamePreview = !gamePreview;
+    });
   }
 }
 
@@ -60,6 +86,8 @@ class _ProfileBackground extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var colorScheme = Theme.of(context).colorScheme;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -75,9 +103,9 @@ class _ProfileBackground extends StatelessWidget {
             ),
           ),
         ),
-        const Expanded(
+        Expanded(
           child: ColoredBox(
-            color: UIColors.whiteBackground,
+            color: colorScheme.surface,
           ),
         ),
       ],
