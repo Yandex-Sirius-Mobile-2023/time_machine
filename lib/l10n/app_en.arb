@@ -30,5 +30,10 @@
   "loginHeaderBottomMessage": "To get started with TimeMachine you need create account.",
   "dontHaveAnAccount": "Dont have an account? Sign up",
   "or": "or",
-  "signWithGoogle": "Sign with Google"
+  "signWithGoogle": "Sign with Google",
+  "@_REGISTER_PAGE" : {},
+  "registerAccountText" : "Register account",
+  "registerHeaderMessage": "Create you free account!",
+  "registerBottomMessage": "To get started with TimeMachine, create you account.",
+  "alreadyHaveAnAccount": "Already have account?"
 }

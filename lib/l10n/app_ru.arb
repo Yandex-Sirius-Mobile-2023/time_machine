@@ -28,7 +28,12 @@
   "logIn" : "Войти",
   "loginHeaderMessage": "Войти в аккаунт",
   "loginHeaderBottomMessage": "Чтобы войти в TimeMachine создайте аккаунт.",
-  "dontHaveAnAccount": "Dont have an account? Sign up",
+  "dontHaveAnAccount": "Нет аккаунта? Создайте новый!",
   "or": "или",
-  "signWithGoogle": "Войти с помощью Google"
+  "signWithGoogle": "Войти с помощью Google",
+  "@_REGISTER_PAGE" : {},
+  "registerAccountText" : "Зарегистрировать",
+  "registerHeaderMessage": "Создайте свой бесплатный аккаунт!",
+  "registerBottomMessage": "Для начала работы с TimeMachine создайте аккаунт.",
+  "alreadyHaveAnAccount": "Уже есть аккаунт?"
 }
