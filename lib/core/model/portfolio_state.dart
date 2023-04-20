@@ -12,9 +12,6 @@ class PortfolioState with _$PortfolioState {
       _PortfolioState;
 }
 
-
-
-
 enum Period {
   day,
   week,

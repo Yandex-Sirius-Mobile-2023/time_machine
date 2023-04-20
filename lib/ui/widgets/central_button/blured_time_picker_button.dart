@@ -3,18 +3,22 @@ import 'dart:math';
 
 import 'package:circular_widgets/circular_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:time_machine/core/model/portfolio_state.dart';
 
 import 'package:time_machine/uikit/themes/ui_colors.dart';
 import 'package:time_machine/uikit/ui_consts.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BluredTimePickerButton extends StatefulWidget {
   const BluredTimePickerButton({
     Key? key,
     required this.maxSize,
+    required this.onSuccess,
+    required this.initIndex,
   }) : super(key: key);
 
   final double maxSize;
+  final Function(Period) onSuccess;
+  final int initIndex;
 
   @override
   State<BluredTimePickerButton> createState() => _BluredTimePickerButtonState();
@@ -24,15 +28,14 @@ class _BluredTimePickerButtonState extends State<BluredTimePickerButton> {
   int? touched;
 
   @override
+  void initState() {
+    touched = widget.initIndex;
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final List<String> intervals = [
-      AppLocalizations.of(context)!.day,
-      AppLocalizations.of(context)!.week,
-      AppLocalizations.of(context)!.month,
-      AppLocalizations.of(context)!.quarter,
-      AppLocalizations.of(context)!.halfYear,
-      AppLocalizations.of(context)!.year,
-    ];
+    final List<String> intervals = UIConsts.periods(context);
 
     return MouseRegion(
       child: Center(
@@ -56,12 +59,16 @@ class _BluredTimePickerButtonState extends State<BluredTimePickerButton> {
                     }
 
                     return _ItemBluredTimePickerButton(
-                        onTapDown: () => setState(() => touched = i),
-                        onTapCancel: () => setState(() => touched = null),
-                        angle: angle,
-                        isTouched: (touched ?? -1) == i,
-                        text: intervals[i],
-                        size: value / 20);
+                      onTapDown: () => setState(() => touched = i),
+                      onTapCancel: () => setState(() => touched = null),
+                      angle: angle,
+                      isTouched: (touched ?? -1) == i,
+                      text: intervals[i],
+                      size: value / 20,
+                      onSuccess: () {
+                        widget.onSuccess(Period.values[i]);
+                      },
+                    );
                   },
                   itemsLength: intervals.length,
                   config: CircularWidgetConfig(
@@ -85,6 +92,7 @@ class _ItemBluredTimePickerButton extends StatelessWidget {
   final bool isTouched;
   final String text;
   final double size;
+  final VoidCallback onSuccess;
 
   const _ItemBluredTimePickerButton({
     Key? key,
@@ -94,15 +102,15 @@ class _ItemBluredTimePickerButton extends StatelessWidget {
     required this.isTouched,
     required this.text,
     required this.size,
+    required this.onSuccess,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // TODO: сделать отклик на успешный переход по датам
-
     return GestureDetector(
       onTapDown: (t) => onTapDown(),
       onTapCancel: onTapCancel,
+      onTapUp: (details) => onSuccess(),
       child: Center(
           child: Transform.rotate(
         angle: angle,

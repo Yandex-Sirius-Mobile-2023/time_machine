@@ -8,7 +8,7 @@ abstract class UIColors {
   static const cyanLight = Color.fromRGBO(5, 170, 185, 1);
   static const redAccent = Color.fromARGB(255, 241, 89, 80);
   static const redAccentDark = Color.fromARGB(255, 220, 70, 70);
-  static const grey = Colors.grey;
+  static const grey = Color.fromRGBO(215, 215, 215, 1);
   static const darkGrey = Color.fromARGB(255, 118, 118, 118);
   static const blackSurface = Color.fromARGB(255, 28, 28, 28);
   static const whiteSurface = Color.fromRGBO(252, 252, 252, 1);

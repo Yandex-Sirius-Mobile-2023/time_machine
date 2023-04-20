@@ -48,5 +48,7 @@
   "@_VALIDATOR_ERRORS" : {},
   "emptyEmail": "Email is empty",
   "invalidFormat": "Email invalid format",
-  "tooWeakPassword": "Password cannot be less than 6 characters"
+  "tooWeakPassword": "Password cannot be less than 6 characters",
+  "save": "Save",
+  "lowStocks": "Chose more stocks!"
 }

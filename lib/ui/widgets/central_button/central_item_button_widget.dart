@@ -1,10 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:time_machine/ui/widgets/central_button/blured_text_central_button.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:time_machine/core/model/portfolio_state.dart';
 
+import 'package:time_machine/ui/widgets/central_button/blured_text_central_button.dart';
 import 'package:time_machine/uikit/themes/ui_colors.dart';
 import 'package:time_machine/uikit/ui_consts.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CentralItemButtonWidget extends StatelessWidget {
   const CentralItemButtonWidget({
@@ -12,8 +13,10 @@ class CentralItemButtonWidget extends StatelessWidget {
     required this.text,
     this.size,
     required this.onTap,
-    required this.isBlur,
     required this.onLongPress,
+    required this.isBlur,
+    required this.onSuccess,
+    required this.initIndex,
   }) : super(key: key);
 
   final String text;
@@ -21,6 +24,8 @@ class CentralItemButtonWidget extends StatelessWidget {
   final VoidCallback onTap;
   final VoidCallback onLongPress;
   final bool isBlur;
+  final Function(Period) onSuccess;
+  final int initIndex;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +42,12 @@ class CentralItemButtonWidget extends StatelessWidget {
           border: Border.all(width: 7, color: UIColors.cyanBright),
         ),
         child: isBlur
-            ? BluredTextCentralButton(maxSize: size ?? 0, onTap: onLongPress)
+            ? BluredTextCentralButton(
+                maxSize: size ?? 0,
+                onClose: onLongPress,
+                onSuccess: onSuccess,
+                initIndex: initIndex,
+              )
             : _InitTextCentralButton(text: text),
       ),
     );

@@ -78,11 +78,7 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  void switchFregments() {
-    setState(() {
-      gamePreview = !gamePreview;
-    });
-  }
+  void switchFregments() => setState(() => gamePreview = !gamePreview);
 }
 
 class _ProfileBackground extends StatelessWidget {

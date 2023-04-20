@@ -1,52 +1,27 @@
 import 'package:time_machine/core/provider/user_portfolio/user_portfolio.dart';
-import 'package:time_machine/data/models/step.dart';
 import '../data/models/stock.dart';
 import 'model/portfolio_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:time_machine/data/models/portfolio.dart';
 
 class ActivePortfolioNotifier extends StateNotifier<PortfolioState> {
-  ActivePortfolioNotifier(super.state) {
-    print('constructor: $hashCode');
-  }
+  ActivePortfolioNotifier(super.state);
 
-  double getBalance(){
-    print(state.portfolio.balance);
-    print("from getBalance");
+  double getBalance() {
     return state.portfolio.balance;
   }
 
-  void addStock(Stock stock, int amount) {
+  void addStock(Stock stock, int amount, WidgetRef ref) {
     var stocks = state.currentStep.stocks;
     stocks.update(stock, (value) => value + amount);
-
-
-    Step step = state.currentStep.copyWith(stocks: stocks);
-
+    var step = state.currentStep.copyWith(stocks: stocks);
     var balance = state.portfolio.balance -
         stock.quotesHistory[state.now]! * state.currentStep.stocks[stock]!;
-    print(balance);
-
-    Portfolio portfolio = state.portfolio.copyWith(
-        balance: balance);
-
-
+    print("in add stock begin ${state.portfolio.balance}");
+    var portfolio = state.portfolio.copyWith(balance: balance);
     state = state.copyWith(portfolio: portfolio, currentStep: step);
-    print(state.portfolio.balance);
-
-    /*
-    remove unfreezed
-    remove mutable state
-    remove update of balance before goToFuture
-    updatePortfolio change for state = state.copyWith
-    each method of stateNotifier only one overwrite for
-    write to get total from currentStep
-    move nowDate and period for PortfolioState from Portfolio
-    check that hashcode portfolio for next round will be the same
-     */
-
-    print(
-        'addStock ($hashCode) ${state.portfolio.balance} -> ${state.portfolio.hashCode}');
+    print("in add stock end ${state.portfolio.balance}");
+    ref.watch(userPortfolioProvider.notifier).updatePortfolio(state.portfolio);
   }
 
   double getTotal() {
@@ -57,12 +32,6 @@ class ActivePortfolioNotifier extends StateNotifier<PortfolioState> {
     }
     return total;
   }
-
-  // @override
-  // set state(PortfolioState value) {
-  //   super.state = value;
-  //   print('update ($hashCode):\nprev: ${state.portfolio.balance}\nnext: ${value.portfolio.balance}\n');
-  // }
 
   void goToFuture() {
     int period = state.period.getPeriod();
@@ -77,13 +46,10 @@ class ActivePortfolioNotifier extends StateNotifier<PortfolioState> {
     Portfolio portfolio = state.portfolio.copyWith(steps: steps);
 
     state = state.copyWith(
-        now: now,
-        portfolio: portfolio,
-        currentStep: currentStep);
+        now: now, portfolio: portfolio, currentStep: currentStep);
   }
 
   double getGrowth() {
-    print('getGrowth ${state.portfolio.balance}');
     int period = state.period.getPeriod();
     double previous = 0;
     for (var stock in state.currentStep.stocks.keys) {
@@ -119,26 +85,19 @@ class ActivePortfolioNotifier extends StateNotifier<PortfolioState> {
   }
 
   void updatePeriod(Period period) {
-    state = state.copyWith(period: period);
+    var portfolio = state.portfolio.copyWith(period: period);
+    state = state.copyWith(period: period, portfolio: portfolio);
   }
 }
 
 final activePortfolioProvider = StateNotifierProvider.family<
-    ActivePortfolioNotifier, PortfolioState, Portfolio>(
-  (ref, portfolio) => ActivePortfolioNotifier(PortfolioState(
-      portfolio,
-      portfolio.steps.last,
-      portfolio.steps.last.date,
-      Period.week)),
-);
+    ActivePortfolioNotifier, PortfolioState, Portfolio>((ref, portfolio) {
+      print("in StateNotifierProvider ${portfolio.balance}");
+
+  return ActivePortfolioNotifier(PortfolioState(portfolio, portfolio.steps.last,
+      portfolio.steps.last.date, portfolio.period));
+});
 
 final userPortfolioProvider =
     StateNotifierProvider<UserPortfolio, Map<int, Portfolio>>(
         (ref) => UserPortfolio([]));
-
-// final portfolioGraphDataProvider =
-//     StateProvider.family<List<List<double>>, Portfolio>((ref, portfolio) {
-//
-// });
-
-

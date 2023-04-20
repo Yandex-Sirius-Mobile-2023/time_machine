@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:time_machine/core/model/portfolio_state.dart';
 
 import 'package:time_machine/uikit/themes/ui_colors.dart';
 import 'package:time_machine/uikit/ui_consts.dart';
@@ -8,18 +9,22 @@ import 'blured_time_picker_button.dart';
 
 class BluredTextCentralButton extends StatelessWidget {
   final double maxSize;
-  final VoidCallback onTap;
+  final VoidCallback onClose;
+  final Function(Period) onSuccess;
+  final int initIndex;
 
   const BluredTextCentralButton({
     Key? key,
     required this.maxSize,
-    required this.onTap,
+    required this.onClose,
+    required this.onSuccess,
+    required this.initIndex,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: onClose,
       child: Stack(
         alignment: Alignment.center,
         children: [
@@ -46,7 +51,11 @@ class BluredTextCentralButton extends StatelessWidget {
               ),
             ),
           ),
-          BluredTimePickerButton(maxSize: maxSize)
+          BluredTimePickerButton(
+            maxSize: maxSize,
+            onSuccess: onSuccess,
+            initIndex: initIndex,
+          )
         ],
       ),
     );
