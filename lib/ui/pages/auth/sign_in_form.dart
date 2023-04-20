@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logging/logging.dart';
 import 'package:time_machine/core/provider/auth_provider.dart';
@@ -98,6 +99,8 @@ class _SignInFormState extends State<SignInForm> {
   }
 
   void emailSign(EmailAuthService authService, BuildContext context) {
+    var localization = AppLocalizations.of(context)!;
+
     if (currentLogging) {
       logger.info("Cancel login. User already await login results.");
       return;
@@ -117,8 +120,8 @@ class _SignInFormState extends State<SignInForm> {
       (error, stackTrace) {
         if (error is! EmailSignException) throw error!;
         String errorMessage = error.when<String>(
-          wrondCredentials: () => "Wrong credentials",
-          userNotFound: () => "User not found",
+          wrondCredentials: () => localization.wrondCredentials,
+          userNotFound: () => localization.userNotFound,
         );
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -130,6 +133,8 @@ class _SignInFormState extends State<SignInForm> {
   }
 
   void googleSignIn(GoogleAuthService service, BuildContext context) {
+    var localization = AppLocalizations.of(context)!;
+
     if (currentLogging) {
       logger.info("Cancel login. User already await login results.");
       return;
@@ -143,11 +148,18 @@ class _SignInFormState extends State<SignInForm> {
         )
         .onError(
       (error, stackTrace) {
+        if (error is PlatformException) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(localization.needGoogleService),
+            ),
+          );
+        }
         if (error is! CredentialSignException) throw error!;
         String errorMessage = error.when<String>(
-          userNotFound: () => "Unknown user",
-          invalidCredential: () => "Invalid credential",
-          exsistAnother: () => "Already exsist another",
+          userNotFound: () => localization.userNotFound,
+          invalidCredential: () => localization.wrondCredentials,
+          exsistAnother: () => localization.exsistAnother,
         );
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
