@@ -22,12 +22,16 @@ class UserPortfolio extends StateNotifier<Map<int, Portfolio>> {
       stocks[stock] = 0;
     }
     List<Step> steps = [Step(stocks, startDate)];
-    state = {...state , id: Portfolio(id, now, steps, 1000000.0)};
+    state = {...state, id: Portfolio(id, now, steps, 1000000.0)};
     return id;
   }
 
   Portfolio getPortfolio(int id) {
     return state[id]!;
+  }
+
+  Portfolio getLastPortfolio() {
+    return state.values.last;
   }
 
   void updatePortfolio(Portfolio portfolio) {

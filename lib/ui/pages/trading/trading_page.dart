@@ -13,7 +13,6 @@ import 'package:time_machine/uikit/bottomsheet/ui_bottom_sheet.dart';
 class TradingPage extends ConsumerWidget {
   const TradingPage({Key? key}) : super(key: key);
 
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final id = ModalRoute.of(context)!.settings.arguments as int;
@@ -33,7 +32,7 @@ class TradingPage extends ConsumerWidget {
       print("onTap");
       // print("${portfolioState.portfolio.steps}");
       ref.read(activePortfolioProvider(activePortfolio).notifier).goToFuture();
-      print("${portfolioState.now}");
+      // print("${portfolioState.now}");
       ref
           .read(userPortfolioProvider.notifier)
           .updatePortfolio(portfolioState.portfolio);
@@ -42,10 +41,7 @@ class TradingPage extends ConsumerWidget {
     // void onLongPress(Period period) {
     //   ref.read(activePortfolioProvider(activePortfolio).notifier).updatePeriod(period);
     // }
-    void onLongPress(){
-
-    }
-
+    void onLongPress() {}
 
     var satellites = [
       for (var stock in activePortfolio.steps.last.stocks.keys)
@@ -81,7 +77,10 @@ class TradingPage extends ConsumerWidget {
                     .getTotal()
                     .toStringAsFixed(2),
                 // portfolioState.portfolio.totalValue.toStringAsFixed(2),
-                costCache: ref.read(activePortfolioProvider(activePortfolio).notifier).getBalance().toStringAsFixed(2),
+                costCache: ref
+                    .read(activePortfolioProvider(activePortfolio).notifier)
+                    .getBalance()
+                    .toStringAsFixed(2),
                 data: graphData,
               ),
             ),
