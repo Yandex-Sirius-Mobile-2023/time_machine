@@ -22,7 +22,8 @@ abstract class SignFormText {
 class SignInForm extends StatefulWidget {
   final Function() goToRegistration;
 
-  const SignInForm({Key? key, required this.goToRegistration}) : super(key: key);
+  const SignInForm({Key? key, required this.goToRegistration})
+      : super(key: key);
 
   @override
   State<SignInForm> createState() => _SignInFormState();

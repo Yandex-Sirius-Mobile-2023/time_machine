@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:time_machine/core/operations.dart';
+import 'package:time_machine/data/models/portfolio.dart';
 import 'package:time_machine/data/models/stock.dart';
 import 'package:time_machine/ui/widgets/graph_cost/graph_cost_widget.dart';
 import 'package:time_machine/ui/widgets/ticker_logo_circle.dart';
@@ -7,16 +9,18 @@ import 'package:time_machine/uikit/themes/ui_colors.dart';
 import 'package:time_machine/uikit/ui_consts.dart';
 import 'package:time_machine/uikit/ui_text.dart';
 
-class StockInfoBottomSheetBody extends StatelessWidget {
+class StockInfoBottomSheetBody extends ConsumerWidget {
   const StockInfoBottomSheetBody({
     Key? key,
+    required this.activePortfolio,
     required this.stock,
   }) : super(key: key);
 
   final Stock stock;
+  final Portfolio activePortfolio;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final history = stock.quotesHistory;
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -84,15 +88,28 @@ class StockInfoBottomSheetBody extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             IconButton(
-              onPressed: () => ref.watch(_counterProvider.notifier).decrement(),
+              onPressed: () {
+                ref
+                    .read(activePortfolioProvider(activePortfolio).notifier)
+                    .addStock(stock, -1);
+              },
               icon: const Icon(
                 Icons.remove_circle,
                 color: UIColors.dropColor,
               ),
             ),
-            Text(ref.watch(_counterProvider).toString()),
+            Text(ref
+                .watch(activePortfolioProvider(activePortfolio))
+                .currentStep
+                .stocks[stock]
+                .toString()),
             IconButton(
-              onPressed: () => ref.watch(_counterProvider.notifier).increment(),
+              onPressed: () {
+                ref
+                    .read(activePortfolioProvider(activePortfolio).notifier)
+                    .addStock(stock, 1);
+
+              },
               icon: const Icon(
                 Icons.add_circle,
                 color: UIColors.growColor,
@@ -109,12 +126,4 @@ extension IterableExtension<T> on Iterable<T> {
   T fromEnd(int i) {
     return toList().reversed.toList()[i];
   }
-}
-
-final _counterProvider = StateNotifierProvider((ref) => _Counter());
-
-class _Counter extends StateNotifier<int> {
-  _Counter() : super(0);
-  void increment() => state += 1;
-  void decrement() => state -= 1;
 }

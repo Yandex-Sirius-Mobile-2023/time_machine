@@ -22,9 +22,7 @@ class UserPortfolio extends StateNotifier<Map<int, Portfolio>> {
       stocks[stock] = 0;
     }
     List<Step> steps = [Step(stocks, startDate)];
-    state[id] =
-        Portfolio(id, now, steps, startDate, 1000000.0, 0.0, Period.week);
-
+    state = {...state , id: Portfolio(id, now, steps, 1000000.0)};
     return id;
   }
 
@@ -33,6 +31,8 @@ class UserPortfolio extends StateNotifier<Map<int, Portfolio>> {
   }
 
   void updatePortfolio(Portfolio portfolio) {
-    state[portfolio.id] = portfolio;
+    print("in update -> ${portfolio.hashCode}");
+
+    state = {...state, portfolio.id: portfolio};
   }
 }
