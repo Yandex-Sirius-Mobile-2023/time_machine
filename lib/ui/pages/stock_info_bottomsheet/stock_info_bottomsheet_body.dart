@@ -21,14 +21,23 @@ class StockInfoBottomSheetBody extends ConsumerWidget {
   final int id;
 
   Widget build(BuildContext context, WidgetRef ref) {
+    var activePortfolio = ref.watch(userPortfolioProvider.notifier).getPortfolio(id);
     final history = stock.quotesHistory;
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         UIText(stock.ticker.getName()),
-        UIText('\$${history.entries.last.value}'),
+        UIText('\$${history[activePortfolio.steps.last.date]!}'),
         _buildLastComparison(history),
-        Flexible(child: _buildChart(history)),
+        Flexible(child:
+        Consumer(
+          builder: (context, ref , child) {
+            return
+            GraphCostWidget(
+              data: ref.watch(activePortfolioProvider(activePortfolio).notifier).getGraphDataForStock(stock),
+              isSingleWidget: true,
+            );},),
+        ),
         _buildStockCard(stock, context),
         const SizedBox(height: UIConsts.paddings),
       ],
@@ -50,17 +59,7 @@ class StockInfoBottomSheetBody extends ConsumerWidget {
           '${comparison > 0 ? '▲' : '▼'} ${comparison.toStringAsFixed(2)}%'),
     );
   }
-
-  Widget _buildChart(Map<DateTime, double> history) {
-    final dataForChart = history.entries
-        .map((entry) =>
-            [entry.key.millisecondsSinceEpoch.toDouble(), entry.value])
-        .toList();
-    return GraphCostWidget(
-      data: dataForChart,
-      isSingleWidget: true,
-    );
-  }
+  
 
   Widget _buildStockCard(Stock stock, BuildContext context) {
     return Container(

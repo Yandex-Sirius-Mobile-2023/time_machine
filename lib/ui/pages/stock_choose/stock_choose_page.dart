@@ -27,7 +27,7 @@ class StockChoosePage extends StatelessWidget {
                 )
                 .toList();
             return ref.watch(stockQuotesInfoProvider).when(
-                  loading: () => const CircularProgressIndicator(),
+                  loading: () => const Center(child:CircularProgressIndicator()),
                   data: (value) {
                     return StockListView(
                       tickers: tickers,
