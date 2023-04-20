@@ -44,5 +44,9 @@
   "@_REGISTER_PAGE_ERRORS" : {},
   "invalidEmail": "Invalid email format",
   "emailAlreadyUsed": "Email already used",
-  "weakPassword": "Password to weak"
+  "weakPassword": "Password to weak",
+  "@_VALIDATOR_ERRORS" : {},
+  "emptyEmail": "Email is empty",
+  "invalidFormat": "Email invalid format",
+  "tooWeakPassword": "Password cannot be less than 6 characters"
 }

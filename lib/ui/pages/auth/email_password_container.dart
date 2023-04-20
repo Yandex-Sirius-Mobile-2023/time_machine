@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:time_machine/app.dart';
 import 'package:time_machine/uikit/themes/text/text_decorations.dart';
 import 'package:time_machine/uikit/themes/text/text_style.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -33,7 +34,10 @@ class EmailPasswordContainer extends StatelessWidget {
           decoration: inputFormDecoration(context).copyWith(
             hintText: AppLocalizations.of(context)!.enterEmailAdress,
           ),
-          validator: (val) => emailValidator(val),
+          validator: (val) => emailValidatorText(
+            valid: emailValidator(val),
+            localizations: AppLocalizations.of(context)!,
+          ),
         ),
         columnSpacer,
         // Password input
@@ -50,10 +54,37 @@ class EmailPasswordContainer extends StatelessWidget {
           decoration: inputFormDecoration(context).copyWith(
             hintText: AppLocalizations.of(context)!.enterPassword,
           ),
-          validator: passwordValidator,
+          validator: (text) => passwordValidatorText(
+            valid: passwordValidator(text),
+            localizations: AppLocalizations.of(context)!,
+          ),
         ),
         columnSpacer,
       ],
     );
+  }
+
+  String? passwordValidatorText({
+    required PasswordValid valid,
+    required AppLocalizations localizations,
+  }) {
+    if (valid == PasswordValid.tooWeakPassword) {
+      return localizations.tooWeakPassword;
+    }
+    return null;
+  }
+
+  String? emailValidatorText({
+    required EmailValid valid,
+    required AppLocalizations localizations,
+  }) {
+    switch (valid) {
+      case EmailValid.invalidFormat:
+        return localizations.invalidEmail;
+      case EmailValid.empty:
+        return localizations.emptyEmail;
+      default:
+        return null;
+    }
   }
 }
