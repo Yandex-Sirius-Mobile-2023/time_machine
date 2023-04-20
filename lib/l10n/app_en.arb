@@ -19,6 +19,7 @@
   "darkTheme": "Dark",
   "systemTheme": "System",
   "lightTheme": "Light",
+  "signOut": "Sign out",
   "@_LOGIN_PAGE" : {},
   "yourEmailAdress": "Your email addres",
   "enterEmailAdress": "Enter email addres",
