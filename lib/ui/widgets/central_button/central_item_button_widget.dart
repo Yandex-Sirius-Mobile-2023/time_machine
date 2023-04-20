@@ -25,7 +25,7 @@ class CentralItemButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onLongPress: () => isBlur ? null : onLongPress(),
-      onTap: () => onTap(),
+      onTap: onTap,
       child: AnimatedContainer(
         duration: UIConsts.duration,
         width: size,
