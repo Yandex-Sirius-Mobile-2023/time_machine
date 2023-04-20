@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:riverpod/riverpod.dart';
 import 'package:time_machine/data/settings/settings_manager.dart';
-import 'package:time_machine/di_providers.dart';
 import 'package:time_machine/uikit/themes/dark_theme.dart';
 import 'package:time_machine/uikit/themes/light_theme.dart';
 
@@ -34,11 +33,3 @@ class ThemeDataNotifier extends StateNotifier<ThemeData> {
       WidgetsBinding.instance.platformDispatcher.platformBrightness ==
       Brightness.light;
 }
-
-final themeProvider =
-    StateNotifierProvider<ThemeDataNotifier, ThemeData>(
-  (ref) => ThemeDataNotifier(
-    settingsManager: ref.watch(settingsRepoProvider),
-    systemDarkMode: ThemeDataNotifier.isSystemLightTheme,
-  ),
-);

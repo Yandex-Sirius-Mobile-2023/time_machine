@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:hive/hive.dart';
 import 'package:time_machine/data/settings/settings_manager.dart';
 
@@ -9,6 +11,7 @@ extension ThemeOptionsJson on ThemeSettings {
 
 abstract class SettingsRepositoryKeys {
   static const String theme = "theme";
+  static const String language = "language";
 }
 
 class SettingsRepository implements SettingsManager {
@@ -25,6 +28,18 @@ class SettingsRepository implements SettingsManager {
   @override
   ThemeSettings getThemeSettings() {
     var value = settingsBox.get(SettingsRepositoryKeys.theme);
+    if (value == null) return ThemeSettings.system;
     return ThemeSettings.fromJson(value);
+  }
+
+  @override
+  Locale getLocale() {
+    var value = settingsBox.get(SettingsRepositoryKeys.language);
+    return Locale(value.toString());
+  }
+
+  @override
+  void saveLanguage(Locale locale) {
+    settingsBox.put(SettingsRepositoryKeys.language, locale.languageCode);
   }
 }
