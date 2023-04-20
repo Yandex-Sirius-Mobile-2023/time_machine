@@ -59,14 +59,12 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyAfgxwZstGbKxMD9c22WkBc_KBnzWJAP7k',
-    appId: '1:793231606892:ios:2af5a8520fd8ade65d8449',
+    appId: '1:793231606892:ios:f35a3f657eb87e8b5d8449',
     messagingSenderId: '793231606892',
     projectId: 'time-machine-sirius',
     storageBucket: 'time-machine-sirius.appspot.com',
-    androidClientId:
-        '793231606892-jmrlgd1a2eolcofht8plhv5jep23oukf.apps.googleusercontent.com',
-    iosClientId:
-        '793231606892-8el394ftpugf0sbrm12k91mu9kdj4cb0.apps.googleusercontent.com',
-    iosBundleId: 'com.example.timeMachine',
+    androidClientId: '793231606892-jmrlgd1a2eolcofht8plhv5jep23oukf.apps.googleusercontent.com',
+    iosClientId: '793231606892-dgdahm867d7ptsng2ei3h7vpfini1lt3.apps.googleusercontent.com',
+    iosBundleId: 'com.timurHarin',
   );
 }

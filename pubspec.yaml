@@ -12,6 +12,7 @@ environment:
 dependencies:
   analytics:
     path: packages/analytics
+  animations: ^2.0.7
   circular_widgets: ^3.0.0
   csv: ^5.0.1
   cupertino_icons: ^1.0.2
@@ -19,6 +20,7 @@ dependencies:
   envied: ^0.3.0
   firebase_auth: ^4.4.0
   firebase_core: ^2.9.0
+  firebase_crashlytics: ^3.1.1
   fl_chart: ^0.61.0
   flutter:
     sdk: flutter
@@ -33,7 +35,6 @@ dependencies:
   logging: ^1.1.1
   riverpod: ^2.3.4
   shimmer: ^2.0.0
-  animations: ^2.0.7
   flutter_localizations:
     sdk: flutter
   intl: any
