@@ -78,6 +78,8 @@ class _RegisterFormState extends State<RegisterForm> {
   }
 
   void emailCreate(EmailAuthService authService, BuildContext context) {
+    var localization = AppLocalizations.of(context)!;
+
     if (currentCreating) {
       logger.info("Cancel create. User already await create results.");
       return;
@@ -97,9 +99,9 @@ class _RegisterFormState extends State<RegisterForm> {
       (error, stackTrace) {
         if (error is! AuthCreateException) throw error!;
         String errorMessage = error.when<String>(
-          invalidEmail: () => "Invalid email format",
-          emailAlreadyUsed: () => "Email already used",
-          weakPassword: () => "Password to weak",
+          invalidEmail: () => localization.invalidEmail,
+          emailAlreadyUsed: () => localization.emailAlreadyUsed,
+          weakPassword: () => localization.weakPassword,
         );
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(

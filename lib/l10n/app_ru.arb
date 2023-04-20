@@ -40,5 +40,9 @@
   "registerAccountText" : "Зарегистрировать",
   "registerHeaderMessage": "Создайте свой бесплатный аккаунт!",
   "registerBottomMessage": "Для начала работы с TimeMachine создайте аккаунт.",
-  "alreadyHaveAnAccount": "Уже есть аккаунт?"
+  "alreadyHaveAnAccount": "Уже есть аккаунт?",
+  "@_REGISTER_PAGE_ERRORS" : {},
+  "invalidEmail": "Неверный формат почты",
+  "emailAlreadyUsed": "Почта уже используется",
+  "weakPassword": "Слишком слабый пароль"
 }

@@ -40,5 +40,9 @@
   "registerAccountText" : "Register account",
   "registerHeaderMessage": "Create you free account!",
   "registerBottomMessage": "To get started with TimeMachine, create you account.",
-  "alreadyHaveAnAccount": "Already have account?"
+  "alreadyHaveAnAccount": "Already have account?",
+  "@_REGISTER_PAGE_ERRORS" : {},
+  "invalidEmail": "Invalid email format",
+  "emailAlreadyUsed": "Email already used",
+  "weakPassword": "Password to weak"
 }
