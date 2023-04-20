@@ -18,7 +18,6 @@ class TradingPage extends ConsumerWidget {
     final id = ModalRoute.of(context)!.settings.arguments as int;
     Portfolio activePortfolio =
         ref.watch(userPortfolioProvider.notifier).getPortfolio(id);
-    print("after activePortfolioProvider ${activePortfolio.balance}");
     List<List<double>> graphData = ref
         .watch(activePortfolioProvider(activePortfolio).notifier)
         .getGraphData();

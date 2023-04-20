@@ -53,7 +53,7 @@ class _StockChooseButton extends ConsumerWidget {
               ? UIColors.growColor
               : UIColors.dropColor,
         ),
-        child: const Icon(Icons.add_rounded),
+        child: ref.watch(stockChooseProvider)[ticker]! ? const Icon(Icons.check): const Icon(Icons.add_rounded),
       ),
     );
   }
