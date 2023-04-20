@@ -1,15 +1,26 @@
-String? passwordValidator(String? password) {
-  if (password == null || password.length < 6) {
-    return "Too weak password";
-  }
-  return null;
+enum PasswordValid {
+  valid,
+  tooWeakPassword,
 }
 
-String? emailValidator(String? email) {
-  if (email == null) return "Enter E-mail";
+PasswordValid passwordValidator(String? password) {
+  if (password == null || password.length < 6) {
+    return PasswordValid.tooWeakPassword;
+  }
+  return PasswordValid.valid;
+}
+
+enum EmailValid {
+  valid,
+  empty,
+  invalidFormat,
+}
+
+EmailValid emailValidator(String? email) {
+  if (email == null) return EmailValid.empty;
   final bool emailValid = RegExp(
           r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
       .hasMatch(email);
-  if (!emailValid) return "Invalid email";
-  return null;
+  if (!emailValid) return EmailValid.invalidFormat;
+  return EmailValid.valid;
 }

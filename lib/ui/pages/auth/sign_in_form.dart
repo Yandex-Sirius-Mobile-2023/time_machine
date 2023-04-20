@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logging/logging.dart';
 import 'package:time_machine/core/provider/auth_provider.dart';
@@ -9,15 +10,12 @@ import 'package:time_machine/data/auth/status/credential_sign_exception.dart';
 import 'package:time_machine/data/auth/status/email_sign_exception.dart';
 import 'package:time_machine/ui/pages/auth/commons/header_text.dart';
 import 'package:time_machine/uikit/themes/text/text_style.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'email_password_container.dart';
 import 'sign_button.dart';
 
 Logger logger = Logger("SignInForm");
-
-abstract class SignFormText {
-  static const String createAccountText = "Login in";
-}
 
 class SignInForm extends StatefulWidget {
   final Function() goToRegistration;
@@ -43,10 +41,10 @@ class _SignInFormState extends State<SignInForm> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SignHeaderText(
-            message: "Sign in to account",
+          SignHeaderText(
+            message: AppLocalizations.of(context)!.loginHeaderMessage,
             bottomMessage:
-                "To get started with Roflo-Investor you need write normal UI",
+                AppLocalizations.of(context)!.loginHeaderBottomMessage,
           ),
           const SizedBox(height: 32),
           EmailPasswordContainer(
@@ -61,18 +59,20 @@ class _SignInFormState extends State<SignInForm> {
                 var service = ref.read(emailSignProvider);
                 emailSign(service, context);
               },
-              text: SignFormText.createAccountText,
+              text: AppLocalizations.of(context)!.createAccount,
             ),
           ),
           Center(
             child: TextButton(
               onPressed: widget.goToRegistration,
-              child: const Text("Dont have an account? Sign up"),
+              child: Text(
+                AppLocalizations.of(context)!.dontHaveAnAccount,
+              ),
             ),
           ),
-          const Center(
+          Center(
             child: Text(
-              "or",
+              AppLocalizations.of(context)!.or,
               style: infoStyle,
             ),
           ),
@@ -83,7 +83,7 @@ class _SignInFormState extends State<SignInForm> {
                 final service = ref.watch(googleSignProvider);
                 googleSignIn(service, context);
               },
-              text: "Sign with Google",
+              text: AppLocalizations.of(context)!.signWithGoogle,
             ),
           ),
         ],
@@ -99,6 +99,8 @@ class _SignInFormState extends State<SignInForm> {
   }
 
   void emailSign(EmailAuthService authService, BuildContext context) {
+    var localization = AppLocalizations.of(context)!;
+
     if (currentLogging) {
       logger.info("Cancel login. User already await login results.");
       return;
@@ -118,8 +120,8 @@ class _SignInFormState extends State<SignInForm> {
       (error, stackTrace) {
         if (error is! EmailSignException) throw error!;
         String errorMessage = error.when<String>(
-          wrondCredentials: () => "Wrong credentials",
-          userNotFound: () => "User not found",
+          wrondCredentials: () => localization.wrondCredentials,
+          userNotFound: () => localization.userNotFound,
         );
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -131,6 +133,8 @@ class _SignInFormState extends State<SignInForm> {
   }
 
   void googleSignIn(GoogleAuthService service, BuildContext context) {
+    var localization = AppLocalizations.of(context)!;
+
     if (currentLogging) {
       logger.info("Cancel login. User already await login results.");
       return;
@@ -144,11 +148,18 @@ class _SignInFormState extends State<SignInForm> {
         )
         .onError(
       (error, stackTrace) {
+        if (error is PlatformException) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(localization.needGoogleService),
+            ),
+          );
+        }
         if (error is! CredentialSignException) throw error!;
         String errorMessage = error.when<String>(
-          userNotFound: () => "Unknown user",
-          invalidCredential: () => "Invalid credential",
-          exsistAnother: () => "Already exsist another",
+          userNotFound: () => localization.userNotFound,
+          invalidCredential: () => localization.wrondCredentials,
+          exsistAnother: () => localization.exsistAnother,
         );
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(

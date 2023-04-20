@@ -15,11 +15,11 @@ class SettingsFragment extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
-      children: const [
-        SizedBox(height: containerBottomPadding),
-        OptionsTextHeader("Options"),
-        _ThemeDropdownButton(),
-        _LanguageDropdownButton(),
+      children: [
+        const SizedBox(height: containerBottomPadding),
+        OptionsTextHeader(AppLocalizations.of(context)!.options),
+        const _ThemeDropdownButton(),
+        const _LanguageDropdownButton(),
       ],
     );
   }
@@ -49,9 +49,9 @@ class _ThemeDropdownButton extends ConsumerWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        const Text(
-          "Theme: ",
-          style: TextStyle(
+        Text(
+          AppLocalizations.of(context)!.themeOptions,
+          style: const TextStyle(
             fontSize: _ThemeDropdownButton.fontSyze,
           ),
         ),
@@ -67,7 +67,12 @@ class _ThemeDropdownButton extends ConsumerWidget {
               .map<DropdownMenuItem<ThemeSettings>>(
                 (e) => DropdownMenuItem(
                   value: e,
-                  child: Text(e.name),
+                  child: Text(
+                    textFromTheme(
+                      e,
+                      AppLocalizations.of(context)!,
+                    ),
+                  ),
                 ),
               )
               .toList(),
@@ -80,11 +85,21 @@ class _ThemeDropdownButton extends ConsumerWidget {
       ],
     );
   }
+
+  static String textFromTheme(
+      ThemeSettings settings, AppLocalizations localizations) {
+    switch (settings) {
+      case ThemeSettings.dark:
+        return localizations.darkTheme;
+      case ThemeSettings.light:
+        return localizations.lightTheme;
+      case ThemeSettings.system:
+        return localizations.systemTheme;
+    }
+  }
 }
 
 class _LanguageDropdownButton extends ConsumerWidget {
-  static const String settingName = "Language: ";
-
   const _LanguageDropdownButton({Key? key}) : super(key: key);
 
   @override
@@ -95,9 +110,9 @@ class _LanguageDropdownButton extends ConsumerWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        const Text(
-          settingName,
-          style: TextStyle(
+        Text(
+          AppLocalizations.of(context)!.languageOptions,
+          style: const TextStyle(
             fontSize: _ThemeDropdownButton.fontSyze,
           ),
         ),
@@ -113,12 +128,16 @@ class _LanguageDropdownButton extends ConsumerWidget {
               .map<DropdownMenuItem<String>>(
                 (e) => DropdownMenuItem(
                   value: e.languageCode,
-                  child: Text(e.languageCode),
+                  child: Text(e.languageCode.toUpperCase()),
                 ),
               )
               .toList(),
           onChanged: (val) {
-            languageNotifier.saveLanguage(Locale(val!));
+            languageNotifier.saveLanguage(
+              Locale(
+                val!,
+              ),
+            );
           },
           dropdownColor: colorScheme.background,
         ),

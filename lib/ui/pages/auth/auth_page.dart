@@ -80,6 +80,6 @@ class _AuthPageState extends State<AuthPage> {
   }
 
   void succesfulLoginAction(BuildContext context) {
-    Navigator.of(context).pushReplacementNamed(AppRoutes.chooseStockURL);
+    Navigator.of(context).pushReplacementNamed(AppRoutes.profileUrl);
   }
 }
