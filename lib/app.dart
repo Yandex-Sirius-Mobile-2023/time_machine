@@ -18,6 +18,7 @@ class App extends ConsumerWidget {
     return MaterialApp(
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
+      locale: ref.watch(languageProvider),
       routes: {
         AppRoutes.loginURL: (_) => const AuthPage(),
         AppRoutes.chooseStockURL: (_) => const StockChoosePage(),

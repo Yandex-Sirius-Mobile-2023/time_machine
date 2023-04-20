@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:hive/hive.dart';
 import 'package:time_machine/data/settings/settings_manager.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 extension ThemeOptionsJson on ThemeSettings {
   String toJson() => name;
@@ -35,6 +36,7 @@ class SettingsRepository implements SettingsManager {
   @override
   Locale getLocale() {
     var value = settingsBox.get(SettingsRepositoryKeys.language);
+    if (value == null) return AppLocalizations.supportedLocales[0];
     return Locale(value.toString());
   }
 

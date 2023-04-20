@@ -9,5 +9,8 @@ class LanguageDataNotifier extends StateNotifier<Locale> {
     required this.settingsManager,
   }) : super(settingsManager.getLocale());
 
-  void saveLanguage(Locale locale) {}
+  void saveLanguage(Locale locale) {
+    settingsManager.saveLanguage(locale);
+    state = locale;
+  }
 }
