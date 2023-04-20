@@ -4,6 +4,7 @@ import 'package:time_machine/ui/pages/profiile/fragments/settings_fragment.dart'
 import 'package:time_machine/ui/pages/profiile/profile_header.dart';
 import 'package:time_machine/ui/pages/profiile/button_container.dart';
 import 'package:time_machine/uikit/themes/ui_colors.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'fragments/game_preview_fragment.dart';
 
@@ -65,8 +66,11 @@ class _ProfilePageState extends State<ProfilePage> {
             top: headerSize - buttonsContainerHeight / 2,
             height: buttonsContainerHeight,
             child: ButtonsContainer(
-              rightButtonText: gamePreview ? "Edit\nsettings" : "Show\ngame",
+              rightButtonText: gamePreview
+                  ? AppLocalizations.of(context)!.setSettings
+                  : AppLocalizations.of(context)!.showGames,
               onSwitchPressed: switchFregments,
+              leftButtonText: AppLocalizations.of(context)!.startGame,
             ),
           ),
         ],
