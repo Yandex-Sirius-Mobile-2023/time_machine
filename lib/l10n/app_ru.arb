@@ -12,5 +12,11 @@
   "halfYear": "Полгода",
   "year": "Год",
   "touchOrHold": "Нажми /\nудерживай",
-  "showGames": "Показать\nигры"
+  "showGames": "Показать\nигры",
+  "options": "Настройки",
+  "themeOptions": "Тема: ",
+  "languageOptions": "Язык: ",
+  "darkTheme": "Темная",
+  "systemTheme": "Системная",
+  "lightTheme": "Светлая"
 }

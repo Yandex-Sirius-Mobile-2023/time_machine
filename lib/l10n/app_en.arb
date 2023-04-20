@@ -12,5 +12,11 @@
   "halfYear": "Half year",
   "year": "Year",
   "touchOrHold": "Touch /\nhold",
-  "showGames": "Show\ngames"
+  "showGames": "Show\ngames",
+  "options": "Options",
+  "themeOptions": "Theme: ",
+  "languageOptions": "Language: ",
+  "darkTheme": "Dark",
+  "systemTheme": "System",
+  "lightTheme": "Light"
 }
