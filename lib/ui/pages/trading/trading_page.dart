@@ -3,41 +3,43 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:time_machine/core/model/portfolio_state.dart';
 import 'package:time_machine/core/operations.dart';
 import 'package:time_machine/data/models/portfolio.dart';
+import 'package:time_machine/ui/pages/stock_info_bottomsheet/stock_info_bottomsheet_body.dart';
 import 'package:time_machine/ui/widgets/central_button/blur_central_button_widget.dart';
 import 'package:time_machine/ui/widgets/graph_cost/card_general_cost_widget.dart';
 import 'package:time_machine/ui/widgets/ticker_logo_circle.dart';
 import 'package:time_machine/ui/widgets/trading/stock_circle_preview.dart';
+import 'package:time_machine/uikit/bottomsheet/ui_bottom_sheet.dart';
 
 class TradingPage extends ConsumerWidget {
   const TradingPage({Key? key}) : super(key: key);
-
-  void onTap(){}
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final id = ModalRoute.of(context)!.settings.arguments as int;
     Portfolio activePortfolio =
         ref.watch(userPortfolioProvider.notifier).getPortfolio(id);
-
-    List<List<double>> graphData =
-        ref.watch(portfolioGraphDataProvider(activePortfolio));
-
+    List<List<double>> graphData = ref
+        .watch(activePortfolioProvider(activePortfolio).notifier)
+        .getGraphData();
     PortfolioState portfolioState =
         ref.watch(activePortfolioProvider(activePortfolio));
 
-    var currentStep = portfolioState.currentStep;
+    void onTap() {
+      ref.read(activePortfolioProvider(activePortfolio).notifier).goToFuture();
+      ref
+          .read(userPortfolioProvider.notifier)
+          .updatePortfolio(portfolioState.portfolio);
+    }
 
     var satellites = [
       for (var stock in activePortfolio.steps.last.stocks.keys)
         StockCirclePreview(
-            count: currentStep.stocks[stock]!,
+            count: portfolioState.currentStep.stocks[stock]!,
             onPressed: () {
-              ref
-                  .read(activePortfolioProvider(activePortfolio).notifier)
-                  .addStock(stock, 1);
-              ref
-                  .read(activePortfolioProvider(activePortfolio).notifier)
-                  .updateBalanceAndTotalValue();
+              showUIBottomSheet(
+                  context: context,
+                  content: StockInfoBottomSheetBody(id: id,
+                      stock: stock));
             },
             child: TickerLogoCircle(ticker: stock.ticker))
     ];
@@ -56,11 +58,16 @@ class TradingPage extends ConsumerWidget {
               child: CardGeneralCostWidget(
                 delta: ref
                     .read(activePortfolioProvider(activePortfolio).notifier)
-                    .getGrowth(50)
+                    .getGrowth()
                     .toStringAsFixed(1),
-                costStocks:
-                    portfolioState.portfolio.totalValue.toStringAsFixed(2),
-                costCache: portfolioState.portfolio.balance.toStringAsFixed(2),
+                costStocks: ref
+                    .read(activePortfolioProvider(activePortfolio).notifier)
+                    .getTotal()
+                    .toStringAsFixed(2),
+                costCache: ref
+                    .read(activePortfolioProvider(activePortfolio).notifier)
+                    .getBalance()
+                    .toStringAsFixed(2),
                 data: graphData,
               ),
             ),
@@ -70,21 +77,9 @@ class TradingPage extends ConsumerWidget {
               child: BlurCentralButtonWidget(
                 satellites: satellites,
                 onTap: onTap,
+                onLongPress: () {},
               ),
             ),
-            Flexible(
-              flex: 3,
-                child:
-                ElevatedButton(
-                  onPressed: () {
-                    //TODO reanimate balance and total
-                    ref.read(activePortfolioProvider(activePortfolio).notifier).goToFuture(7);
-                    ref.read(activePortfolioProvider(activePortfolio).notifier).commit(currentStep);
-                    ref.read(userPortfolioProvider.notifier).updatePortfolio(portfolioState.portfolio);
-                  },
-                  child: const Text('Press me'),
-                )
-            )
           ],
         ),
       ),

@@ -7,11 +7,12 @@ import 'package:time_machine/core/provider/auth_provider.dart';
 import 'package:time_machine/data/auth/auth_service.dart';
 import 'package:time_machine/data/auth/status/auth_create_exception.dart';
 import 'package:time_machine/ui/pages/auth/commons/header_text.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'email_password_container.dart';
 import 'sign_button.dart';
 
-Logger logger = Logger("SignInForm");
+Logger logger = Logger("RegisterForm");
 
 class RegisterForm extends StatefulWidget {
   final Function() goToLogin;
@@ -23,11 +24,6 @@ class RegisterForm extends StatefulWidget {
 }
 
 class _RegisterFormState extends State<RegisterForm> {
-  static const String registerAccountText = "Register account";
-  static const String headerMessage = "Create you free account!";
-  static const String headerBottomMessage =
-      "To get started with Roflo-Investor, create you account.";
-
   final _formKey = GlobalKey<FormState>();
   final _emailTextContoler = TextEditingController();
   final _passwordTextContoler = TextEditingController();
@@ -35,15 +31,17 @@ class _RegisterFormState extends State<RegisterForm> {
 
   @override
   Widget build(BuildContext context) {
+    var localization = AppLocalizations.of(context)!;
+
     return Form(
       key: _formKey,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SignHeaderText(
-            message: headerMessage,
-            bottomMessage: headerBottomMessage,
+          SignHeaderText(
+            message: localization.registerHeaderMessage,
+            bottomMessage: localization.registerBottomMessage,
           ),
           const SizedBox(height: 32),
           EmailPasswordContainer(
@@ -58,13 +56,13 @@ class _RegisterFormState extends State<RegisterForm> {
                 var service = ref.read(emailSignProvider);
                 emailCreate(service, context);
               },
-              text: registerAccountText,
+              text: localization.registerAccountText,
             ),
           ),
           Center(
             child: TextButton(
               onPressed: widget.goToLogin,
-              child: const Text("Already have account?"),
+              child: Text(localization.alreadyHaveAnAccount),
             ),
           )
         ],
@@ -80,6 +78,8 @@ class _RegisterFormState extends State<RegisterForm> {
   }
 
   void emailCreate(EmailAuthService authService, BuildContext context) {
+    var localization = AppLocalizations.of(context)!;
+
     if (currentCreating) {
       logger.info("Cancel create. User already await create results.");
       return;
@@ -99,9 +99,9 @@ class _RegisterFormState extends State<RegisterForm> {
       (error, stackTrace) {
         if (error is! AuthCreateException) throw error!;
         String errorMessage = error.when<String>(
-          invalidEmail: () => "Invalid email format",
-          emailAlreadyUsed: () => "Email already used",
-          weakPassword: () => "Password to weak",
+          invalidEmail: () => localization.invalidEmail,
+          emailAlreadyUsed: () => localization.emailAlreadyUsed,
+          weakPassword: () => localization.weakPassword,
         );
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(

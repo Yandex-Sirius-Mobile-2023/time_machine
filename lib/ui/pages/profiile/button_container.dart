@@ -1,18 +1,30 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+
 import 'package:time_machine/app.dart';
 import 'package:time_machine/uikit/themes/ui_colors.dart';
 
-class SettingsContainer extends StatelessWidget {
-  const SettingsContainer({super.key});
+class ButtonsContainer extends StatelessWidget {
+  final Function() onSwitchPressed;
+  final String rightButtonText;
+  final String leftButtonText;
+  const ButtonsContainer({
+    Key? key,
+    required this.onSwitchPressed,
+    required this.rightButtonText,
+    required this.leftButtonText,
+  }) : super(key: key);
 
   static const double textPadding = 8;
   static const double rounded = 8;
 
   @override
   Widget build(BuildContext context) {
+    var colorScheme = Theme.of(context).colorScheme;
+
     return Card(
-      color: Colors.white,
-      elevation: 4,
+      color: colorScheme.background,
+      elevation: 6,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(rounded),
       ),
@@ -28,15 +40,18 @@ class SettingsContainer extends StatelessWidget {
                 textPadding: textPadding,
                 onPressed: () => Navigator.of(context)
                     .pushReplacementNamed(AppRoutes.chooseStockURL),
+                text: leftButtonText,
               ),
             ),
             const SizedBox(
               width: 16,
             ),
-            const Expanded(
+            Expanded(
               child: _SettingsButton(
+                text: rightButtonText,
                 textPadding: textPadding,
                 rounded: rounded,
+                onPressed: onSwitchPressed,
               ),
             ),
           ],
@@ -49,14 +64,16 @@ class SettingsContainer extends StatelessWidget {
 class _StartGameButton extends StatelessWidget {
   final Function() onPressed;
   const _StartGameButton({
-    super.key,
+    Key? key,
+    required this.onPressed,
     required this.rounded,
     required this.textPadding,
-    required this.onPressed,
-  });
+    required this.text,
+  }) : super(key: key);
 
   final double rounded;
   final double textPadding;
+  final String text;
 
   @override
   Widget build(BuildContext context) {
@@ -70,9 +87,9 @@ class _StartGameButton extends StatelessWidget {
       ),
       child: Padding(
         padding: EdgeInsets.all(textPadding),
-        child: const Text(
-          "Начать\nигру",
-          style: TextStyle(color: Colors.white),
+        child: Text(
+          text,
+          style: const TextStyle(color: Colors.white),
           textAlign: TextAlign.center,
         ),
       ),
@@ -82,10 +99,14 @@ class _StartGameButton extends StatelessWidget {
 
 class _SettingsButton extends StatelessWidget {
   final double rounded;
+  final Function() onPressed;
+  final String text;
+
   const _SettingsButton({
-    super.key,
     required this.textPadding,
     required this.rounded,
+    required this.onPressed,
+    required this.text,
   });
 
   final double textPadding;
@@ -93,20 +114,21 @@ class _SettingsButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return OutlinedButton(
-      onPressed: () {},
+      onPressed: onPressed,
       style: OutlinedButton.styleFrom(
-          side: const BorderSide(
-            width: 2.0,
-            color: UIColors.cyanBright,
-          ),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(rounded),
-          )),
+        side: const BorderSide(
+          width: 2.0,
+          color: UIColors.cyanBright,
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(rounded),
+        ),
+      ),
       child: Padding(
         padding: EdgeInsets.all(textPadding),
-        child: const Text(
-          "Изменить\nНастройки",
-          style: TextStyle(color: UIColors.cyanBright),
+        child: Text(
+          text,
+          style: const TextStyle(color: UIColors.cyanBright),
           textAlign: TextAlign.center,
         ),
       ),

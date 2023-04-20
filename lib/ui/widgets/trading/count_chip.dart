@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:time_machine/uikit/themes/ui_colors.dart';
+import 'package:time_machine/uikit/ui_consts.dart';
 
 /// Chip with number display.
 class CountChip extends StatelessWidget {
-  final double height;
   final int count;
   final double minWidth, maxWidth;
   const CountChip({
     Key? key,
-    required this.height,
     required this.count,
     required this.minWidth,
     required this.maxWidth,
@@ -17,10 +16,10 @@ class CountChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8),
-      height: height,
+      padding: const EdgeInsets.symmetric(
+          vertical: UIConsts.paddings / 3, horizontal: UIConsts.paddings / 5),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(UIConsts.doublePaddings),
         color: UIColors.cyanBright,
         boxShadow: const [
           BoxShadow(

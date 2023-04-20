@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:time_machine/core/model/portfolio_state.dart';
 import 'package:time_machine/data/models/step.dart';
 
 part 'portfolio.freezed.dart';
@@ -9,8 +10,9 @@ class Portfolio with _$Portfolio {
     int id,
     DateTime createdAt,
     List<Step> steps,
-    DateTime nowDate,
+    // DateTime nowDate, //
     double balance,
-    double totalValue,
+    // double totalValue, //???????
+    Period period,
   ) = _Portfolio;
 }

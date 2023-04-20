@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:time_machine/core/provider/stock_choose/stock_provider.dart';
 import 'package:time_machine/data/models/stock.dart';
 import 'package:time_machine/ui/widgets/ticker_logo_circle.dart';
+import 'package:time_machine/uikit/themes/ui_colors.dart';
 import 'package:time_machine/uikit/ui_consts.dart';
 
 /// Widget that displays name, icon and choose button.
@@ -14,10 +15,7 @@ class ShortInfoRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Padding(
-          padding: const EdgeInsets.all(4),
-          child: TickerLogoCircle(ticker: ticker),
-        ),
+        TickerLogoCircle(ticker: ticker),
         const SizedBox(width: 12),
         _StockNameHeader(ticker: ticker),
         Expanded(
@@ -34,7 +32,6 @@ class ShortInfoRow extends StatelessWidget {
 /// Button to choose ticker in.
 class _StockChooseButton extends ConsumerWidget {
   const _StockChooseButton({
-    super.key,
     required this.ticker,
   });
 
@@ -53,10 +50,10 @@ class _StockChooseButton extends ConsumerWidget {
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: ref.watch(stockChooseProvider)[ticker]!
-              ? Colors.green
-              : Colors.blue,
+              ? UIColors.growColor
+              : UIColors.dropColor,
         ),
-        child: const Icon(Icons.keyboard_double_arrow_right_sharp),
+        child: ref.watch(stockChooseProvider)[ticker]! ? const Icon(Icons.check): const Icon(Icons.add_rounded),
       ),
     );
   }
@@ -66,7 +63,7 @@ class _StockChooseButton extends ConsumerWidget {
 class _StockNameHeader extends StatelessWidget {
   final StockTicker ticker;
 
-  const _StockNameHeader({super.key, required this.ticker});
+  const _StockNameHeader({required this.ticker});
 
   @override
   Widget build(BuildContext context) {

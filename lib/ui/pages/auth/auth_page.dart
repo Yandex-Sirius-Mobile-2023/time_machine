@@ -24,7 +24,8 @@ class _AuthPageState extends State<AuthPage> {
   final UniqueKey registrationFormKey = UniqueKey();
 
   bool nowLoging = true;
-  late StreamSubscription subscription = const Stream.empty().listen((event) {});
+  late StreamSubscription subscription =
+      const Stream.empty().listen((event) {});
 
   @override
   Widget build(BuildContext context) {
@@ -48,8 +49,9 @@ class _AuthPageState extends State<AuthPage> {
             child: PageTransitionSwitcher(
               duration: const Duration(milliseconds: 500),
               reverse: nowLoging,
-              transitionBuilder: (child, primaryAnimation, secondaryAnimation) =>
-                  SharedAxisTransition(
+              transitionBuilder:
+                  (child, primaryAnimation, secondaryAnimation) =>
+                      SharedAxisTransition(
                 animation: primaryAnimation,
                 secondaryAnimation: secondaryAnimation,
                 transitionType: SharedAxisTransitionType.vertical,
@@ -78,6 +80,6 @@ class _AuthPageState extends State<AuthPage> {
   }
 
   void succesfulLoginAction(BuildContext context) {
-    Navigator.of(context).pushReplacementNamed(AppRoutes.chooseStockURL);
+    Navigator.of(context).pushReplacementNamed(AppRoutes.profileUrl);
   }
 }
