@@ -10,18 +10,29 @@ class ActivePortfolioNotifier extends StateNotifier<PortfolioState> {
     print('constructor: $hashCode');
   }
 
-  void addStock(Stock stock, int amount) {
-    // updateTotalValue();
-    Portfolio portfolio = state.portfolio.copyWith(
-        balance: state.portfolio.balance -
-            stock.quotesHistory[state.now]! * state.currentStep.stocks[stock]!);
+  double getBalance(){
+    print(state.portfolio.balance);
+    print("from getBalance");
+    return state.portfolio.balance;
+  }
 
+  void addStock(Stock stock, int amount) {
     var stocks = state.currentStep.stocks;
     stocks.update(stock, (value) => value + amount);
 
+
     Step step = state.currentStep.copyWith(stocks: stocks);
 
+    var balance = state.portfolio.balance -
+        stock.quotesHistory[state.now]! * state.currentStep.stocks[stock]!;
+    print(balance);
+
+    Portfolio portfolio = state.portfolio.copyWith(
+        balance: balance);
+
+
     state = state.copyWith(portfolio: portfolio, currentStep: step);
+    print(state.portfolio.balance);
 
     /*
     remove unfreezed
@@ -56,16 +67,19 @@ class ActivePortfolioNotifier extends StateNotifier<PortfolioState> {
   void goToFuture() {
     int period = state.period.getPeriod();
     var dates = state.currentStep.stocks.keys.first.quotesHistory.keys.toList();
+    var now = (dates.length - 1 > dates.indexOf(state.now) + period)
+        ? dates[dates.indexOf(state.now) + period]
+        : dates.last;
+
+    var currentStep = state.currentStep.copyWith(date: now);
     var steps = state.portfolio.steps;
-    steps.add(state.currentStep);
+    steps.add(currentStep);
     Portfolio portfolio = state.portfolio.copyWith(steps: steps);
 
     state = state.copyWith(
-        now: (dates.length - 1 > dates.indexOf(state.now) + period)
-            ? dates[dates.indexOf(state.now) + period]
-            : dates.last,
+        now: now,
         portfolio: portfolio,
-        currentStep: state.currentStep.copyWith(date: state.now));
+        currentStep: currentStep);
   }
 
   double getGrowth() {
@@ -114,7 +128,7 @@ final activePortfolioProvider = StateNotifierProvider.family<
   (ref, portfolio) => ActivePortfolioNotifier(PortfolioState(
       portfolio,
       portfolio.steps.last,
-      DateTime.parse("2011-01-03 00:00:00"),
+      portfolio.steps.last.date,
       Period.week)),
 );
 

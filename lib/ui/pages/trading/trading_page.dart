@@ -31,8 +31,9 @@ class TradingPage extends ConsumerWidget {
 
     void onTap() {
       print("onTap");
-      print("${portfolioState.portfolio.steps}");
+      // print("${portfolioState.portfolio.steps}");
       ref.read(activePortfolioProvider(activePortfolio).notifier).goToFuture();
+      print("${portfolioState.now}");
       ref
           .read(userPortfolioProvider.notifier)
           .updatePortfolio(portfolioState.portfolio);
@@ -80,7 +81,7 @@ class TradingPage extends ConsumerWidget {
                     .getTotal()
                     .toStringAsFixed(2),
                 // portfolioState.portfolio.totalValue.toStringAsFixed(2),
-                costCache: activePortfolio.balance.toStringAsFixed(2),
+                costCache: ref.read(activePortfolioProvider(activePortfolio).notifier).getBalance().toStringAsFixed(2),
                 data: graphData,
               ),
             ),

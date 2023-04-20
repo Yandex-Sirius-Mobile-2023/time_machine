@@ -108,6 +108,7 @@ class StockInfoBottomSheetBody extends ConsumerWidget {
                 ref
                     .read(activePortfolioProvider(activePortfolio).notifier)
                     .addStock(stock, 1);
+
               },
               icon: const Icon(
                 Icons.add_circle,
