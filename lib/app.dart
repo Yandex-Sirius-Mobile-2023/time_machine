@@ -26,7 +26,7 @@ class App extends ConsumerWidget {
         AppRoutes.profileUrl: (_) => const ProfilePage(),
       },
       initialRoute: needSignIn ? AppRoutes.loginURL : AppRoutes.profileUrl,
-      theme: ref.watch(themeProvider),
+      theme: ref.watch(themeProvider(ThemeDataNotifier.isSystemLightTheme)),
     );
   }
 }

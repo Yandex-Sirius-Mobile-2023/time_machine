@@ -12,7 +12,12 @@ class ThemeDataNotifier extends StateNotifier<ThemeData> {
     required this.settingsManager,
     required bool systemDarkMode,
   }) : super(
-          systemDarkMode ? lightTheme : darkTheme,
+          isLightTheme(
+            settingsManager.getThemeSettings(),
+            isSystemLightTheme,
+          )
+              ? lightTheme
+              : darkTheme,
         );
 
   void setTheme(ThemeSettings settings) {
@@ -33,12 +38,17 @@ class ThemeDataNotifier extends StateNotifier<ThemeData> {
   static bool get isSystemLightTheme =>
       WidgetsBinding.instance.platformDispatcher.platformBrightness ==
       Brightness.light;
+
+  static bool isLightTheme(ThemeSettings settings, bool defaultLight) {
+    return (settings == ThemeSettings.system && defaultLight) ||
+        settings == ThemeSettings.light;
+  }
 }
 
 final themeProvider =
-    StateNotifierProvider<ThemeDataNotifier, ThemeData>(
-  (ref) => ThemeDataNotifier(
+    StateNotifierProvider.family<ThemeDataNotifier, ThemeData, bool>(
+  (ref, args) => ThemeDataNotifier(
     settingsManager: ref.watch(settingsRepoProvider),
-    systemDarkMode: ThemeDataNotifier.isSystemLightTheme,
+    systemDarkMode: args,
   ),
 );
