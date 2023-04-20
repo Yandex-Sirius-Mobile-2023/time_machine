@@ -18,6 +18,7 @@ class TradingPage extends ConsumerWidget {
     final id = ModalRoute.of(context)!.settings.arguments as int;
     Portfolio activePortfolio =
         ref.watch(userPortfolioProvider.notifier).getPortfolio(id);
+    print("after activePortfolioProvider ${activePortfolio.balance}");
     List<List<double>> graphData = ref
         .watch(activePortfolioProvider(activePortfolio).notifier)
         .getGraphData();
@@ -38,8 +39,8 @@ class TradingPage extends ConsumerWidget {
             onPressed: () {
               showUIBottomSheet(
                   context: context,
-                  content: StockInfoBottomSheetBody(
-                      activePortfolio: activePortfolio, stock: stock));
+                  content: StockInfoBottomSheetBody(id: id,
+                      stock: stock));
             },
             child: TickerLogoCircle(ticker: stock.ticker))
     ];

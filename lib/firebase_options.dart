@@ -63,8 +63,10 @@ class DefaultFirebaseOptions {
     messagingSenderId: '793231606892',
     projectId: 'time-machine-sirius',
     storageBucket: 'time-machine-sirius.appspot.com',
-    androidClientId: '793231606892-jmrlgd1a2eolcofht8plhv5jep23oukf.apps.googleusercontent.com',
-    iosClientId: '793231606892-dgdahm867d7ptsng2ei3h7vpfini1lt3.apps.googleusercontent.com',
+    androidClientId:
+        '793231606892-jmrlgd1a2eolcofht8plhv5jep23oukf.apps.googleusercontent.com',
+    iosClientId:
+        '793231606892-dgdahm867d7ptsng2ei3h7vpfini1lt3.apps.googleusercontent.com',
     iosBundleId: 'com.timurHarin',
   );
 }

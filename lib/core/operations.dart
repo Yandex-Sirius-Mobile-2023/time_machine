@@ -11,14 +11,17 @@ class ActivePortfolioNotifier extends StateNotifier<PortfolioState> {
     return state.portfolio.balance;
   }
 
-  void addStock(Stock stock, int amount) {
+  void addStock(Stock stock, int amount, WidgetRef ref) {
     var stocks = state.currentStep.stocks;
     stocks.update(stock, (value) => value + amount);
     var step = state.currentStep.copyWith(stocks: stocks);
     var balance = state.portfolio.balance -
         stock.quotesHistory[state.now]! * state.currentStep.stocks[stock]!;
+    print("in add stock begin ${state.portfolio.balance}");
     var portfolio = state.portfolio.copyWith(balance: balance);
     state = state.copyWith(portfolio: portfolio, currentStep: step);
+    print("in add stock end ${state.portfolio.balance}");
+    ref.watch(userPortfolioProvider.notifier).updatePortfolio(state.portfolio);
   }
 
   double getTotal() {
@@ -82,17 +85,18 @@ class ActivePortfolioNotifier extends StateNotifier<PortfolioState> {
   }
 
   void updatePeriod(Period period) {
-    state = state.copyWith(period: period);
+    var portfolio = state.portfolio.copyWith(period: period);
+    state = state.copyWith(period: period, portfolio: portfolio);
   }
 }
 
 final activePortfolioProvider = StateNotifierProvider.family<
-    ActivePortfolioNotifier, PortfolioState, Portfolio>(
-  (ref, portfolio) => ActivePortfolioNotifier(
-    PortfolioState(portfolio, portfolio.steps.last, portfolio.steps.last.date,
-        Period.week),
-  ),
-);
+    ActivePortfolioNotifier, PortfolioState, Portfolio>((ref, portfolio) {
+      print("in StateNotifierProvider ${portfolio.balance}");
+
+  return ActivePortfolioNotifier(PortfolioState(portfolio, portfolio.steps.last,
+      portfolio.steps.last.date, portfolio.period));
+});
 
 final userPortfolioProvider =
     StateNotifierProvider<UserPortfolio, Map<int, Portfolio>>(

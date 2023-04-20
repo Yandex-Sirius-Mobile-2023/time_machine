@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:time_machine/core/model/portfolio_state.dart';
 import 'package:time_machine/data/models/portfolio.dart';
 import 'package:time_machine/data/models/step.dart';
 import 'package:time_machine/data/models/stock.dart';
@@ -12,7 +13,7 @@ class UserPortfolio extends StateNotifier<Map<int, Portfolio>> {
   }
 
   Future<int> createPortfolio(List<StockTicker> tickers) async {
-    DateTime startDate = DateTime.parse("2011-01-03 00:00:00");
+    DateTime startDate = DateTime.parse("2012-01-03 00:00:00");
     final now = DateTime.now();
     final id = now.microsecondsSinceEpoch;
     Map<Stock, int> stocks = {};
@@ -22,7 +23,7 @@ class UserPortfolio extends StateNotifier<Map<int, Portfolio>> {
       stocks[stock] = 0;
     }
     List<Step> steps = [Step(stocks, startDate)];
-    state = {...state, id: Portfolio(id, now, steps, 1000000.0)};
+    state = {...state, id: Portfolio(id, now, steps, 1000000.0, Period.week)};
     return id;
   }
 

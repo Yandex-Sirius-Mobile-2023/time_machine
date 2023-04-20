@@ -50,8 +50,8 @@ class _BlurCentralButtonWidgetState extends State<BlurCentralButtonWidget> {
           CentralButtonWidget(
             onLongPress: onLongPress,
             onTap: widget.onTap,
-            getRadius: (double r) =>
-                Future.microtask(() => setState(() => radius = r * 2)),
+            getRadius: (double r) => {},
+            // Future.microtask(() => setState(() => radius = r * 2)),
             satellites: widget.satellites,
             onSuccess: (p) {},
             initIndex: delta.index,

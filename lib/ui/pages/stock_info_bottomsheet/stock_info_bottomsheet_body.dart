@@ -12,14 +12,13 @@ import 'package:time_machine/uikit/ui_text.dart';
 class StockInfoBottomSheetBody extends ConsumerWidget {
   const StockInfoBottomSheetBody({
     Key? key,
-    required this.activePortfolio,
     required this.stock,
+    required this.id
   }) : super(key: key);
 
   final Stock stock;
-  final Portfolio activePortfolio;
+  final int id;
 
-  @override
   Widget build(BuildContext context, WidgetRef ref) {
     final history = stock.quotesHistory;
     return Column(
@@ -84,6 +83,7 @@ class StockInfoBottomSheetBody extends ConsumerWidget {
   Widget _buildStockCounter() {
     return Consumer(
       builder: (context, ref, _) {
+        var activePortfolio = ref.watch(userPortfolioProvider.notifier).getPortfolio(id);
         return Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -91,7 +91,7 @@ class StockInfoBottomSheetBody extends ConsumerWidget {
               onPressed: () {
                 ref
                     .read(activePortfolioProvider(activePortfolio).notifier)
-                    .addStock(stock, -1);
+                    .addStock(stock, -1, ref);
               },
               icon: const Icon(
                 Icons.remove_circle,
@@ -107,8 +107,7 @@ class StockInfoBottomSheetBody extends ConsumerWidget {
               onPressed: () {
                 ref
                     .read(activePortfolioProvider(activePortfolio).notifier)
-                    .addStock(stock, 1);
-
+                    .addStock(stock, 1,ref);
               },
               icon: const Icon(
                 Icons.add_circle,
