@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:time_machine/core/provider/theme_provider.dart';
+import 'package:time_machine/core/provider/settings/theme_data_nortifier.dart';
 import 'package:time_machine/data/settings/settings_manager.dart';
 import 'package:time_machine/di_providers.dart';
 import 'package:time_machine/ui/pages/profiile/commons/options_text_header.dart';
@@ -42,7 +42,7 @@ class _ThemeDropdownButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     var colorScheme = Theme.of(context).colorScheme;
     var themeNotifier = ref.watch(
-      themeProvider(ThemeDataNotifier.isSystemLightTheme).notifier,
+      themeProvider.notifier,
     );
 
     return Row(

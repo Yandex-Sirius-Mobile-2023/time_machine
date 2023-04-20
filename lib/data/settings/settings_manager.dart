@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 enum ThemeSettings {
   light,
   dark,
@@ -11,4 +13,6 @@ enum ThemeSettings {
 abstract class SettingsManager {
   void saveTheme(ThemeSettings options);
   ThemeSettings getThemeSettings();
+  void saveLanguage(Locale locale);
+  Locale getLocale();
 }
