@@ -11,7 +11,12 @@ class ThemeDataNotifier extends StateNotifier<ThemeData> {
     required this.settingsManager,
     required bool systemDarkMode,
   }) : super(
-          systemDarkMode ? lightTheme : darkTheme,
+          (systemDarkMode &&
+                      settingsManager.getThemeSettings() ==
+                          ThemeSettings.system ||
+                  settingsManager.getThemeSettings() == ThemeSettings.light)
+              ? lightTheme
+              : darkTheme,
         );
 
   void setTheme(ThemeSettings settings) {

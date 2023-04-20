@@ -42,7 +42,7 @@ class _ThemeDropdownButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     var colorScheme = Theme.of(context).colorScheme;
     var themeNotifier = ref.watch(
-      themeProvider(ThemeDataNotifier.isSystemLightTheme).notifier,
+      themeProvider.notifier,
     );
 
     return Row(
