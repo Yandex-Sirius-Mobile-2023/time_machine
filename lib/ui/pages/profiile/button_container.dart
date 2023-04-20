@@ -1,15 +1,19 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+
 import 'package:time_machine/app.dart';
 import 'package:time_machine/uikit/themes/ui_colors.dart';
 
 class ButtonsContainer extends StatelessWidget {
   final Function() onSwitchPressed;
   final String rightButtonText;
+  final String leftButtonText;
   const ButtonsContainer({
-    super.key,
+    Key? key,
     required this.onSwitchPressed,
     required this.rightButtonText,
-  });
+    required this.leftButtonText,
+  }) : super(key: key);
 
   static const double textPadding = 8;
   static const double rounded = 8;
@@ -36,6 +40,7 @@ class ButtonsContainer extends StatelessWidget {
                 textPadding: textPadding,
                 onPressed: () => Navigator.of(context)
                     .pushReplacementNamed(AppRoutes.chooseStockURL),
+                text: leftButtonText,
               ),
             ),
             const SizedBox(
@@ -59,13 +64,16 @@ class ButtonsContainer extends StatelessWidget {
 class _StartGameButton extends StatelessWidget {
   final Function() onPressed;
   const _StartGameButton({
+    Key? key,
+    required this.onPressed,
     required this.rounded,
     required this.textPadding,
-    required this.onPressed,
-  });
+    required this.text,
+  }) : super(key: key);
 
   final double rounded;
   final double textPadding;
+  final String text;
 
   @override
   Widget build(BuildContext context) {
@@ -79,9 +87,9 @@ class _StartGameButton extends StatelessWidget {
       ),
       child: Padding(
         padding: EdgeInsets.all(textPadding),
-        child: const Text(
-          "Начать\nигру",
-          style: TextStyle(color: Colors.white),
+        child: Text(
+          text,
+          style: const TextStyle(color: Colors.white),
           textAlign: TextAlign.center,
         ),
       ),
