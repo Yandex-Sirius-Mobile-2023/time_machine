@@ -4,6 +4,7 @@ import 'package:time_machine/data/settings/settings_manager.dart';
 import 'package:time_machine/di_providers.dart';
 import 'package:time_machine/ui/pages/profiile/commons/options_text_header.dart';
 import 'package:time_machine/ui/pages/profiile/profile_page.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SettingsFragment extends StatelessWidget {
   /// Pressed right switch button.
@@ -18,6 +19,7 @@ class SettingsFragment extends StatelessWidget {
         SizedBox(height: containerBottomPadding),
         OptionsTextHeader("Options"),
         _ThemeDropdownButton(),
+        _LanguageDropdownButton(),
       ],
     );
   }
@@ -72,6 +74,51 @@ class _ThemeDropdownButton extends ConsumerWidget {
           onChanged: (val) {
             themeNotifier.setTheme(val!);
             ref.watch(_themeSettingsProvider.notifier).state = val;
+          },
+          dropdownColor: colorScheme.background,
+        ),
+      ],
+    );
+  }
+}
+
+class _LanguageDropdownButton extends ConsumerWidget {
+  static const String settingName = "Language: ";
+
+  const _LanguageDropdownButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    var colorScheme = Theme.of(context).colorScheme;
+    var languageNotifier = ref.watch(languageProvider.notifier);
+
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        const Text(
+          settingName,
+          style: TextStyle(
+            fontSize: _ThemeDropdownButton.fontSyze,
+          ),
+        ),
+        const SizedBox(width: 16),
+        DropdownButton(
+          value: ref.watch(languageProvider).languageCode,
+          style: TextStyle(
+            fontSize: _ThemeDropdownButton.fontSyze,
+            color: colorScheme.onBackground,
+            fontWeight: FontWeight.w500,
+          ),
+          items: AppLocalizations.supportedLocales
+              .map<DropdownMenuItem<String>>(
+                (e) => DropdownMenuItem(
+                  value: e.languageCode,
+                  child: Text(e.languageCode),
+                ),
+              )
+              .toList(),
+          onChanged: (val) {
+            languageNotifier.saveLanguage(Locale(val!));
           },
           dropdownColor: colorScheme.background,
         ),

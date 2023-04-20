@@ -12,5 +12,7 @@
   "halfYear": "Half year",
   "year": "Year",
   "touchOrHold": "Touch /\nhold",
-  "showGames": "Show\ngames"
+  "showGames": "Show\ngames",
+  "save": "Save",
+  "lowStocks": "Chose more stocks!"
 }

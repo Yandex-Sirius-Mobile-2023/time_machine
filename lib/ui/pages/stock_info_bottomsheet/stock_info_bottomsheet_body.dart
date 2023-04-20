@@ -8,6 +8,7 @@ import 'package:time_machine/ui/widgets/ticker_logo_circle.dart';
 import 'package:time_machine/uikit/themes/ui_colors.dart';
 import 'package:time_machine/uikit/ui_consts.dart';
 import 'package:time_machine/uikit/ui_text.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class StockInfoBottomSheetBody extends ConsumerWidget {
   const StockInfoBottomSheetBody({
@@ -28,7 +29,7 @@ class StockInfoBottomSheetBody extends ConsumerWidget {
         UIText('\$${history.entries.last.value}'),
         _buildLastComparison(history),
         Flexible(child: _buildChart(history)),
-        _buildStockCard(stock),
+        _buildStockCard(stock, context),
         const SizedBox(height: UIConsts.paddings),
       ],
     );
@@ -61,18 +62,22 @@ class StockInfoBottomSheetBody extends ConsumerWidget {
     );
   }
 
-  Widget _buildStockCard(Stock stock) {
+  Widget _buildStockCard(Stock stock, BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(UIConsts.paddings),
-      color: UIColors.whiteBackground,
       child: Row(
         children: [
-          Expanded(
+          SizedBox(
+            height: 50,
+            width: 50,
             child: TickerLogoCircle(
               ticker: stock.ticker,
             ),
           ),
-          UIText(stock.ticker.getName()),
+          UIText(
+            stock.ticker.getName(),
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
           const Spacer(),
           _buildStockCounter(),
         ],
@@ -84,11 +89,20 @@ class StockInfoBottomSheetBody extends ConsumerWidget {
     return Consumer(
       builder: (context, ref, _) {
         var activePortfolio = ref.watch(userPortfolioProvider.notifier).getPortfolio(id);
+        int countOfStock = ref
+            .watch(activePortfolioProvider(activePortfolio))
+            .currentStep
+            .stocks[stock]!;
         return Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             IconButton(
               onPressed: () {
+                if (countOfStock < 1) {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text(AppLocalizations.of(context)!.lowStocks)));
+                  return;
+                }
                 ref
                     .read(activePortfolioProvider(activePortfolio).notifier)
                     .addStock(stock, -1, ref);
@@ -96,22 +110,35 @@ class StockInfoBottomSheetBody extends ConsumerWidget {
               icon: const Icon(
                 Icons.remove_circle,
                 color: UIColors.dropColor,
+                size: 40,
               ),
             ),
-            Text(ref
-                .watch(activePortfolioProvider(activePortfolio))
-                .currentStep
-                .stocks[stock]
-                .toString()),
+            Text(
+              countOfStock.toString(),
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+            // SizedBox(
+            //   width: 50,
+            //   child: TextFormField(
+            //     initialValue: countOfStock.toString(),
+            //     onChanged:(value) {
+            //       ref
+            //         .read(activePortfolioProvider(activePortfolio).notifier)
+            //         .addStock(stock, -1);
+            //     },
+            //   ),
+            // ),
             IconButton(
               onPressed: () {
                 ref
                     .read(activePortfolioProvider(activePortfolio).notifier)
                     .addStock(stock, 1,ref);
+
               },
               icon: const Icon(
                 Icons.add_circle,
                 color: UIColors.growColor,
+                size: 40,
               ),
             ),
           ],

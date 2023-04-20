@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:time_machine/core/provider/stock_choose/stock_provider.dart';
 import 'package:time_machine/data/models/stock.dart';
 import 'package:time_machine/ui/widgets/ticker_logo_circle.dart';
+import 'package:time_machine/uikit/themes/ui_colors.dart';
 import 'package:time_machine/uikit/ui_consts.dart';
 
 /// Widget that displays name, icon and choose button.
@@ -49,10 +50,10 @@ class _StockChooseButton extends ConsumerWidget {
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: ref.watch(stockChooseProvider)[ticker]!
-              ? Colors.green
-              : Colors.blue,
+              ? UIColors.growColor
+              : UIColors.dropColor,
         ),
-        child: const Icon(Icons.keyboard_double_arrow_right_sharp),
+        child: const Icon(Icons.add_rounded),
       ),
     );
   }
