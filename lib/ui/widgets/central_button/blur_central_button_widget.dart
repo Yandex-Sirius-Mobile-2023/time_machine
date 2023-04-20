@@ -40,11 +40,10 @@ class _BlurCentralButtonWidgetState extends State<BlurCentralButtonWidget> {
     final double maxWidth =
         (MediaQuery.of(context).size.width - UIConsts.doublePaddings) * 0.7;
 
-    return Consumer(builder: (BuildContext context, WidgetRef ref, _) {
-      var portfolio =
-          ref.watch(userPortfolioProvider.notifier).getLastPortfolio();
-      Period delta = ref.watch(activePortfolioProvider(portfolio)).period;
-      // print(portfolio.steps.last.)
+    return Consumer(builder: (context, ref, child) {
+      int id = ModalRoute.of(context)!.settings.arguments as int;
+      var portfolio = ref.read(userPortfolioProvider.notifier).getPortfolio(id);
+      Period delta = ref.read(activePortfolioProvider(portfolio)).period;
       return Stack(
         alignment: Alignment.center,
         children: [

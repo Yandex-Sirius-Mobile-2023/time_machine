@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:time_machine/core/provider/settings/theme_data_nortifier.dart';
 import 'package:time_machine/data/settings/settings_manager.dart';
 import 'package:time_machine/di_providers.dart';
 import 'package:time_machine/ui/pages/profiile/commons/options_text_header.dart';

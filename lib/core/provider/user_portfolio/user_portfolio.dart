@@ -30,13 +30,7 @@ class UserPortfolio extends StateNotifier<Map<int, Portfolio>> {
     return state[id]!;
   }
 
-  Portfolio getLastPortfolio() {
-    return state.values.last;
-  }
-
   void updatePortfolio(Portfolio portfolio) {
-    print("in update -> ${portfolio.hashCode}");
-
     state = {...state, portfolio.id: portfolio};
   }
 }

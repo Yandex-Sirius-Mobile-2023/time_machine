@@ -18,30 +18,18 @@ class TradingPage extends ConsumerWidget {
     final id = ModalRoute.of(context)!.settings.arguments as int;
     Portfolio activePortfolio =
         ref.watch(userPortfolioProvider.notifier).getPortfolio(id);
-
-    // print('build ($hashCode): ${activePortfolio.totalValue} -> ${activePortfolio.hashCode} ($id)');
-
     List<List<double>> graphData = ref
         .watch(activePortfolioProvider(activePortfolio).notifier)
         .getGraphData();
-
     PortfolioState portfolioState =
         ref.watch(activePortfolioProvider(activePortfolio));
 
     void onTap() {
-      print("onTap");
-      // print("${portfolioState.portfolio.steps}");
       ref.read(activePortfolioProvider(activePortfolio).notifier).goToFuture();
-      // print("${portfolioState.now}");
       ref
           .read(userPortfolioProvider.notifier)
           .updatePortfolio(portfolioState.portfolio);
     }
-
-    // void onLongPress(Period period) {
-    //   ref.read(activePortfolioProvider(activePortfolio).notifier).updatePeriod(period);
-    // }
-    void onLongPress() {}
 
     var satellites = [
       for (var stock in activePortfolio.steps.last.stocks.keys)
@@ -76,7 +64,6 @@ class TradingPage extends ConsumerWidget {
                     .read(activePortfolioProvider(activePortfolio).notifier)
                     .getTotal()
                     .toStringAsFixed(2),
-                // portfolioState.portfolio.totalValue.toStringAsFixed(2),
                 costCache: ref
                     .read(activePortfolioProvider(activePortfolio).notifier)
                     .getBalance()
@@ -90,7 +77,7 @@ class TradingPage extends ConsumerWidget {
               child: BlurCentralButtonWidget(
                 satellites: satellites,
                 onTap: onTap,
-                onLongPress: onLongPress,
+                onLongPress: () {},
               ),
             ),
           ],
