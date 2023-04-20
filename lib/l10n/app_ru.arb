@@ -18,5 +18,17 @@
   "languageOptions": "Язык: ",
   "darkTheme": "Темная",
   "systemTheme": "Системная",
-  "lightTheme": "Светлая"
+  "lightTheme": "Светлая",
+  "@_LOGIN_PAGE" : {},
+  "yourEmailAdress": "Ваш E-Mail",
+  "enterEmailAdress": "Введите E-Mail",
+  "yourPassword": "Ваш пароль",
+  "enterPassword": "Введите пароль",
+  "createAccount": "Создать аккаунт",
+  "logIn" : "Войти",
+  "loginHeaderMessage": "Войти в аккаунт",
+  "loginHeaderBottomMessage": "Чтобы войти в TimeMachine создайте аккаунт.",
+  "dontHaveAnAccount": "Dont have an account? Sign up",
+  "or": "или",
+  "signWithGoogle": "Войти с помощью Google"
 }

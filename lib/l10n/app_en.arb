@@ -18,5 +18,17 @@
   "languageOptions": "Language: ",
   "darkTheme": "Dark",
   "systemTheme": "System",
-  "lightTheme": "Light"
+  "lightTheme": "Light",
+  "@_LOGIN_PAGE" : {},
+  "yourEmailAdress": "Your email addres",
+  "enterEmailAdress": "Enter email addres",
+  "yourPassword": "Your password",
+  "enterPassword": "Enter password",
+  "createAccount": "Create account",
+  "logIn" : "Login in",
+  "loginHeaderMessage": "Sign in to account",
+  "loginHeaderBottomMessage": "To get started with TimeMachine you need create account.",
+  "dontHaveAnAccount": "Dont have an account? Sign up",
+  "or": "or",
+  "signWithGoogle": "Sign with Google"
 }

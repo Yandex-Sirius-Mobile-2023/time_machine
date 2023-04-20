@@ -9,15 +9,12 @@ import 'package:time_machine/data/auth/status/credential_sign_exception.dart';
 import 'package:time_machine/data/auth/status/email_sign_exception.dart';
 import 'package:time_machine/ui/pages/auth/commons/header_text.dart';
 import 'package:time_machine/uikit/themes/text/text_style.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'email_password_container.dart';
 import 'sign_button.dart';
 
 Logger logger = Logger("SignInForm");
-
-abstract class SignFormText {
-  static const String createAccountText = "Login in";
-}
 
 class SignInForm extends StatefulWidget {
   final Function() goToRegistration;
@@ -43,10 +40,10 @@ class _SignInFormState extends State<SignInForm> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SignHeaderText(
-            message: "Sign in to account",
+          SignHeaderText(
+            message: AppLocalizations.of(context)!.loginHeaderMessage,
             bottomMessage:
-                "To get started with Roflo-Investor you need write normal UI",
+                AppLocalizations.of(context)!.loginHeaderBottomMessage,
           ),
           const SizedBox(height: 32),
           EmailPasswordContainer(
@@ -61,18 +58,20 @@ class _SignInFormState extends State<SignInForm> {
                 var service = ref.read(emailSignProvider);
                 emailSign(service, context);
               },
-              text: SignFormText.createAccountText,
+              text: AppLocalizations.of(context)!.createAccount,
             ),
           ),
           Center(
             child: TextButton(
               onPressed: widget.goToRegistration,
-              child: const Text("Dont have an account? Sign up"),
+              child: Text(
+                AppLocalizations.of(context)!.dontHaveAnAccount,
+              ),
             ),
           ),
-          const Center(
+          Center(
             child: Text(
-              "or",
+              AppLocalizations.of(context)!.or,
               style: infoStyle,
             ),
           ),
@@ -83,7 +82,7 @@ class _SignInFormState extends State<SignInForm> {
                 final service = ref.watch(googleSignProvider);
                 googleSignIn(service, context);
               },
-              text: "Sign with Google",
+              text: AppLocalizations.of(context)!.signWithGoogle,
             ),
           ),
         ],

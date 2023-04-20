@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:time_machine/uikit/themes/text/text_decorations.dart';
 import 'package:time_machine/uikit/themes/text/text_style.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'validators.dart';
 
 class EmailPasswordContainer extends StatelessWidget {
-  static const String enterEmailAdressLabel = "Your email addres";
-  static const String enterEmailAdressHint = "Enter email addres";
-  static const String enterPasswordLabel = "Your password";
-  static const String enterPasswordHint = "Enter password";
-  static const String createAccountText = "Create account text";
   static const columnSpacer = SizedBox(height: 16);
   static const smallSpacer = SizedBox(height: 4);
 
@@ -27,22 +23,22 @@ class EmailPasswordContainer extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // Email input
-        const Text(
-          enterEmailAdressLabel,
+        Text(
+          AppLocalizations.of(context)!.yourEmailAdress,
           style: infoStyle,
         ),
         smallSpacer,
         TextFormField(
           controller: emailTextContoler,
           decoration: inputFormDecoration(context).copyWith(
-            hintText: enterEmailAdressHint,
+            hintText: AppLocalizations.of(context)!.enterEmailAdress,
           ),
           validator: (val) => emailValidator(val),
         ),
         columnSpacer,
         // Password input
-        const Text(
-          enterPasswordLabel,
+        Text(
+          AppLocalizations.of(context)!.yourPassword,
           style: infoStyle,
         ),
         smallSpacer,
@@ -52,7 +48,7 @@ class EmailPasswordContainer extends StatelessWidget {
           enableSuggestions: false,
           autocorrect: false,
           decoration: inputFormDecoration(context).copyWith(
-            hintText: enterPasswordHint,
+            hintText: AppLocalizations.of(context)!.enterPassword,
           ),
           validator: passwordValidator,
         ),
