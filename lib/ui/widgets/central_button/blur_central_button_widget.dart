@@ -2,6 +2,9 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:time_machine/core/model/portfolio_state.dart';
+import 'package:time_machine/core/operations.dart';
 
 import 'package:time_machine/ui/widgets/central_button/central_button_widget.dart';
 import 'package:time_machine/ui/widgets/central_button/central_item_button_widget.dart';
@@ -25,7 +28,6 @@ class BlurCentralButtonWidget extends StatefulWidget {
 }
 
 class _BlurCentralButtonWidgetState extends State<BlurCentralButtonWidget> {
-  String delta = "7 дн";
   double radius = 0;
   bool isBlur = false;
   void onLongPress() => setState(() {
@@ -38,41 +40,55 @@ class _BlurCentralButtonWidgetState extends State<BlurCentralButtonWidget> {
     final double maxWidth =
         (MediaQuery.of(context).size.width - UIConsts.doublePaddings) * 0.7;
 
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        CentralButtonWidget(
-          onLongPress: onLongPress,
-          onTap: widget.onTap,
-          getRadius: (double r) =>
-              Future.microtask(() => setState(() => radius = r * 2)),
-          satellites: widget.satellites,
-        ),
-        TweenAnimationBuilder<double>(
-          tween: Tween<double>(begin: 0.0, end: isBlur ? 30 : 0),
-          duration: UIConsts.duration,
-          builder: (_, value, child) {
-            return BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: value, sigmaY: value),
-              child: child,
-            );
-          },
-          child: const DecoratedBox(
-            decoration: BoxDecoration(
-              color: Colors.transparent,
+    return Consumer(builder: (context, ref, child) {
+      int id = ModalRoute.of(context)!.settings.arguments as int;
+      var portfolio = ref.read(userPortfolioProvider.notifier).getPortfolio(id);
+      Period delta = ref.read(activePortfolioProvider(portfolio)).period;
+      return Stack(
+        alignment: Alignment.center,
+        children: [
+          CentralButtonWidget(
+            onLongPress: onLongPress,
+            onTap: widget.onTap,
+            getRadius: (double r) => {},
+            // Future.microtask(() => setState(() => radius = r * 2)),
+            satellites: widget.satellites,
+            onSuccess: (p) {},
+            initIndex: delta.index,
+          ),
+          TweenAnimationBuilder<double>(
+            tween: Tween<double>(begin: 0.0, end: isBlur ? 30 : 0),
+            duration: UIConsts.duration,
+            builder: (_, value, child) {
+              return BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: value, sigmaY: value),
+                child: child,
+              );
+            },
+            child: const DecoratedBox(
+              decoration: BoxDecoration(
+                color: Colors.transparent,
+              ),
             ),
           ),
-        ),
-        isBlur
-            ? CentralItemButtonWidget(
-                text: delta,
-                size: isBlur ? maxWidth : radius,
-                onTap: widget.onTap,
-                onLongPress: onLongPress,
-                isBlur: isBlur,
-              )
-            : const SizedBox(),
-      ],
-    );
+          isBlur
+              ? CentralItemButtonWidget(
+                  text: delta.name,
+                  size: isBlur ? maxWidth : radius,
+                  onTap: widget.onTap,
+                  onLongPress: onLongPress,
+                  isBlur: isBlur,
+                  onSuccess: (Period period) {
+                    setState(() => isBlur = !isBlur);
+                    ref
+                        .read(activePortfolioProvider(portfolio).notifier)
+                        .updatePeriod(period);
+                  },
+                  initIndex: delta.index,
+                )
+              : const SizedBox(),
+        ],
+      );
+    });
   }
 }

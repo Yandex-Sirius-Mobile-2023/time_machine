@@ -13,14 +13,13 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class StockInfoBottomSheetBody extends ConsumerWidget {
   const StockInfoBottomSheetBody({
     Key? key,
-    required this.activePortfolio,
     required this.stock,
+    required this.id
   }) : super(key: key);
 
   final Stock stock;
-  final Portfolio activePortfolio;
+  final int id;
 
-  @override
   Widget build(BuildContext context, WidgetRef ref) {
     final history = stock.quotesHistory;
     return Column(
@@ -89,6 +88,7 @@ class StockInfoBottomSheetBody extends ConsumerWidget {
   Widget _buildStockCounter() {
     return Consumer(
       builder: (context, ref, _) {
+        var activePortfolio = ref.watch(userPortfolioProvider.notifier).getPortfolio(id);
         int countOfStock = ref
             .watch(activePortfolioProvider(activePortfolio))
             .currentStep
@@ -105,7 +105,7 @@ class StockInfoBottomSheetBody extends ConsumerWidget {
                 }
                 ref
                     .read(activePortfolioProvider(activePortfolio).notifier)
-                    .addStock(stock, -1);
+                    .addStock(stock, -1, ref);
               },
               icon: const Icon(
                 Icons.remove_circle,
@@ -132,7 +132,8 @@ class StockInfoBottomSheetBody extends ConsumerWidget {
               onPressed: () {
                 ref
                     .read(activePortfolioProvider(activePortfolio).notifier)
-                    .addStock(stock, 1);
+                    .addStock(stock, 1,ref);
+
               },
               icon: const Icon(
                 Icons.add_circle,

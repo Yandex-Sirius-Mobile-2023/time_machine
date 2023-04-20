@@ -13,39 +13,24 @@ import 'package:time_machine/uikit/bottomsheet/ui_bottom_sheet.dart';
 class TradingPage extends ConsumerWidget {
   const TradingPage({Key? key}) : super(key: key);
 
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final id = ModalRoute.of(context)!.settings.arguments as int;
     Portfolio activePortfolio =
         ref.watch(userPortfolioProvider.notifier).getPortfolio(id);
-
-    // print('build ($hashCode): ${activePortfolio.totalValue} -> ${activePortfolio.hashCode} ($id)');
-
+    print("after activePortfolioProvider ${activePortfolio.balance}");
     List<List<double>> graphData = ref
         .watch(activePortfolioProvider(activePortfolio).notifier)
         .getGraphData();
-
     PortfolioState portfolioState =
         ref.watch(activePortfolioProvider(activePortfolio));
 
     void onTap() {
-      print("onTap");
-      // print("${portfolioState.portfolio.steps}");
       ref.read(activePortfolioProvider(activePortfolio).notifier).goToFuture();
-      print("${portfolioState.now}");
       ref
           .read(userPortfolioProvider.notifier)
           .updatePortfolio(portfolioState.portfolio);
     }
-
-    // void onLongPress(Period period) {
-    //   ref.read(activePortfolioProvider(activePortfolio).notifier).updatePeriod(period);
-    // }
-    void onLongPress(){
-
-    }
-
 
     var satellites = [
       for (var stock in activePortfolio.steps.last.stocks.keys)
@@ -54,8 +39,8 @@ class TradingPage extends ConsumerWidget {
             onPressed: () {
               showUIBottomSheet(
                   context: context,
-                  content: StockInfoBottomSheetBody(
-                      activePortfolio: activePortfolio, stock: stock));
+                  content: StockInfoBottomSheetBody(id: id,
+                      stock: stock));
             },
             child: TickerLogoCircle(ticker: stock.ticker))
     ];
@@ -80,8 +65,10 @@ class TradingPage extends ConsumerWidget {
                     .read(activePortfolioProvider(activePortfolio).notifier)
                     .getTotal()
                     .toStringAsFixed(2),
-                // portfolioState.portfolio.totalValue.toStringAsFixed(2),
-                costCache: ref.read(activePortfolioProvider(activePortfolio).notifier).getBalance().toStringAsFixed(2),
+                costCache: ref
+                    .read(activePortfolioProvider(activePortfolio).notifier)
+                    .getBalance()
+                    .toStringAsFixed(2),
                 data: graphData,
               ),
             ),
@@ -91,7 +78,7 @@ class TradingPage extends ConsumerWidget {
               child: BlurCentralButtonWidget(
                 satellites: satellites,
                 onTap: onTap,
-                onLongPress: onLongPress,
+                onLongPress: () {},
               ),
             ),
           ],
