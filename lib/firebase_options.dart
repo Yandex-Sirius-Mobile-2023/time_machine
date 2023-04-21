@@ -54,6 +54,7 @@ class DefaultFirebaseOptions {
     appId: '1:793231606892:android:c912d471ca2a13c65d8449',
     messagingSenderId: '793231606892',
     projectId: 'time-machine-sirius',
+    databaseURL: 'https://time-machine-sirius-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'time-machine-sirius.appspot.com',
   );
 
@@ -62,11 +63,10 @@ class DefaultFirebaseOptions {
     appId: '1:793231606892:ios:f35a3f657eb87e8b5d8449',
     messagingSenderId: '793231606892',
     projectId: 'time-machine-sirius',
+    databaseURL: 'https://time-machine-sirius-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'time-machine-sirius.appspot.com',
-    androidClientId:
-        '793231606892-jmrlgd1a2eolcofht8plhv5jep23oukf.apps.googleusercontent.com',
-    iosClientId:
-        '793231606892-dgdahm867d7ptsng2ei3h7vpfini1lt3.apps.googleusercontent.com',
+    androidClientId: '793231606892-jmrlgd1a2eolcofht8plhv5jep23oukf.apps.googleusercontent.com',
+    iosClientId: '793231606892-dgdahm867d7ptsng2ei3h7vpfini1lt3.apps.googleusercontent.com',
     iosBundleId: 'com.timurHarin',
   );
 }

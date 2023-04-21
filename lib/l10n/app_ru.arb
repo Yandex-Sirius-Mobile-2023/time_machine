@@ -19,6 +19,7 @@
   "darkTheme": "Темная",
   "systemTheme": "Системная",
   "lightTheme": "Светлая",
+  "signOut": "Выйти",
   "@_LOGIN_PAGE" : {},
   "yourEmailAdress": "Ваш E-Mail",
   "enterEmailAdress": "Введите E-Mail",

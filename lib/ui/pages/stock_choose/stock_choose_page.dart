@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logging/logging.dart';
 import 'package:time_machine/app.dart';
@@ -27,7 +28,8 @@ class StockChoosePage extends StatelessWidget {
                 )
                 .toList();
             return ref.watch(stockQuotesInfoProvider).when(
-                  loading: () => const Center(child:CircularProgressIndicator()),
+                  loading: () =>
+                      const Center(child: CircularProgressIndicator()),
                   data: (value) {
                     return StockListView(
                       tickers: tickers,
@@ -44,6 +46,7 @@ class StockChoosePage extends StatelessWidget {
         builder: (context, ref, child) {
           return FilledButton(
             onPressed: () async {
+              HapticFeedback.mediumImpact();
               var tickers = ref.watch(stockChooseProvider.notifier).choosen;
               if (tickers.length < 2) {
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(

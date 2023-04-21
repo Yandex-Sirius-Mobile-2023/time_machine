@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:time_machine/app.dart';
+import 'package:time_machine/core/operations.dart';
+import 'package:time_machine/di_providers.dart';
 import 'package:time_machine/ui/widgets/graph_cost/graph_cost_widget.dart';
 import 'package:time_machine/uikit/themes/ui_colors.dart';
 import 'package:time_machine/uikit/ui_consts.dart';
 import 'package:time_machine/uikit/ui_text.dart';
 
-class FinalPage extends StatelessWidget {
+class FinalPage extends ConsumerWidget {
   const FinalPage({
     Key? key,
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return LayoutBuilder(
       builder: (_, constrains) => Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -23,8 +26,17 @@ class FinalPage extends StatelessWidget {
               height: 50,
             ),
             child: FloatingActionButton.extended(
-              //TODO сюда колбэк на страницу истории игр + сделайте что вам там надо: в провайдере игру сохраните или еще чего
-              onPressed: () {},
+              onPressed: () {
+                final id = ModalRoute.of(context)!.settings.arguments as int;
+                var activePortfolio =
+                    ref.watch(userPortfolioProvider.notifier).getPortfolio(id);
+                ref.read(historyDbProvider).addHistoryJson({
+                  'balance': activePortfolio.balance,
+                  'createAt': activePortfolio.createdAt.toString(),
+                });
+                Navigator.of(context)
+                    .pushReplacementNamed(AppRoutes.profileUrl);
+              },
               backgroundColor: UIColors.cyanBright,
               label: const Text('Return to main screen'),
             ),
@@ -84,6 +96,10 @@ class _TotalCostCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    int id = ModalRoute.of(context)!.settings.arguments as int;
+    var portfolio = ref.read(userPortfolioProvider.notifier).getPortfolio(id);
+    var portfolioNotifier =
+        ref.read(activePortfolioProvider(portfolio).notifier);
     const LinearGradient gradient = LinearGradient(
       colors: [
         UIColors.cyanDark,
@@ -93,9 +109,9 @@ class _TotalCostCard extends ConsumerWidget {
       end: Alignment.bottomRight,
     );
 
-    //TODO сюда старовый и финальный кошелек игрока
-    final finalCost = 15.0;
-    final startCost = 100.0;
+    final finalCost =
+        portfolioNotifier.getBalance() + portfolioNotifier.getTotal();
+    const startCost = 1000000.0;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: UIConsts.paddings),
@@ -119,7 +135,7 @@ class _TotalCostCard extends ConsumerWidget {
                         .apply(color: Colors.white70),
                   ),
                   UIText(
-                    'Final cost:   \$ $finalCost',
+                    'Final cost:   \$ ${finalCost.toStringAsFixed(2)}',
                     style: Theme.of(context)
                         .textTheme
                         .bodyLarge!

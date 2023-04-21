@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:time_machine/app.dart';
 import 'package:time_machine/uikit/themes/text/text_decorations.dart';
 import 'package:time_machine/uikit/themes/text/text_style.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
