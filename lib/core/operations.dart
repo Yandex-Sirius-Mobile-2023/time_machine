@@ -33,20 +33,25 @@ class ActivePortfolioNotifier extends StateNotifier<PortfolioState> {
     return total;
   }
 
-  void goToFuture() {
+  void goToFuture(WidgetRef ref) {
+    bool endOfGame = state.portfolio.endOfGame;
     int period = state.period.getPeriod();
     var dates = state.currentStep.stocks.keys.first.quotesHistory.keys.toList();
     var now = (dates.length - 1 > dates.indexOf(state.now) + period)
         ? dates[dates.indexOf(state.now) + period]
         : dates.last;
-
+    if (now == dates.last) {
+      endOfGame = true;
+    }
     var currentStep = state.currentStep.copyWith(date: now);
     var steps = state.portfolio.steps;
     steps.add(currentStep);
-    Portfolio portfolio = state.portfolio.copyWith(steps: steps);
+    Portfolio portfolio =
+        state.portfolio.copyWith(steps: steps, endOfGame: endOfGame);
 
     state = state.copyWith(
         now: now, portfolio: portfolio, currentStep: currentStep);
+    ref.watch(userPortfolioProvider.notifier).updatePortfolio(state.portfolio);
   }
 
   double getGrowth() {

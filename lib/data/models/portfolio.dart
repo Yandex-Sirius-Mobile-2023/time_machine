@@ -10,9 +10,8 @@ class Portfolio with _$Portfolio {
     int id,
     DateTime createdAt,
     List<Step> steps,
-    // DateTime nowDate, //
     double balance,
-    // double totalValue, //???????
     Period period,
+    bool endOfGame,
   ) = _Portfolio;
 }
