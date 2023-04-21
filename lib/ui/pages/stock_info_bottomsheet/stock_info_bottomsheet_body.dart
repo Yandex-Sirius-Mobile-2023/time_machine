@@ -10,6 +10,7 @@ import 'package:time_machine/uikit/ui_text.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class StockInfoBottomSheetBody extends ConsumerWidget {
+  static const double padding = 8;
 
   const StockInfoBottomSheetBody(
       {Key? key, required this.stock, required this.id})
@@ -59,7 +60,6 @@ class StockInfoBottomSheetBody extends ConsumerWidget {
     );
   }
 
-
   Widget _buildLastComparison(
       Map<DateTime, double> history, BuildContext context) {
     var colorScheme = Theme.of(context).colorScheme;
@@ -86,7 +86,7 @@ class StockInfoBottomSheetBody extends ConsumerWidget {
                 ),
               ]),
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(padding),
             child: Row(
               children: [
                 SizedBox(
@@ -96,7 +96,7 @@ class StockInfoBottomSheetBody extends ConsumerWidget {
                     child: ColoredBox(color: getRiskColor(risk)),
                   ),
                 ),
-                const SizedBox(width: 8),
+                const SizedBox(width: padding),
                 Text(
                   risk.toString(),
                   style: const TextStyle(
@@ -107,7 +107,7 @@ class StockInfoBottomSheetBody extends ConsumerWidget {
             ),
           ),
         ),
-        const SizedBox(width: 16),
+        const SizedBox(width: padding * 2),
         Container(
           decoration: BoxDecoration(
             borderRadius: const BorderRadius.all(
@@ -139,7 +139,6 @@ class StockInfoBottomSheetBody extends ConsumerWidget {
       return UIColors.growColor;
     }
   }
-
 
   Widget _buildStockCard(Stock stock, BuildContext context) {
     return Container(
