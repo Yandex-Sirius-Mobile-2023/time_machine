@@ -27,7 +27,8 @@ class GraphCostWidget extends StatelessWidget {
                 fitInsideHorizontally: true,
                 fitInsideVertically:
                     true, // чтобы кликабельные окошки не попадали за виджет
-                tooltipBgColor: UIColors.whiteBackground.withOpacity(0.3),
+                tooltipBgColor:
+                    Theme.of(context).colorScheme.onPrimary.withOpacity(0.6),
                 getTooltipItems: (List<LineBarSpot> touchedBarSpots) {
                   return touchedBarSpots.map((barSpot) {
                     return LineTooltipItem(

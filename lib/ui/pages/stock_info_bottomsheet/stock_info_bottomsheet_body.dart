@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:time_machine/core/operations.dart';
 import 'package:time_machine/data/models/stock.dart';
@@ -169,6 +170,7 @@ class StockInfoBottomSheetBody extends ConsumerWidget {
           children: [
             IconButton(
               onPressed: () {
+                HapticFeedback.lightImpact();
                 if (countOfStock < 1) {
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: Text(AppLocalizations.of(context)!.lowStocks)));
@@ -190,6 +192,7 @@ class StockInfoBottomSheetBody extends ConsumerWidget {
             ),
             IconButton(
               onPressed: () {
+                HapticFeedback.lightImpact();
                 ref
                     .read(activePortfolioProvider(activePortfolio).notifier)
                     .addStock(stock, 1, ref);

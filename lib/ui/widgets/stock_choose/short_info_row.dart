@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:time_machine/core/provider/stock_choose/stock_provider.dart';
 import 'package:time_machine/data/models/stock.dart';
@@ -41,6 +42,7 @@ class _StockChooseButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return GestureDetector(
       onTap: () {
+        HapticFeedback.lightImpact();
         ref.read(stockChooseProvider.notifier).updateTicker(ticker);
       },
       child: AnimatedContainer(
@@ -53,7 +55,9 @@ class _StockChooseButton extends ConsumerWidget {
               ? UIColors.growColor
               : UIColors.dropColor,
         ),
-        child: ref.watch(stockChooseProvider)[ticker]! ? const Icon(Icons.check): const Icon(Icons.add_rounded),
+        child: ref.watch(stockChooseProvider)[ticker]!
+            ? const Icon(Icons.check)
+            : const Icon(Icons.add_rounded),
       ),
     );
   }

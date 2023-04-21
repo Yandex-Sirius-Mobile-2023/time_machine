@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:circular_widgets/circular_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:time_machine/core/model/portfolio_state.dart';
 
 import 'package:time_machine/uikit/themes/ui_colors.dart';
@@ -108,7 +109,10 @@ class _ItemBluredTimePickerButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTapDown: (t) => onTapDown(),
+      onTapDown: (t) {
+        HapticFeedback.mediumImpact();
+        onTapDown();
+      },
       onTapCancel: onTapCancel,
       onTapUp: (details) => onSuccess(),
       child: Center(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:time_machine/core/provider/auth_provider.dart';
 import 'package:time_machine/ui/pages/final/final_page.dart';
@@ -14,9 +15,11 @@ class App extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     var needSignIn = ref.read(emailSignProvider).user == null;
 
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       locale: ref.watch(languageProvider),
