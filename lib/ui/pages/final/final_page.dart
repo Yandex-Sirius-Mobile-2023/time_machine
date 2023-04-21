@@ -94,8 +94,8 @@ class _TotalCostCard extends ConsumerWidget {
     );
 
     //TODO сюда старовый и финальный кошелек игрока
-    final finalCost = 15.0;
-    final startCost = 100.0;
+    const finalCost = 15.0;
+    const startCost = 100.0;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: UIConsts.paddings),

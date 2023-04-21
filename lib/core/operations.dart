@@ -64,6 +64,14 @@ class ActivePortfolioNotifier extends StateNotifier<PortfolioState> {
     return (previous == 0) ? 0 : (totalValue - previous) / previous * 100;
   }
 
+  double getGrowthForStock(Stock stock) {
+    int period = state.period.getPeriod();
+    double previous = stock.quotesHistory.values.toList()[
+        stock.quotesHistory.keys.toList().indexOf(state.now) - period];
+    double current = stock.quotesHistory[state.now]!;
+    return (previous == 0) ? 0 : (current - previous) / previous * 100;
+  }
+
   List<List<double>> getGraphData() {
     final stockQuantity = state.currentStep.stocks;
     final stocks = stockQuantity.keys.toList();

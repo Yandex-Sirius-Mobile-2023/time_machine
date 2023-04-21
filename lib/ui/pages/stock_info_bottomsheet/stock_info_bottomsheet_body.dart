@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:time_machine/core/operations.dart';
-import 'package:time_machine/data/models/portfolio.dart';
 import 'package:time_machine/data/models/stock.dart';
 import 'package:time_machine/ui/widgets/graph_cost/graph_cost_widget.dart';
 import 'package:time_machine/ui/widgets/ticker_logo_circle.dart';
@@ -22,13 +21,24 @@ class StockInfoBottomSheetBody extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     var activePortfolio =
         ref.watch(userPortfolioProvider.notifier).getPortfolio(id);
+    var comparison = ref
+        .watch(activePortfolioProvider(activePortfolio).notifier)
+        .getGrowthForStock(stock);
     final history = stock.quotesHistory;
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         UIText(stock.ticker.getName()),
         UIText('\$${history[activePortfolio.steps.last.date]!}'),
-        _buildLastComparison(history),
+        Container(
+          decoration: BoxDecoration(
+            borderRadius:
+                const BorderRadius.all(Radius.circular(UIConsts.paddings)),
+            color: comparison > 0 ? UIColors.growColor : UIColors.dropColor,
+          ),
+          child: UIText(
+              '${comparison > 0 ? '▲' : '▼'} ${comparison.toStringAsFixed(2)}%'),
+        ),
         Flexible(
           child: Consumer(
             builder: (context, ref, child) {
@@ -44,22 +54,6 @@ class StockInfoBottomSheetBody extends ConsumerWidget {
         _buildStockCard(stock, context),
         const SizedBox(height: UIConsts.paddings),
       ],
-    );
-  }
-
-  Widget _buildLastComparison(Map<DateTime, double> history) {
-    final last = history.values.fromEnd(0);
-    final preLast = history.values.fromEnd(1);
-    final comparison = last / preLast;
-
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius:
-            const BorderRadius.all(Radius.circular(UIConsts.paddings)),
-        color: comparison > 0 ? UIColors.growColor : UIColors.dropColor,
-      ),
-      child: UIText(
-          '${comparison > 0 ? '▲' : '▼'} ${comparison.toStringAsFixed(2)}%'),
     );
   }
 
@@ -119,17 +113,6 @@ class StockInfoBottomSheetBody extends ConsumerWidget {
               countOfStock.toString(),
               style: Theme.of(context).textTheme.titleMedium,
             ),
-            // SizedBox(
-            //   width: 50,
-            //   child: TextFormField(
-            //     initialValue: countOfStock.toString(),
-            //     onChanged:(value) {
-            //       ref
-            //         .read(activePortfolioProvider(activePortfolio).notifier)
-            //         .addStock(stock, -1);
-            //     },
-            //   ),
-            // ),
             IconButton(
               onPressed: () {
                 ref
