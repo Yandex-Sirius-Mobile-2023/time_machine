@@ -11,6 +11,7 @@ import 'package:time_machine/ui/widgets/graph_cost/card_general_cost_widget.dart
 import 'package:time_machine/ui/widgets/ticker_logo_circle.dart';
 import 'package:time_machine/ui/widgets/trading/stock_circle_preview.dart';
 import 'package:time_machine/uikit/bottomsheet/ui_bottom_sheet.dart';
+import 'package:time_machine/uikit/themes/ui_colors.dart';
 
 class TradingPage extends ConsumerWidget {
   const TradingPage({Key? key}) : super(key: key);
@@ -48,6 +49,22 @@ class TradingPage extends ConsumerWidget {
             },
             child: TickerLogoCircle(ticker: stock.ticker))
     ];
+    final start = DateTime.parse("2012-01-03 00:00:00");
+    final end = DateTime.parse("2022-12-30 00:00:00");
+
+    final differenceInit = end.difference(start).inDays;
+    final differenceEnd = portfolioState.now.difference(start).inDays;
+
+    int step = differenceEnd * 100 ~/ differenceInit;
+
+    const LinearGradient gradient = LinearGradient(
+      colors: [
+        UIColors.cyanDark,
+        UIColors.cyanBright,
+      ],
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+    );
 
     return Scaffold(
       body: SafeArea(
@@ -55,35 +72,61 @@ class TradingPage extends ConsumerWidget {
           horizontal: 16,
           vertical: 8,
         ),
-        child: Column(
+        child: Stack(
           children: [
-            Flexible(
-              flex: 5,
-              fit: FlexFit.tight,
-              child: CardGeneralCostWidget(
-                delta: ref
-                    .read(activePortfolioProvider(activePortfolio).notifier)
-                    .getGrowth()
-                    .toStringAsFixed(1),
-                costStocks: ref
-                    .read(activePortfolioProvider(activePortfolio).notifier)
-                    .getTotal()
-                    .toStringAsFixed(2),
-                costCache: ref
-                    .read(activePortfolioProvider(activePortfolio).notifier)
-                    .getBalance()
-                    .toStringAsFixed(2),
-                data: graphData,
-              ),
+            Column(
+              children: [
+                Flexible(
+                  flex: 5,
+                  fit: FlexFit.tight,
+                  child: CardGeneralCostWidget(
+                    delta: ref
+                        .read(activePortfolioProvider(activePortfolio).notifier)
+                        .getGrowth()
+                        .toStringAsFixed(1),
+                    costStocks: ref
+                        .read(activePortfolioProvider(activePortfolio).notifier)
+                        .getTotal()
+                        .toStringAsFixed(2),
+                    costCache: ref
+                        .read(activePortfolioProvider(activePortfolio).notifier)
+                        .getBalance()
+                        .toStringAsFixed(2),
+                    data: graphData,
+                  ),
+                ),
+                Flexible(
+                  flex: 9,
+                  fit: FlexFit.tight,
+                  child: BlurCentralButtonWidget(
+                    satellites: satellites,
+                    onTap: onTap,
+                    onLongPress: () {},
+                  ),
+                ),
+              ],
             ),
-            Flexible(
-              flex: 9,
-              fit: FlexFit.tight,
-              child: BlurCentralButtonWidget(
-                satellites: satellites,
-                onTap: onTap,
-                onLongPress: () {},
-              ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: SizedBox(
+                  height: 20,
+                  width: double.infinity,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        flex: step,
+                        child: Container(
+                          decoration: BoxDecoration(
+                              gradient: gradient,
+                              borderRadius: BorderRadius.circular(1000)),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 100 - step,
+                        child: const SizedBox(),
+                      )
+                    ],
+                  )),
             ),
           ],
         ),
