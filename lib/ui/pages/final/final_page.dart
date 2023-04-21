@@ -127,7 +127,7 @@ class _TotalCostCard extends ConsumerWidget {
                         .apply(color: Colors.white70),
                   ),
                   UIText(
-                    'Final cost:   \$ $finalCost',
+                    'Final cost:   \$ ${finalCost.toStringAsFixed(2)}',
                     style: Theme.of(context)
                         .textTheme
                         .bodyLarge!

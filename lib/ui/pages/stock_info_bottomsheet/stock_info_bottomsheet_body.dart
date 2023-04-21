@@ -28,13 +28,15 @@ class StockInfoBottomSheetBody extends ConsumerWidget {
         .watch(activePortfolioProvider(activePortfolio).notifier)
         .getGrowthForStock(stock);
 
+    var risk = 0.55; //TODO: get risk from analytics package
+
     final history = stock.quotesHistory;
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         UIText(stock.ticker.getName()),
         UIText('\$${history[activePortfolio.steps.last.date]!}'),
-        _buildLastComparison(history, context, comparison),
+        _buildLastComparison(history, context, comparison, risk),
         Flexible(
           child: Consumer(
             builder: (context, ref, child) {
@@ -53,14 +55,9 @@ class StockInfoBottomSheetBody extends ConsumerWidget {
     );
   }
 
-  Widget _buildLastComparison(
-      Map<DateTime, double> history, BuildContext context, double comprasion) {
+  Widget _buildLastComparison(Map<DateTime, double> history,
+      BuildContext context, double comprasion, double risk) {
     var colorScheme = Theme.of(context).colorScheme;
-    final last = history.values.fromEnd(0);
-    final preLast = history.values.fromEnd(1);
-
-    //TODO: Вставить риск.
-    final risk = 0.55;
 
     return Row(
       mainAxisSize: MainAxisSize.min,
