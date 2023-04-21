@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:time_machine/app.dart';
+import 'package:time_machine/core/provider/auth_provider.dart';
 import 'package:time_machine/data/settings/settings_manager.dart';
 import 'package:time_machine/di_providers.dart';
 import 'package:time_machine/ui/pages/profiile/commons/options_text_header.dart';
 import 'package:time_machine/ui/pages/profiile/profile_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:time_machine/uikit/themes/ui_colors.dart';
 
-class SettingsFragment extends StatelessWidget {
+class SettingsFragment extends ConsumerWidget {
   /// Pressed right switch button.
   const SettingsFragment({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final navigator = Navigator.of(context);
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -20,6 +25,21 @@ class SettingsFragment extends StatelessWidget {
         OptionsTextHeader(AppLocalizations.of(context)!.options),
         const _ThemeDropdownButton(),
         const _LanguageDropdownButton(),
+        const SizedBox(height: 16),
+        TextButton(
+          child: Text(
+            AppLocalizations.of(context)!.signOut,
+            style: const TextStyle(
+              color: UIColors.redAccent,
+              fontSize: 16,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          onPressed: () async {
+            await ref.read(firebaseAuthProvider).signOut();
+            navigator.pushReplacementNamed(AppRoutes.loginURL);
+          },
+        )
       ],
     );
   }
