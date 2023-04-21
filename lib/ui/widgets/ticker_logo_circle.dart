@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:logging/logging.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:time_machine/core/provider/image_provider.dart';
 import 'package:time_machine/data/models/stock.dart';
 import 'package:time_machine/uikit/themes/ui_colors.dart';
+
+Logger logger = Logger("TickerLogoCircle");
 
 /// Widget that display logo stock in circle.
 class TickerLogoCircle extends ConsumerWidget {
@@ -23,7 +26,10 @@ class TickerLogoCircle extends ConsumerWidget {
             imageurl,
             placeholderBuilder: (_) => const _TickerShimmer(),
           ),
-          error: (err, stack) => Text('Error: $err'),
+          error: (err, stack) {
+            logger.warning("Слишком много обращений к API");
+            const _TickerShimmer();
+          },
           loading: () => const _TickerShimmer(),
         ),
       ),
