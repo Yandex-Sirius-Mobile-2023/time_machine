@@ -10,6 +10,7 @@ import 'package:time_machine/uikit/ui_text.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class StockInfoBottomSheetBody extends ConsumerWidget {
+  static const double padding = 8;
 
   const StockInfoBottomSheetBody(
       {Key? key, required this.stock, required this.id})
@@ -25,22 +26,14 @@ class StockInfoBottomSheetBody extends ConsumerWidget {
     var comparison = ref
         .watch(activePortfolioProvider(activePortfolio).notifier)
         .getGrowthForStock(stock);
+
     final history = stock.quotesHistory;
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         UIText(stock.ticker.getName()),
         UIText('\$${history[activePortfolio.steps.last.date]!}'),
-        _buildLastComparison(history, context),
-        Container(
-          decoration: BoxDecoration(
-            borderRadius:
-                const BorderRadius.all(Radius.circular(UIConsts.paddings)),
-            color: comparison > 0 ? UIColors.growColor : UIColors.dropColor,
-          ),
-          child: UIText(
-              '${comparison > 0 ? '▲' : '▼'} ${comparison.toStringAsFixed(2)}%'),
-        ),
+        _buildLastComparison(history, context, comparison),
         Flexible(
           child: Consumer(
             builder: (context, ref, child) {
@@ -59,13 +52,12 @@ class StockInfoBottomSheetBody extends ConsumerWidget {
     );
   }
 
-
   Widget _buildLastComparison(
-      Map<DateTime, double> history, BuildContext context) {
+      Map<DateTime, double> history, BuildContext context, double comprasion) {
     var colorScheme = Theme.of(context).colorScheme;
     final last = history.values.fromEnd(0);
     final preLast = history.values.fromEnd(1);
-    final comparison = last / preLast;
+
     //TODO: Вставить риск.
     final risk = 0.55;
 
@@ -86,7 +78,7 @@ class StockInfoBottomSheetBody extends ConsumerWidget {
                 ),
               ]),
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(padding),
             child: Row(
               children: [
                 SizedBox(
@@ -96,7 +88,7 @@ class StockInfoBottomSheetBody extends ConsumerWidget {
                     child: ColoredBox(color: getRiskColor(risk)),
                   ),
                 ),
-                const SizedBox(width: 8),
+                const SizedBox(width: padding),
                 Text(
                   risk.toString(),
                   style: const TextStyle(
@@ -107,24 +99,15 @@ class StockInfoBottomSheetBody extends ConsumerWidget {
             ),
           ),
         ),
-        const SizedBox(width: 16),
+        const SizedBox(width: padding * 2),
         Container(
           decoration: BoxDecoration(
-            borderRadius: const BorderRadius.all(
-              Radius.circular(UIConsts.paddings),
-            ),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(2, 2),
-                blurRadius: 8,
-              ),
-            ],
-            color: comparison > 0 ? UIColors.growColor : UIColors.dropColor,
+            borderRadius:
+                const BorderRadius.all(Radius.circular(UIConsts.paddings)),
+            color: comprasion > 0 ? UIColors.growColor : UIColors.dropColor,
           ),
           child: UIText(
-            '${comparison > 0 ? '▲' : '▼'} ${comparison.toStringAsFixed(2)}%',
-          ),
+              '${comprasion > 0 ? '▲' : '▼'} ${comprasion.toStringAsFixed(2)}%'),
         ),
       ],
     );
@@ -139,7 +122,6 @@ class StockInfoBottomSheetBody extends ConsumerWidget {
       return UIColors.growColor;
     }
   }
-
 
   Widget _buildStockCard(Stock stock, BuildContext context) {
     return Container(
