@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:time_machine/app.dart';
 import 'package:time_machine/core/provider/auth_provider.dart';
@@ -36,6 +37,7 @@ class SettingsFragment extends ConsumerWidget {
             ),
           ),
           onPressed: () async {
+            HapticFeedback.lightImpact();
             await ref.read(firebaseAuthProvider).signOut();
             navigator.pushReplacementNamed(AppRoutes.loginURL);
           },
@@ -97,6 +99,7 @@ class _ThemeDropdownButton extends ConsumerWidget {
               )
               .toList(),
           onChanged: (val) {
+            HapticFeedback.lightImpact();
             themeNotifier.setTheme(val!);
             ref.watch(_themeSettingsProvider.notifier).state = val;
           },
@@ -153,6 +156,7 @@ class _LanguageDropdownButton extends ConsumerWidget {
               )
               .toList(),
           onChanged: (val) {
+            HapticFeedback.lightImpact();
             languageNotifier.saveLanguage(
               Locale(
                 val!,
