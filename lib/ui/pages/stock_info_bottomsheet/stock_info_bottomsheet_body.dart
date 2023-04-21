@@ -31,6 +31,7 @@ class StockInfoBottomSheetBody extends ConsumerWidget {
       children: [
         UIText(stock.ticker.getName()),
         UIText('\$${history[activePortfolio.steps.last.date]!}'),
+        _buildLastComparison(history, context),
         Container(
           decoration: BoxDecoration(
             borderRadius:
@@ -57,6 +58,88 @@ class StockInfoBottomSheetBody extends ConsumerWidget {
       ],
     );
   }
+
+
+  Widget _buildLastComparison(
+      Map<DateTime, double> history, BuildContext context) {
+    var colorScheme = Theme.of(context).colorScheme;
+    final last = history.values.fromEnd(0);
+    final preLast = history.values.fromEnd(1);
+    final comparison = last / preLast;
+    //TODO: Вставить риск.
+    final risk = 0.55;
+
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          decoration: BoxDecoration(
+              borderRadius: const BorderRadius.all(
+                Radius.circular(UIConsts.paddings),
+              ),
+              color: colorScheme.surface,
+              boxShadow: const [
+                BoxShadow(
+                  color: Colors.black26,
+                  offset: Offset(2, 2),
+                  blurRadius: 8,
+                ),
+              ]),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: [
+                SizedBox(
+                  height: 16,
+                  width: 16,
+                  child: ClipOval(
+                    child: ColoredBox(color: getRiskColor(risk)),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Text(
+                  risk.toString(),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(width: 16),
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.all(
+              Radius.circular(UIConsts.paddings),
+            ),
+            boxShadow: const [
+              BoxShadow(
+                color: Colors.black26,
+                offset: Offset(2, 2),
+                blurRadius: 8,
+              ),
+            ],
+            color: comparison > 0 ? UIColors.growColor : UIColors.dropColor,
+          ),
+          child: UIText(
+            '${comparison > 0 ? '▲' : '▼'} ${comparison.toStringAsFixed(2)}%',
+          ),
+        ),
+      ],
+    );
+  }
+
+  Color getRiskColor(double risk) {
+    if (risk > .5) {
+      return UIColors.redAccent;
+    } else if (risk > .2) {
+      return Colors.yellow;
+    } else {
+      return UIColors.growColor;
+    }
+  }
+
 
   Widget _buildStockCard(Stock stock, BuildContext context) {
     return Container(
