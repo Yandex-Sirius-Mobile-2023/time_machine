@@ -1,4 +1,5 @@
 import 'package:time_machine/core/provider/user_portfolio/user_portfolio.dart';
+import 'package:time_machine/data/services/stock_service_impl.dart';
 import '../data/models/stock.dart';
 import 'model/portfolio_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -32,20 +33,25 @@ class ActivePortfolioNotifier extends StateNotifier<PortfolioState> {
     return total;
   }
 
-  void goToFuture() {
+  void goToFuture(WidgetRef ref) {
+    bool endOfGame = state.portfolio.endOfGame;
     int period = state.period.getPeriod();
     var dates = state.currentStep.stocks.keys.first.quotesHistory.keys.toList();
     var now = (dates.length - 1 > dates.indexOf(state.now) + period)
         ? dates[dates.indexOf(state.now) + period]
         : dates.last;
-
+    if (now == dates.last) {
+      endOfGame = true;
+    }
     var currentStep = state.currentStep.copyWith(date: now);
     var steps = state.portfolio.steps;
     steps.add(currentStep);
-    Portfolio portfolio = state.portfolio.copyWith(steps: steps);
+    Portfolio portfolio =
+        state.portfolio.copyWith(steps: steps, endOfGame: endOfGame);
 
     state = state.copyWith(
         now: now, portfolio: portfolio, currentStep: currentStep);
+    ref.watch(userPortfolioProvider.notifier).updatePortfolio(state.portfolio);
   }
 
   double getGrowth() {
@@ -61,6 +67,14 @@ class ActivePortfolioNotifier extends StateNotifier<PortfolioState> {
     var totalValue = getTotal();
 
     return (previous == 0) ? 0 : (totalValue - previous) / previous * 100;
+  }
+
+  double getGrowthForStock(Stock stock) {
+    int period = state.period.getPeriod();
+    double previous = stock.quotesHistory.values.toList()[
+        stock.quotesHistory.keys.toList().indexOf(state.now) - period];
+    double current = stock.quotesHistory[state.now]!;
+    return (previous == 0) ? 0 : (current - previous) / previous * 100;
   }
 
   List<List<double>> getGraphData() {
@@ -83,12 +97,14 @@ class ActivePortfolioNotifier extends StateNotifier<PortfolioState> {
     return graphData;
   }
 
+  Future<double> getStockRisk(Stock stock) async {
+    var risks = await StockServiceImpl().getStockRisk(state.currentStep.stocks);
+    return risks[state.currentStep.stocks.keys.toList().indexOf(stock)];
+  }
 
-  List<List<double>> getGraphDataForStock(Stock stock){
-    final startDate =
-    stock.quotesHistory.keys.toList().indexOf(state.now);
-    final x = List.generate(
-        stock.quotesHistory.values.length, (index) => index)
+  List<List<double>> getGraphDataForStock(Stock stock) {
+    final startDate = stock.quotesHistory.keys.toList().indexOf(state.now);
+    final x = List.generate(stock.quotesHistory.values.length, (index) => index)
         .sublist(startDate - state.period.getPeriod(), startDate);
     List<List<double>> graphData = [];
     for (int i in x) {
