@@ -10,6 +10,7 @@ import 'package:time_machine/uikit/ui_text.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class StockInfoBottomSheetBody extends ConsumerWidget {
+
   const StockInfoBottomSheetBody(
       {Key? key, required this.stock, required this.id})
       : super(key: key);
@@ -69,11 +70,20 @@ class StockInfoBottomSheetBody extends ConsumerWidget {
               ticker: stock.ticker,
             ),
           ),
-          UIText(
-            stock.ticker.getName(),
-            style: Theme.of(context).textTheme.titleLarge,
+          const SizedBox(width: padding),
+          Expanded(
+            child: Text(
+              stock.ticker.getName(),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+              textAlign: TextAlign.justify,
+              style: Theme.of(context)
+                  .textTheme
+                  .titleLarge!
+                  .copyWith(fontSize: 20),
+            ),
           ),
-          const Spacer(),
+          const SizedBox(width: padding),
           _buildStockCounter(),
         ],
       ),
