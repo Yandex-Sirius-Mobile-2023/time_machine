@@ -11,17 +11,17 @@ import 'package:time_machine/uikit/ui_text.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class StockInfoBottomSheetBody extends ConsumerWidget {
-  const StockInfoBottomSheetBody({
-    Key? key,
-    required this.stock,
-    required this.id
-  }) : super(key: key);
+  const StockInfoBottomSheetBody(
+      {Key? key, required this.stock, required this.id})
+      : super(key: key);
 
   final Stock stock;
   final int id;
 
+  @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var activePortfolio = ref.watch(userPortfolioProvider.notifier).getPortfolio(id);
+    var activePortfolio =
+        ref.watch(userPortfolioProvider.notifier).getPortfolio(id);
     final history = stock.quotesHistory;
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -29,14 +29,17 @@ class StockInfoBottomSheetBody extends ConsumerWidget {
         UIText(stock.ticker.getName()),
         UIText('\$${history[activePortfolio.steps.last.date]!}'),
         _buildLastComparison(history),
-        Flexible(child:
-        Consumer(
-          builder: (context, ref , child) {
-            return
-            GraphCostWidget(
-              data: ref.watch(activePortfolioProvider(activePortfolio).notifier).getGraphDataForStock(stock),
-              isSingleWidget: true,
-            );},),
+        Flexible(
+          child: Consumer(
+            builder: (context, ref, child) {
+              return GraphCostWidget(
+                data: ref
+                    .watch(activePortfolioProvider(activePortfolio).notifier)
+                    .getGraphDataForStock(stock),
+                isSingleWidget: true,
+              );
+            },
+          ),
         ),
         _buildStockCard(stock, context),
         const SizedBox(height: UIConsts.paddings),
@@ -59,7 +62,6 @@ class StockInfoBottomSheetBody extends ConsumerWidget {
           '${comparison > 0 ? '▲' : '▼'} ${comparison.toStringAsFixed(2)}%'),
     );
   }
-  
 
   Widget _buildStockCard(Stock stock, BuildContext context) {
     return Container(
@@ -87,7 +89,8 @@ class StockInfoBottomSheetBody extends ConsumerWidget {
   Widget _buildStockCounter() {
     return Consumer(
       builder: (context, ref, _) {
-        var activePortfolio = ref.watch(userPortfolioProvider.notifier).getPortfolio(id);
+        var activePortfolio =
+            ref.watch(userPortfolioProvider.notifier).getPortfolio(id);
         int countOfStock = ref
             .watch(activePortfolioProvider(activePortfolio))
             .currentStep
@@ -131,8 +134,7 @@ class StockInfoBottomSheetBody extends ConsumerWidget {
               onPressed: () {
                 ref
                     .read(activePortfolioProvider(activePortfolio).notifier)
-                    .addStock(stock, 1,ref);
-
+                    .addStock(stock, 1, ref);
               },
               icon: const Icon(
                 Icons.add_circle,

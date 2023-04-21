@@ -1,4 +1,5 @@
 import 'package:time_machine/core/provider/user_portfolio/user_portfolio.dart';
+import 'package:time_machine/data/services/stock_service_impl.dart';
 import '../data/models/stock.dart';
 import 'model/portfolio_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -83,12 +84,14 @@ class ActivePortfolioNotifier extends StateNotifier<PortfolioState> {
     return graphData;
   }
 
+  Future<double> getStockRisk(Stock stock) async {
+    var risks = await StockServiceImpl().getStockRisk(state.currentStep.stocks);
+    return risks[state.currentStep.stocks.keys.toList().indexOf(stock)];
+  }
 
-  List<List<double>> getGraphDataForStock(Stock stock){
-    final startDate =
-    stock.quotesHistory.keys.toList().indexOf(state.now);
-    final x = List.generate(
-        stock.quotesHistory.values.length, (index) => index)
+  List<List<double>> getGraphDataForStock(Stock stock) {
+    final startDate = stock.quotesHistory.keys.toList().indexOf(state.now);
+    final x = List.generate(stock.quotesHistory.values.length, (index) => index)
         .sublist(startDate - state.period.getPeriod(), startDate);
     List<List<double>> graphData = [];
     for (int i in x) {
