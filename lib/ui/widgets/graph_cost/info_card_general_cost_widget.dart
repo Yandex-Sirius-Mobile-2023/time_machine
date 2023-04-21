@@ -88,14 +88,18 @@ class InfoCardGeneralCostWidget extends StatelessWidget {
                             : UIColors.growColor,
                         size: 25),
                     const SizedBox(width: defaultPadding / 2),
-                    Text(
-                      delta,
-                      style: TextStyle(
-                        color: double.parse(delta) < 0
-                            ? UIColors.dropColor
-                            : UIColors.growColor,
-                        fontFamily: "Inter",
-                        fontSize: 16,
+                    SizedBox(
+                      width: 32,
+                      child: Text(
+                        delta,
+                        style: TextStyle(
+                          color: double.parse(delta) < 0
+                              ? UIColors.dropColor
+                              : UIColors.growColor,
+                          fontFamily: "Inter",
+                          fontSize: 16,
+                        ),
+                        maxLines: 1,
                       ),
                     ),
                   ],
