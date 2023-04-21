@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:time_machine/app.dart';
 import 'package:time_machine/core/model/portfolio_state.dart';
@@ -40,6 +41,7 @@ class TradingPage extends ConsumerWidget {
         StockCirclePreview(
             count: portfolioState.currentStep.stocks[stock]!,
             onPressed: () {
+              HapticFeedback.mediumImpact();
               showUIBottomSheet(
                   context: context,
                   content: StockInfoBottomSheetBody(id: id, stock: stock));

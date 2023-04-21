@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:time_machine/core/model/portfolio_state.dart';
 
@@ -30,8 +31,20 @@ class CentralItemButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onLongPress: () => isBlur ? null : onLongPress(),
-      onTap: onTap,
+      onLongPress: () async {
+        if (isBlur) {
+          return;
+        }
+        HapticFeedback.heavyImpact();
+        await Future.delayed(UIConsts.duration);
+        await Future.delayed(UIConsts.duration);
+        HapticFeedback.mediumImpact();
+        onLongPress();
+      },
+      onTap: () {
+        HapticFeedback.mediumImpact();
+        onTap();
+      },
       child: AnimatedContainer(
         duration: UIConsts.duration,
         width: size,
