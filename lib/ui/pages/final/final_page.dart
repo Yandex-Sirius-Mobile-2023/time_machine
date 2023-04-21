@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:time_machine/app.dart';
 import 'package:time_machine/core/operations.dart';
+import 'package:time_machine/di_providers.dart';
 import 'package:time_machine/ui/widgets/graph_cost/graph_cost_widget.dart';
 import 'package:time_machine/uikit/themes/ui_colors.dart';
 import 'package:time_machine/uikit/ui_consts.dart';
@@ -26,6 +27,13 @@ class FinalPage extends ConsumerWidget {
             ),
             child: FloatingActionButton.extended(
               onPressed: () {
+                final id = ModalRoute.of(context)!.settings.arguments as int;
+                var activePortfolio =
+                    ref.watch(userPortfolioProvider.notifier).getPortfolio(id);
+                ref.read(historyDbProvider).addHistoryJson({
+                  'balance': activePortfolio.balance,
+                  'createAt': activePortfolio.createdAt.toString(),
+                });
                 Navigator.of(context)
                     .pushReplacementNamed(AppRoutes.profileUrl);
               },
