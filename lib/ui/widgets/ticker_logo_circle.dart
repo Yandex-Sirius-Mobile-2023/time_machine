@@ -28,7 +28,7 @@ class TickerLogoCircle extends ConsumerWidget {
           ),
           error: (err, stack) {
             logger.warning("Слишком много обращений к API");
-            const _TickerShimmer();
+            return const _TickerShimmer();
           },
           loading: () => const _TickerShimmer(),
         ),
