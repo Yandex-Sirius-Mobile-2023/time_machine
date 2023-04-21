@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "793231606892",
+    "firebase_url": "https://time-machine-sirius-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "time-machine-sirius",
     "storage_bucket": "time-machine-sirius.appspot.com"
   },
