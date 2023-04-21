@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:time_machine/app.dart';
 import 'package:time_machine/core/model/portfolio_state.dart';
 import 'package:time_machine/core/operations.dart';
 import 'package:time_machine/data/models/portfolio.dart';
@@ -16,6 +17,7 @@ class TradingPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    var navigator = Navigator.of(context);
     final id = ModalRoute.of(context)!.settings.arguments as int;
     Portfolio activePortfolio =
         ref.watch(userPortfolioProvider.notifier).getPortfolio(id);
@@ -26,10 +28,12 @@ class TradingPage extends ConsumerWidget {
         ref.watch(activePortfolioProvider(activePortfolio));
 
     void onTap() {
-      ref.read(activePortfolioProvider(activePortfolio).notifier).goToFuture();
       ref
-          .read(userPortfolioProvider.notifier)
-          .updatePortfolio(portfolioState.portfolio);
+          .read(activePortfolioProvider(activePortfolio).notifier)
+          .goToFuture(ref);
+      if (activePortfolio.endOfGame) {
+        navigator.pushReplacementNamed(AppRoutes.finish, arguments: id);
+      }
     }
 
     var satellites = [
